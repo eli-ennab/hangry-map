@@ -43,22 +43,20 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
 
 
 useEffect(() => {
-	 return onAuthStateChanged(auth, (user) => {
+	return onAuthStateChanged(auth, (user) => {
 		setCurrentUser(user)
-		
+
 		if (user) {
 			
 			setUserEmail(user.email)
 
 		} else {
-		
+
 			setUserEmail(null)
 
 		}
 		setLoading(false)
 	})
-	
-	
 },[])
 
 	return (
