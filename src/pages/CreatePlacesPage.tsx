@@ -4,6 +4,7 @@ import { db } from '../services/firebase'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
+import { fetchLatLng, loadGoogleMapsApi } from '../services/googleMapsService'
 
 const CreatePlacesPage = () => {
 	const {
@@ -16,13 +17,20 @@ const CreatePlacesPage = () => {
 	const [message, setMessage] = useState('')
 
 	const onSubmit = async (data: Place) => {
+
 		try {
-			const docRef = await addDoc(collection(db, 'places'), {
+
+			await loadGoogleMapsApi()
+			const { lat, lng } = await fetchLatLng(data.address)
+
+			await addDoc(collection(db, 'places'), {
 				...data,
+				lat,
+				lng,
 				timestamp: new Date()
 			})
 
-			reset();
+			reset()
 			setMessage('Place added successfully!')
 		} catch (error) {
 			console.error('Error adding document: ', error)
@@ -148,15 +156,13 @@ const CreatePlacesPage = () => {
 									/>
 								</Form.Group>
 
-								{/* Latitude and Longitude fields have been omitted as they will be fetched automatically */}
-
 								<Button type="submit">Submit Place</Button>
 							</Form>
 						</Card.Body>
 					</Card>
 				</Col>
 			</Row>
-		</Container>
+		</Container >
 	)
 }
 
