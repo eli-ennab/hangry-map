@@ -20,8 +20,9 @@ const CreatePlacesPage = () => {
 
 		try {
 
+			const fullAddress = `${data.address}, ${data.city}`
 			await loadGoogleMapsApi()
-			const { lat, lng } = await fetchLatLng(data.address)
+			const { lat, lng } = await fetchLatLng(fullAddress)
 
 			await addDoc(collection(db, 'places'), {
 				...data,
