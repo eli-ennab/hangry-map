@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 import { getStorage } from "firebase/storage"
-import { getFirestore } from "firebase/firestore"
-
+import { CollectionReference, collection, DocumentData, getFirestore } from "firebase/firestore"
+import { User } from '../types/User.types'
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
 	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -19,5 +19,12 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 
 export const storage = getStorage(app)
+
+const createCollection = <T = DocumentData>(collectionName: string) => {
+	return collection(db, collectionName) as CollectionReference<T>
+}
+
+export const userCol = createCollection<User>('users')
+
 
 export default app
