@@ -6,6 +6,7 @@ import LogoutPage from './pages/LogoutPage'
 import NotFound from './pages/NotFound'
 import './assets/App.scss'
 import TipsPage from './pages/TipsPage'
+import CreatePlacesPage from './pages/CreatePlacesPage'
 
 const App = () => {
 	return (
@@ -25,6 +26,8 @@ const App = () => {
 				<Route path="*" element={<NotFound />} />
 
 				<Route path="/tips" element={<TipsPage />} />
+
+				<Route path="/create-place" element={<CreatePlacesPage />} />
 
 				{/*
 
