@@ -30,11 +30,17 @@ const App = () => {
 				<Route path="*" element={<NotFound />} />
 
 				{/* RequireAuth */}
-				<Route path="/user/update-profile" element={
+				<Route path="/user/create-places" element={
 					<RequireAuth>
 						<CreatePlacesPage />
 					</RequireAuth>
 				}/> 
+
+				{/* <Route path="/user/update-profile" element={
+					<RequireAuth>
+						<UpdateProfilePage />
+					</RequireAuth>
+				}/>  */}
 
 				<Route path="/user/dashboard" element={
 					<RequireAuth>

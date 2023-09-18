@@ -21,7 +21,7 @@ const Navigation = () => {
 							<>
 								<Nav.Link as={NavLink} to="/user/dashboard">Dashboard (admin only)</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/update-profile">Update Profile</Nav.Link>
-								<Nav.Link as={NavLink} to="/create-place">Create Places</Nav.Link>
+								<Nav.Link as={NavLink} to="/user/create-places">Create Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>
 							</>
 						) : (
