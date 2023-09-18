@@ -1,12 +1,23 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
-import { fetchLatLng, loadGoogleMapsApi } from '../services/googleMapsService'
+import { Libraries, useJsApiLoader } from '@react-google-maps/api'
+import { getGeocode, getLatLng } from 'use-places-autocomplete'
+
+
 
 const CreatePlacesPage = () => {
+
+	const libraries: Libraries = useMemo(() => ["places"], [])
+
+	const { isLoaded } = useJsApiLoader({
+		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
+		libraries,
+	})
+
 	const {
 		register,
 		handleSubmit,
@@ -17,18 +28,21 @@ const CreatePlacesPage = () => {
 	const [message, setMessage] = useState('')
 
 	const onSubmit = async (data: Place) => {
+		if (!isLoaded) {
+			setMessage('Please try again')
+			return
+		}
 
 		try {
-
 			const fullAddress = `${data.address}, ${data.city}`
-			await loadGoogleMapsApi()
-			const { lat, lng } = await fetchLatLng(fullAddress)
+			const results = await getGeocode({ address: fullAddress })
+			const { lat, lng } = getLatLng(results[0])
 
 			await addDoc(collection(db, 'places'), {
 				...data,
 				lat,
 				lng,
-				timestamp: new Date()
+				timestamp: new Date(),
 			})
 
 			reset()
