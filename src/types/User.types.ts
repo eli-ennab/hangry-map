@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 export type LoginCredentials = {
 	email: string
 	password: string
@@ -7,7 +9,7 @@ export type SignUpCredentials = {
 	email: string
 	password: string
 	passwordConfirm: string
-    admin: boolean
+	admin: boolean
 }
 
 export type ForgotPasswordFormData = {
@@ -20,5 +22,14 @@ export type UpdateProfileFormData = {
 	email: string
 	password: string
 	passwordConfirm: string
-    admin: boolean
+	admin: boolean
+}
+
+export type User = {
+	_id: string
+	name: string
+	email: string
+	Photo_url: string
+	admin: boolean
+	created_at: Timestamp
 }

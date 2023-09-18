@@ -1,12 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
 import Navigation from './pages/partials/Navigation'
 import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import LogoutPage from './pages/LogoutPage'
 import NotFound from './pages/NotFound'
-import './assets/App.scss'
 import TipsPage from './pages/TipsPage'
 import CreatePlacesPage from './pages/CreatePlacesPage'
+
+import './assets/App.scss'
 
 const App = () => {
 	return (
@@ -18,7 +20,7 @@ const App = () => {
 				{/* Guest Routes */}
 				<Route path="/" element={<HomePage />} />
 
-				{/* <Route path="/login" element={<LoginPage />}/> */}
+				<Route path="/login" element={<LoginPage />}/>
 				<Route path="/logout" element={<LogoutPage />} />
 				<Route path="/signup" element={<SignupPage />} />
 
