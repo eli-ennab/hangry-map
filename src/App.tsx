@@ -11,7 +11,7 @@ import TipsPage from './pages/TipsPage'
 import RequireAuth from './components/RequireAuth'
 
 import './assets/App.scss'
-import UpdateProfile from './pages/UpdateProfile'
+import UpdateProfilePage from './pages/UpdateProfilePage'
 
 const App = () => {
 	return (
@@ -37,11 +37,11 @@ const App = () => {
 					</RequireAuth>
 				}/> 
 
-				{/* <Route path="/user/update-profile" element={
+				<Route path="/user/update-profile" element={
 					<RequireAuth>
 						<UpdateProfilePage />
 					</RequireAuth>
-				}/>  */}
+				}/> 
 
 				<Route path="/user/dashboard" element={
 					<RequireAuth>

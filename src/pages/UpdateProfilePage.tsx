@@ -16,7 +16,7 @@ import {storage} from '../services/firebase'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import {v4 as uuidv4} from 'uuid'
 
-const UpdateProfile = () => {
+const UpdateProfilePage = () => {
 
 	const [progress, setProgress] = useState<number | null>(null)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -239,4 +239,4 @@ const UpdateProfile = () => {
   )
 }
 
-export default UpdateProfile
+export default UpdateProfilePage
