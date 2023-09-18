@@ -1,12 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
 import Navigation from './pages/partials/Navigation'
+import CreatePlacesPage from './pages/CreatePlacesPage'
+import DashboardPage from './pages/DashboardPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import LogoutPage from './pages/LogoutPage'
 import NotFound from './pages/NotFound'
 import TipsPage from './pages/TipsPage'
-import CreatePlacesPage from './pages/CreatePlacesPage'
+import RequireAuth from './components/RequireAuth'
 
 import './assets/App.scss'
 import UpdateProfile from './pages/UpdateProfile'
@@ -24,23 +26,28 @@ const App = () => {
 				<Route path="/login" element={<LoginPage />}/>
 				<Route path="/logout" element={<LogoutPage />} />
 				<Route path="/signup" element={<SignupPage />} />
-
+				<Route path="/tips" element={<TipsPage />} />
 				{/* <Route path="/forgot-password" element={<ForgotPasswordPage />}/> */}
 				<Route path="*" element={<NotFound />} />
 
-				<Route path="/tips" element={<TipsPage />} />
+				{/* RequireAuth */}
+				<Route path="/user/create-places" element={
+					<RequireAuth>
+						<CreatePlacesPage />
+					</RequireAuth>
+				}/> 
 
-				<Route path="/create-place" element={<CreatePlacesPage />} />
+				{/* <Route path="/user/update-profile" element={
+					<RequireAuth>
+						<UpdateProfilePage />
+					</RequireAuth>
+				}/>  */}
 
-				{/*
-
-            <Route path="/places" element={}/>
-            <Route path="/places/:id" element={}/>
-
-            {/* RequireAuth */}
-			
-            <Route path="/update-profile" element={<UpdateProfile />}/> 
-
+				<Route path="/user/dashboard" element={
+					<RequireAuth>
+						<DashboardPage />
+					</RequireAuth>
+				}/> 
 			</Routes>
 		</div>
 	)
