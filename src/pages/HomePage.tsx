@@ -5,7 +5,6 @@ const mapContainerStyle = {
 	height: '500px',
 }
 
-
 // Malmö
 const center = {
 	lat: 55.604981,
@@ -14,7 +13,7 @@ const center = {
 
 const HomePage = () => {
 	return (
-		<LoadScript googleMapsApiKey="API_KEY">
+		<LoadScript googleMapsApiKey={import.meta.env.VITE_GMAP_API_KEY}>
 			<GoogleMap
 				id="example-map"
 				mapContainerStyle={mapContainerStyle}
