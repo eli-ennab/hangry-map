@@ -2,42 +2,33 @@ import { useState } from 'react'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { Place } from '../types/Places.types'
 
 const CreatePlacesPage = () => {
-	const [name, setName] = useState('')
-	const [address, setAddress] = useState('')
-	const [city, setCity] = useState('')
-	const [description, setDescription] = useState('')
-	const [category, setCategory] = useState('')
-	const [offerings, setOfferings] = useState('')
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors }
+	} = useForm<Place>()
+
 	const [message, setMessage] = useState('')
 
-	const handleSubmit = async (e: any) => {
-		e.preventDefault()
-
+	const onSubmit = async (data: Place) => {
 		try {
-			const docRef = await addDoc(collection(db, "places"), {
-				name,
-				address,
-				city,
-				description,
-				category,
-				offerings,
+			const docRef = await addDoc(collection(db, 'places'), {
+				...data,
 				timestamp: new Date()
 			})
 
-			setName('')
-			setAddress('')
-			setCity('')
-			setDescription('')
-			setCategory('')
-			setOfferings('')
+			reset();
 			setMessage('Place added successfully!')
 		} catch (error) {
-			console.error("Error adding document: ", error)
+			console.error('Error adding document: ', error)
 			setMessage('Error while adding place. Please try again.')
 		}
-	}
+	};
 
 	return (
 		<Container className="py-3">
@@ -47,60 +38,117 @@ const CreatePlacesPage = () => {
 						<Card.Body>
 							<Card.Title className="mb-3">Add a New Place</Card.Title>
 							{message && <p>{message}</p>}
-							<Form onSubmit={handleSubmit}>
+							<Form onSubmit={handleSubmit(onSubmit)}>
 								<Form.Group className="mb-3">
 									<Form.Label>Name</Form.Label>
 									<Form.Control
 										type="text"
-										value={name}
-										onChange={(e) => setName(e.target.value)}
-										required
+										placeholder="Enter place name"
+										{...register('name', { required: true })}
 									/>
+									{errors.name && <span>Name is required</span>}
 								</Form.Group>
 
 								<Form.Group className="mb-3">
 									<Form.Label>Address</Form.Label>
 									<Form.Control
 										type="text"
-										value={address}
-										onChange={(e) => setAddress(e.target.value)}
-										required
+										placeholder="Enter address"
+										{...register('address', { required: true })}
 									/>
+									{errors.address && <span>Address is required</span>}
 								</Form.Group>
 
 								<Form.Group className="mb-3">
 									<Form.Label>City</Form.Label>
 									<Form.Control
 										type="text"
-										value={city}
-										onChange={(e) => setCity(e.target.value)}
-										required
+										placeholder="Enter city"
+										{...register('city', { required: true })}
 									/>
+									{errors.city && <span>City is required</span>}
 								</Form.Group>
 
 								<Form.Group className="mb-3">
 									<Form.Label>Description</Form.Label>
 									<Form.Control
 										as="textarea"
-										value={description}
-										onChange={(e) => setDescription(e.target.value)}
-										required
+										placeholder="Enter a brief description"
+										{...register('description', { required: true })}
 									/>
+									{errors.description && <span>Description is required</span>}
 								</Form.Group>
 
 								<Form.Group className="mb-3">
 									<Form.Label>Category</Form.Label>
-									<Form.Select
-										value={category}
-										onChange={(e) => setCategory(e.target.value)}
-										required
-									>
+									<Form.Select {...register('category', { required: true })}>
 										<option value="">Select a category</option>
 										<option value="Café">Café</option>
 										<option value="Restaurant">Restaurant</option>
 
 									</Form.Select>
+									{errors.category && <span>Category is required</span>}
 								</Form.Group>
+
+								<Form.Group className="mb-3">
+									<Form.Label>Offerings</Form.Label>
+									<Form.Select {...register('offerings', { required: true })}>
+										<option value="">Select type of offerings</option>
+										<option value="Lunch">Lunch</option>
+										<option value="AfterWork">After work</option>
+										<option value="Dinner">Middag/Á la carte</option>
+
+									</Form.Select>
+									{errors.offerings && <span>Offerings is required</span>}
+								</Form.Group>
+
+								<Form.Group className="mb-3">
+									<Form.Label>Email</Form.Label>
+									<Form.Control
+										type="email"
+										placeholder="Enter email address (optional)"
+										{...register('email')}
+									/>
+									{errors.email && <span>Invalid email</span>}
+								</Form.Group>
+
+								<Form.Group className="mb-3">
+									<Form.Label>Phone</Form.Label>
+									<Form.Control
+										type="tel"
+										placeholder="Enter phone number (optional)"
+										{...register('phone')}
+									/>
+								</Form.Group>
+
+								<Form.Group className="mb-3">
+									<Form.Label>Website</Form.Label>
+									<Form.Control
+										type="url"
+										placeholder="Enter website URL (optional)"
+										{...register('website')}
+									/>
+								</Form.Group>
+
+								<Form.Group className="mb-3">
+									<Form.Label>Facebook</Form.Label>
+									<Form.Control
+										type="url"
+										placeholder="Enter Facebook page URL (optional)"
+										{...register('facebook')}
+									/>
+								</Form.Group>
+
+								<Form.Group className="mb-3">
+									<Form.Label>Instagram</Form.Label>
+									<Form.Control
+										type="url"
+										placeholder="Enter Instagram handle URL (optional)"
+										{...register('instagram')}
+									/>
+								</Form.Group>
+
+								{/* Latitude and Longitude fields have been omitted as they will be fetched automatically */}
 
 								<Button type="submit">Submit Place</Button>
 							</Form>
