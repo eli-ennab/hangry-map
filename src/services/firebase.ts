@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth"
 import { getStorage } from "firebase/storage"
 import { CollectionReference, collection, DocumentData, getFirestore } from "firebase/firestore"
 import { User } from '../types/User.types'
+import {Place} from '../types/Places.types.ts'
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
 	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -26,5 +27,6 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 
 export const userCol = createCollection<User>('users')
 
+export const placeCol = createCollection<Place>('places')
 
 export default app
