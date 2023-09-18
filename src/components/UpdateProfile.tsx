@@ -64,14 +64,14 @@ const UpdateProfile: React.FC<Props> = ({
 			setLoading(true)
 			
 			if (data.name !== (currentUser?.displayName ?? "")) {
-				onNameChange(data.name)
+				await onNameChange(data.name)
 			}
 			
 			if (data.email !== (currentUser?.email ?? "")) {
-				onMailChange(data.email)
+				await onMailChange(data.email)
 			}
 			
-			if (data.password) onPassword(data.password)
+			if (data.password) await onPassword(data.password)
 			
 			if (data.photoFile.length) {
 				const photo = data.photoFile[0]
@@ -95,7 +95,7 @@ const UpdateProfile: React.FC<Props> = ({
 						})
 			}
 			
-			reloadUser()
+			await reloadUser()
 			setLoading(false)
 			
 		} catch
@@ -111,8 +111,8 @@ const UpdateProfile: React.FC<Props> = ({
 	}
 	
 	const onDeletePic = async () => {
-		onPhotoUrl('')
-		reloadUser()
+		await onPhotoUrl('')
+		await reloadUser()
 	}
   
     return (
