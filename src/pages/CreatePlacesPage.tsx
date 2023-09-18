@@ -43,6 +43,7 @@ const CreatePlacesPage = () => {
 				lat,
 				lng,
 				timestamp: new Date(),
+				isApproved: false
 			})
 
 			reset()
