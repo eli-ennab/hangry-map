@@ -29,7 +29,7 @@ export type User = {
 	_id: string
 	name: string
 	email: string
-	Photo_url: string
+	photoURL: string
 	admin: boolean
 	created_at: Timestamp
 }

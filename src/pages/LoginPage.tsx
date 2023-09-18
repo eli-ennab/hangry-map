@@ -24,7 +24,7 @@ const LoginPage = () => {
 		try {
 			setLoading(true)
 			await login(data.email, data.password)
-			navigate('/')
+			navigate('/update-profile')
 		} catch (error) {
 			if (error instanceof FirebaseError) {
 				setErrorMessage(error.message)

@@ -9,6 +9,7 @@ import TipsPage from './pages/TipsPage'
 import CreatePlacesPage from './pages/CreatePlacesPage'
 
 import './assets/App.scss'
+import UpdateProfile from './pages/UpdateProfile'
 
 const App = () => {
 	return (
@@ -37,10 +38,8 @@ const App = () => {
             <Route path="/places/:id" element={}/>
 
             {/* RequireAuth */}
-				{/* 
-            <Route path="/user/:id" element={}/>
-            <Route path="/user/:id/create" element={}/>
-            <Route path="/user/:id/update-profile" element={}/> */}
+			
+            <Route path="/update-profile" element={<UpdateProfile />}/> 
 
 			</Routes>
 		</div>
