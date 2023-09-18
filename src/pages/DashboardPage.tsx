@@ -3,9 +3,10 @@ import { Table } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Image from 'react-bootstrap/Image'
+import PlacesList from "../components/PlaceList"
 
 const DashboardPage = () => {
-	const {currentUser} = useAuth()
+	const { currentUser } = useAuth()
 
 	const exampleUsers = [
 		{
@@ -29,6 +30,11 @@ const DashboardPage = () => {
 		}
 	]
 
+	const handleApprove = (placeId: string) => {
+		// approval logic to be 
+		console.log(`Approved place with ID: ${placeId}`)
+	}
+
 	return currentUser ? (
 		<Container>
 			<h2>Users</h2>
@@ -43,11 +49,11 @@ const DashboardPage = () => {
 					{exampleUsers.map(user => (
 						<tr key={user.id}>
 							<td>
-								<Image 
-									src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg" 
-									height={50} 
-									width={50} 
-									fluid 
+								<Image
+									src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+									height={50}
+									width={50}
+									fluid
 								/>
 							</td>
 							<td>{user.email}</td>
@@ -73,11 +79,11 @@ const DashboardPage = () => {
 					{exampleAdmins.map(user => (
 						<tr key={user.id}>
 							<td>
-								<Image 
-									src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg" 
-									height={50} 
-									width={50} 
-									fluid 
+								<Image
+									src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+									height={50}
+									width={50}
+									fluid
 								/>
 							</td>
 							<td>{user.email}</td>
@@ -86,6 +92,8 @@ const DashboardPage = () => {
 					))}
 				</tbody>
 			</Table>
+
+			<PlacesList onApprove={handleApprove} />
 		</Container>
 	) : null
 }
