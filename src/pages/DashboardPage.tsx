@@ -10,8 +10,11 @@ import {createColumnHelper} from '@tanstack/react-table'
 import {Place} from '../types/Places.types.ts'
 import useGetUsers from '../hooks/useGetUsers.ts'
 import {User} from '../types/User.types.ts'
+import UploadImage from '../components/UploadImage.tsx'
+import useGetPlace from '../hooks/useGetPlace.ts'
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
+	
 
 	const exampleUsers = [
 		{
@@ -94,11 +97,14 @@ const  {data: users} = useGetUsers()
 			],
 		}),
 	]
+	
+	const {data: place} = useGetPlace('dJxxvzgSJcEnbqBJsiMk')
 	return currentUser && places && users ? (
 			<>
 			<PlacesTable columns={columns} data={places} />
 			<PlacesTable columns={userColumns} data={users} />
 
+				<UploadImage placeInfo={place} />
 			</>
 		
 		// <Container>

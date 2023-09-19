@@ -115,7 +115,7 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({children}) => {
 		setUserPhotoUrl(auth.currentUser.photoURL)
 		return true
 	}
-	
+		
 	useEffect(() => {
 		return onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user)
