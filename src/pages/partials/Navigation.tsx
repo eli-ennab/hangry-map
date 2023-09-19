@@ -3,12 +3,17 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavLink, Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import useGetUser from '../../hooks/useGetUser.ts'
 
 const Navigation = () => {
 	const {
 		currentUser,
 	} = useAuth()
-
+	
+const {data: user} = useGetUser(currentUser!.uid)
+	
+		
+	
 	return (
 		<Navbar bg="dark" variant="dark" expand="md">
 			<Container>
@@ -18,8 +23,8 @@ const Navigation = () => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto">
 						{currentUser ? (
-							<>
-								<Nav.Link as={NavLink} to="/user/dashboard">Dashboard (admin only)</Nav.Link>
+							<> 
+							{user?.admin === true ? <Nav.Link as={NavLink} to="/user/dashboard">Dashboard (admin only)</Nav.Link> : null} 
 								<Nav.Link as={NavLink} to="/user/update-profile">Update Profile</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/create-places">Create Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>

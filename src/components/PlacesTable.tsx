@@ -51,8 +51,8 @@ const PlacesTable = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 									
 									{/* Add a sort direction indiciator */}
 									{{
-										asc: " 🙂",
-										desc: " 🙃",
+										asc: " ⬇️⬇",
+										desc: " ⬆️⬆",
 									}[
 										header.column.getIsSorted() as string
 										] ?? null}
