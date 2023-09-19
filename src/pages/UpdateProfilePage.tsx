@@ -2,7 +2,6 @@ import useAuth from '../hooks/useAuth'
 import UpdateProfile from '../components/UpdateProfile.tsx'
 const UpdateProfilePage = () => {
 	
-
 	const {
 		userEmail,
 		userName,
