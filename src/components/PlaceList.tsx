@@ -15,7 +15,7 @@ const PlacesList: React.FC<PlacesListProps> = ({ onApprove }) => {
 		const fetchPlaces = async () => {
 			const placesCollection = collection(db, 'places')
 			const placesSnapshot = await getDocs(placesCollection)
-			const placesList = placesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Place))
+			const placesList = placesSnapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() } as Place))
 			setPlaces(placesList)
 		}
 
@@ -31,7 +31,7 @@ const PlacesList: React.FC<PlacesListProps> = ({ onApprove }) => {
 					</Col>
 				</Row>
 				{places.map(place => (
-					<Col md={4} key={place.id}>
+					<Col md={4} key={place._id}>
 						<Card className="mb-4">
 							<Card.Body>
 								<Card.Title>{place.name}</Card.Title>
@@ -44,7 +44,7 @@ const PlacesList: React.FC<PlacesListProps> = ({ onApprove }) => {
 									<br />
 									Offerings: {place.offerings}
 								</Card.Text>
-								<Button variant="primary" onClick={() => onApprove(place.id ?? 'N/A')}>
+								<Button variant="primary" onClick={() => onApprove(place._id ?? 'N/A')}>
 									Approve
 								</Button>
 							</Card.Body>

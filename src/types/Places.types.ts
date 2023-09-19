@@ -1,5 +1,5 @@
 export type Place = {
-	id?: string 
+	_id: string 
 	name: string
 	address: string
 	city: string

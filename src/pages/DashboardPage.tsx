@@ -70,6 +70,9 @@ const  {data: users} = useGetUsers()
 				columnPlaceHelper.accessor('category', {
 					header: 'Category',
 				}),
+				columnPlaceHelper.accessor('_id', {
+					header: 'ID',
+				}),
 			],
 		}),
 	]	

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
@@ -7,10 +7,7 @@ import { Place } from '../types/Places.types'
 import { Libraries, useJsApiLoader } from '@react-google-maps/api'
 import { getGeocode, getLatLng } from 'use-places-autocomplete'
 
-
-
 const CreatePlacesPage = () => {
-
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useJsApiLoader({
@@ -32,27 +29,29 @@ const CreatePlacesPage = () => {
 			setMessage('Please try again')
 			return
 		}
-
+		
 		try {
 			const fullAddress = `${data.address}, ${data.city}`
 			const results = await getGeocode({ address: fullAddress })
 			const { lat, lng } = getLatLng(results[0])
-
-			await addDoc(collection(db, 'places'), {
+		
+			const docRef = await addDoc(collection(db, 'places'), {
 				...data,
 				lat,
 				lng,
 				timestamp: new Date(),
 				isApproved: false
 			})
-
+		
+			const placeId = docRef.id
+			await updateDoc(doc(db, 'places', placeId), { _id: placeId })
+		
 			reset()
 			setMessage('Place added successfully!')
 		} catch (error) {
-			console.error('Error adding document: ', error)
 			setMessage('Error while adding place. Please try again.')
 		}
-	};
+	}
 
 	return (
 		<Container className="py-3">
