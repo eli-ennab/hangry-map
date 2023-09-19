@@ -10,8 +10,11 @@ import {createColumnHelper} from '@tanstack/react-table'
 import {Place} from '../types/Places.types.ts'
 import useGetUsers from '../hooks/useGetUsers.ts'
 import {User} from '../types/User.types.ts'
+import useGetUser from "../hooks/useGetUser.ts"
+
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
+	const {data: user} = useGetUser(currentUser!.uid)
 
 	const exampleUsers = [
 		{
@@ -94,12 +97,12 @@ const  {data: users} = useGetUsers()
 			],
 		}),
 	]
-	return currentUser && places && users ? (
-			<>
+
+	return user?.admin === true && places && users ? (
+		<>
 			<PlacesTable columns={columns} data={places} />
 			<PlacesTable columns={userColumns} data={users} />
-
-			</>
+		</>
 		
 		// <Container>
 		// 	<h2>Users</h2>
@@ -160,7 +163,7 @@ const  {data: users} = useGetUsers()
 		//
 		// 	<PlacesList onApprove={handleApprove} />
 		// </Container>
-	) : null
+	) : <p>You must be an Admin to access the Dashboard.</p>
 }
 
 export default DashboardPage
