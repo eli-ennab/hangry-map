@@ -10,10 +10,6 @@ const Navigation = () => {
 		currentUser,
 	} = useAuth()
 	
-const {data: user} = useGetUser(currentUser!.uid)
-	
-		
-	
 	return (
 		<Navbar bg="dark" variant="dark" expand="md">
 			<Container>
@@ -24,7 +20,7 @@ const {data: user} = useGetUser(currentUser!.uid)
 					<Nav className="ms-auto">
 						{currentUser ? (
 							<> 
-							{user?.admin === true ? <Nav.Link as={NavLink} to="/user/dashboard">Dashboard (admin only)</Nav.Link> : null} 
+								<Nav.Link as={NavLink} to="/user/dashboard">Dashboard (admin only)</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/update-profile">Update Profile</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/create-places">Create Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>
