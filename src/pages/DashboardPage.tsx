@@ -34,6 +34,9 @@ const DashboardPage = () => {
 				columnPlaceHelper.accessor('category', {
 					header: 'Category',
 				}),
+				columnPlaceHelper.accessor('isApproved', {
+					header: 'Is Approved',
+				}),
 				columnPlaceHelper.accessor('_id', {
 					header: '',
 					cell: props => (
