@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
 import { Libraries, useJsApiLoader } from '@react-google-maps/api'
 import { getGeocode, getLatLng } from 'use-places-autocomplete'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
@@ -65,7 +66,9 @@ const CreatePlacesPage = () => {
 					<Card>
 						<Card.Body>
 							<Card.Title className="mb-3">Add a New Place</Card.Title>
-							{message && <p>{message}</p>}
+
+							{message && <Alert variant="dark">{message}</Alert>}
+
 							<Form onSubmit={handleSubmit(onSubmit)}>
 								<Form.Group className="mb-3">
 									<Form.Label>Name</Form.Label>

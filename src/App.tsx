@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
-import NotFound from './pages/NotFound'
 import PlacePage from './pages/PlacePage'
 import RequireAuth from './components/RequireAuth'
 import SignupPage from './pages/SignupPage'
@@ -14,6 +13,7 @@ import TipsPage from './pages/TipsPage'
 import UpdateProfilePage from './pages/UpdateProfilePage'
 
 import './assets/App.scss'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
 
 const App = () => {
 	return (
@@ -25,10 +25,11 @@ const App = () => {
 				{/* Guest Routes */}
 				<Route path="/" element={<HomePage />} />
 
-				<Route path="/login" element={<LoginPage />}/>
+				<Route path="/login" element={<LoginPage />} />
 				<Route path="/logout" element={<LogoutPage />} />
 				<Route path="/signup" element={<SignupPage />} />
-				{/* <Route path="/forgot-password" element={<ForgotPasswordPage />}/> */}
+				<Route path="/tips" element={<TipsPage />} />
+				<Route path="/forgot-password" element={<ForgotPasswordPage />} />
 				<Route path="*" element={<NotFound />} />
 
 				{/* RequireAuth */}
@@ -36,25 +37,25 @@ const App = () => {
 					<RequireAuth>
 						<CreatePlacesPage />
 					</RequireAuth>
-				}/> 
+				} />
 
 				<Route path="/user/update-profile" element={
 					<RequireAuth>
 						<UpdateProfilePage />
 					</RequireAuth>
-				}/> 
+				} />
 
 				<Route path="/user/dashboard" element={
 					<RequireAuth>
 						<DashboardPage />
 					</RequireAuth>
-				}/> 
+				} />
 
 				<Route path="/places/:id" element={
 					<RequireAuth>
 						<PlacePage />
 					</RequireAuth>
-				}/> 
+				} />
 			</Routes>
 		</div>
 	)
