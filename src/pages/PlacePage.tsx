@@ -1,18 +1,24 @@
 import { useParams } from 'react-router-dom'
 import useGetPlace from '../hooks/useGetPlace'
 import { useState } from 'react'
-import { db } from '../services/firebase'
+import { useNavigate } from 'react-router-dom'
+import { db, placeCol } from '../services/firebase'
 import { useForm } from 'react-hook-form'
-import { doc, updateDoc } from 'firebase/firestore'
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { Place } from '../types/Places.types'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
+import ConfirmationModal from '../components/ConfimationModal'
 
 const PlacePage = () => {
+	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+	const [message, setMessage] = useState('')
+	const navigate = useNavigate()
 	const { id } = useParams()
 	const { data: place } = useGetPlace(id!)
 
@@ -26,8 +32,6 @@ const PlacePage = () => {
 		formState: { errors }
 	} = useForm<Place>()
 
-	const [message, setMessage] = useState('')
-
 	const onSubmit = async (data: Place) => {	
 		try {
 			const placeRef = doc(db, 'places', id)
@@ -37,6 +41,13 @@ const PlacePage = () => {
 			console.error('Error while updating place:', error)
 			setMessage('Error while updating place. Please try again.')
 		}
+	}
+
+	const onDelete = async () => {
+		await deleteDoc(doc(placeCol, id))
+		navigate('/user/dashboard', {
+			replace: true,
+		})
 	}
 	
 	return (
@@ -49,7 +60,7 @@ const PlacePage = () => {
 								<Card.Body>
 									<Card.Title className="mb-3">Update Place</Card.Title>
 
-									{message && <p>{message}</p>}
+									{message && <Alert variant="dark">{message}</Alert>}
 
 									<Form onSubmit={handleSubmit(onSubmit)}>
 										<Form.Group className="mb-3">
@@ -137,7 +148,7 @@ const PlacePage = () => {
 												type="number"
 												placeholder="Enter phone number (optional)"
 												{...register('phone')}
-												defaultValue={place.phone ?? 'N/A'}
+												defaultValue={place.phone}
 											/>
 										</Form.Group>
 
@@ -147,7 +158,7 @@ const PlacePage = () => {
 												type="url"
 												placeholder="Enter website URL (optional)"
 												{...register('website')}
-												defaultValue={place.website ?? 'N/A'}
+												defaultValue={place.website}
 											/>
 										</Form.Group>
 
@@ -157,7 +168,7 @@ const PlacePage = () => {
 												type="url"
 												placeholder="Enter Facebook page URL (optional)"
 												{...register('facebook')}
-												defaultValue={place.facebook ?? 'N/A'}
+												defaultValue={place.facebook}
 											/>
 										</Form.Group>
 
@@ -167,7 +178,7 @@ const PlacePage = () => {
 												type="url"
 												placeholder="Enter Instagram handle URL (optional)"
 												{...register('instagram')}
-												defaultValue={place.instagram ?? 'N/A'}
+												defaultValue={place.instagram}
 											/>
 										</Form.Group>
 
@@ -180,12 +191,33 @@ const PlacePage = () => {
 											{errors.offerings && <span>An isApproved value is required.</span>}
 										</Form.Group>
 
-										<Button type="submit">Update Place</Button>
+										<Button 
+											type="submit"
+											variant="dark"
+										>
+											Update Place
+										</Button>
+
+										<Button
+											variant="danger"
+											className="mx-3"
+											onClick={() => setShowConfirmDelete(true)}
+										>
+											Delete Place
+										</Button>
 									</Form>
 								</Card.Body>
 							</Card>
 						</Col>
 					</Row>
+
+					<ConfirmationModal
+						show={showConfirmDelete}
+						onCancel={() => setShowConfirmDelete(false)}
+						onConfirm={onDelete}
+					>
+						Are you sure you want to delete {place.name}?
+					</ConfirmationModal>
 				</Container>
 			}
 		</>
