@@ -181,16 +181,16 @@ const PlacePage = () => {
 												defaultValue={place.instagram}
 											/>
 										</Form.Group>
-
-										<Form.Group className="mb-3">
-											<Form.Label>Is Approved</Form.Label>
-											<Form.Select {...register('isApproved', { required: true })} defaultValue={place.isApproved.toString()}>
-												<option value="false">false</option>
-												<option value="true">true</option>
-											</Form.Select>
-											{errors.offerings && <span>An isApproved value is required.</span>}
-										</Form.Group>
-
+										
+										<Form.Group className="mb-3" controlId="completed">
+											<Form.Label>{place.isApproved ? 'Check to remove place form map' : 'Check to approve place'}</Form.Label>
+											<Form.Check
+												type="switch"
+												defaultChecked={place.isApproved}
+												{...register('isApproved')}
+											/>
+										</Form.Group>										
+									
 										<Button 
 											type="submit"
 											variant="dark"
