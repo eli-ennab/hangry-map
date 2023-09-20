@@ -1,9 +1,8 @@
-import {Link} from 'react-router-dom'
-import {createColumnHelper} from '@tanstack/react-table'
-import {Place} from '../types/Places.types.ts'
+import { Link } from 'react-router-dom'
+import { createColumnHelper } from '@tanstack/react-table'
+import { Place } from '../types/Places.types.ts'
 
 const columnPlaceHelper = createColumnHelper<Place>()
-
 
 export const placesColumns = [
 	columnPlaceHelper.group({
