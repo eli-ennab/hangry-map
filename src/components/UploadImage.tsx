@@ -6,10 +6,10 @@ import {Place} from '../types/Places.types.ts'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Alert from 'react-bootstrap/Alert'
 interface Props {
-	placeInfo: Place | null
+	place: Place | null
 }
 
-const UploadImage: React.FC<Props> = ({placeInfo}) => {
+const UploadImage: React.FC<Props> = ({place}) => {
 	
 	const uploadImg = useUploadImg()
 	
@@ -37,27 +37,32 @@ const UploadImage: React.FC<Props> = ({placeInfo}) => {
 		"drag-reject": isDragReject,
 	})
 	
-	if(!uploadImg) return
+	if( !uploadImg) return
+	// if( uploadImg.isSuccess && place) {
+	// 	// updateDb().then(() => {
+	// 	// 	console.log('completed')
+	// 	// })
+	// }
 	
 	return (
-			<>
-				{placeInfo && <h2>{placeInfo.name}</h2>}
-				{uploadImg && uploadImg.isError && <Alert variant="danger">❌ {uploadImg.error}</Alert>}
-				{uploadImg && uploadImg.isSuccess && <Alert variant="success">✅ Upload complete!</Alert>}
-				{uploadImg && uploadImg.progress !== null && (
-						<ProgressBar animated label={`${uploadImg.progress}%`} now={uploadImg.progress} variant="success"
-						/>)}
-				<div {...getRootProps()} id="dropzone-wrapper" className={dropzoneWrapperClasses}>
-					<input {...getInputProps()} />
-					<div className="indicator">
-						{isDragActive
-								? isDragAccept
-										? <p>Yeah! Drop that file...</p>
-										: <p>Nope, either to many images or wrong format</p>
-										: <p>Drag Image here...</p>}
-					</div>
-				</div>
-			</>
+		<>
+			{place && <h2>{place.name} {place._id}</h2>}
+			{uploadImg.isError && <Alert variant="danger">❌ {uploadImg.error}</Alert>}
+			{uploadImg.isSuccess && <Alert variant="success">✅ Upload complete!</Alert>}
+			{uploadImg.progress !== null && (
+				<ProgressBar animated label={`${uploadImg.progress}%`} now={uploadImg.progress} variant="success"
+				/>)}
+			<div {...getRootProps()} id="dropzone-wrapper" className={dropzoneWrapperClasses}>
+				<input {...getInputProps()} />
+				<div className="indicator">
+					{isDragActive
+						? isDragAccept
+							? <p>Yeah! Drop that file...</p>
+							: <p>Nope, either to many images or wrong format</p>
+							: <p>Drag Image here, or click to open upload</p>}
+			</div>
+			</div>
+		</>
 	)
 }
 

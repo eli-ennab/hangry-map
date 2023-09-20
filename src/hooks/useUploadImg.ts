@@ -13,7 +13,13 @@ const useUploadImg = () => {
     const [isError, setIsError] = useState<boolean | null>(null)
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
     const [isUploading, setIsUploading] = useState<boolean | null>(null)
+	
+	const [url, setUrl] = useState<string | null>(null)
+	const [imgRef, setImgRef] = useState<string | null>(null)
+	
     const upload = async (image: File) => {
+		setImgRef(null)
+		setUrl(null)
         setError(null)
         setIsError(null)
         setIsSuccess(null)
@@ -30,7 +36,6 @@ const useUploadImg = () => {
             })
             await uploadTask.then()
             const url = await getDownloadURL(storageRef)
-            setUrl(url)
             const docRef = doc(imgCol)
       
             await setDoc(docRef, {
@@ -43,9 +48,8 @@ const useUploadImg = () => {
                 uid: currentUser?.uid,
                 url: url
             })
-            
-            //  TODO add url to the place in places collection in firestore
-            
+			setImgRef(docRef.id)
+			setUrl(url)
             setIsSuccess(true)
             setIsUploading(false)
             setProgress(null)
@@ -71,7 +75,9 @@ const useUploadImg = () => {
         error,
         isError,
         isSuccess,
-        isUploading
+        isUploading,
+		url, 
+		imgRef
     }
 }
     
