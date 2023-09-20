@@ -8,6 +8,10 @@ import {
 import { useMemo, useState } from "react"
 import AutoComplete from "../components/AutoComplete"
 import useGetPlacesApproved from "../hooks/useGetPlacesApproved"
+import PlaceDetailsOffCanvas from "../components/PlaceDetailsOffCanvas"
+import { Place } from "../types/Places.types"
+import { Button } from "react-bootstrap"
+import PlacesOffCanvas from "../components/PlacesOffCanvas"
 
 // css for map to cover screen
 const containerStyle = {
@@ -21,6 +25,10 @@ export type LatLngLiteral = {
 }
 
 const HomePage = () => {
+
+	const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
+
 	const { data: places, loading } = useGetPlacesApproved()
 
 	// states
@@ -77,47 +85,58 @@ const HomePage = () => {
 	const mapOptions = {
 		zoom: zoom,
 		center: userPos ?? mapCenter,
+		mapTypeControl: false
 	}
 
 	console.log(places)
 
 	return (
 		<>
-			{/* input field with autocomplete functionallity */}
-			{isLoaded && (
-				<AutoComplete
-					setZoom={setZoom}
-					setUserPos={setUserPos}
-					setMapCenter={setMapCenter}
-					setMarker={setMarker}
-				/>
-			)}
-
-			<hr></hr>
-
-			{/* get user location */}
-			<button onClick={getLocation}>Get Location</button>
-			{userPos && (
-				<span>
-					User location:
-					{userPos.lat} {userPos.lng}
-				</span>
-			)}
-
-			<hr></hr>
-
-			{/* main map view */}
 			<GoogleMap options={mapOptions} mapContainerStyle={containerStyle}>
 				{places && places.map(place => (
 					<Marker
 						key={place._id}
 						position={{ lat: Number(place.lat), lng: Number(place.lng) }}
-					//title={place.name}
-					// onClick?
+						onClick={() => setSelectedPlace(place)}
 					/>
 				))}
 				<MarkerF position={marker} />
 			</GoogleMap>
+
+			<div className="overlay-container">
+				{isLoaded && (
+					<AutoComplete
+						setZoom={setZoom}
+						setUserPos={setUserPos}
+						setMapCenter={setMapCenter}
+						setMarker={setMarker}
+					/>
+				)}
+
+				<hr />
+
+				<Button onClick={getLocation}>Get Location</Button>
+				{userPos && (
+					<span>
+						User location:
+						{userPos.lat} {userPos.lng}
+					</span>
+				)}
+
+				<hr />
+				<Button onClick={() => setShowPlacesCanvas(true)}>All places in your area</Button>
+
+				<PlaceDetailsOffCanvas
+					selectedPlace={selectedPlace}
+					onHide={() => setSelectedPlace(null)}
+				/>
+
+				<PlacesOffCanvas
+					places={places}
+					show={showPlacesCanvas}
+					onHide={() => setShowPlacesCanvas(false)}
+				/>
+			</div>
 		</>
 	)
 }

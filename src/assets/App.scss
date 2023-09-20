@@ -1,16 +1,35 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'config';
-@import 'dropZone';
+@import "bootstrap/scss/bootstrap";
+@import "config";
+@import "dropZone";
 
 body {
-    background-color: white;
-	font-family: 'Karla', sans-serif;
+	background-color: white;
+	font-family: "Karla", sans-serif;
 }
 
 .navigation {
+	background-color: black;
 	text-transform: uppercase;
+}
+
+.table-tabs {
+	background-color: rgb(148, 148, 148);
+	border: none;
+
+	.nav-link {
+		color: white;
+	}
+
+	.nav-link.active {
+		color: black;
+	}
 }
 
 .admin {
 	color: gold;
+}
+
+.overlay-container {
+	position: absolute;
+	top: 6vh;
 }
