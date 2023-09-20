@@ -2,14 +2,13 @@ import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 import classNames from 'classnames'
 import useUploadImg from '../hooks/useUploadImg.ts'
-import {Place} from '../types/Places.types.ts'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Alert from 'react-bootstrap/Alert'
 interface Props {
-	place: Place | null
+	update: (url: string|null, ref: string|null) => void
 }
 
-const UploadImage: React.FC<Props> = ({place}) => {
+const UploadImage: React.FC<Props> = ({update}) => {
 	
 	const uploadImg = useUploadImg()
 	
@@ -18,6 +17,7 @@ const UploadImage: React.FC<Props> = ({place}) => {
 			return
 		}
 		await uploadImg.upload(acceptImg[0])
+		update(uploadImg.url, uploadImg.imgRef)
 	}, [uploadImg])
 	
 	const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
@@ -38,15 +38,9 @@ const UploadImage: React.FC<Props> = ({place}) => {
 	})
 	
 	if( !uploadImg) return
-	// if( uploadImg.isSuccess && place) {
-	// 	// updateDb().then(() => {
-	// 	// 	console.log('completed')
-	// 	// })
-	// }
-	
+		
 	return (
 		<>
-			{place && <h2>{place.name} {place._id}</h2>}
 			{uploadImg.isError && <Alert variant="danger">❌ {uploadImg.error}</Alert>}
 			{uploadImg.isSuccess && <Alert variant="success">✅ Upload complete!</Alert>}
 			{uploadImg.progress !== null && (
