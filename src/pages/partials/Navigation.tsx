@@ -9,6 +9,8 @@ const Navigation = () => {
 	const {
 		currentUser,
 	} = useAuth()
+	const userId = currentUser?.uid || 'no id'
+	const {data: user} = useGetUser(userId)
 	
 	return (
 		<Navbar bg="dark" variant="dark" expand="md">
@@ -18,9 +20,9 @@ const Navigation = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto">
-						{currentUser ? (
+						{currentUser || user?.admin ? (
 							<> 
-								<Nav.Link as={NavLink} to="/user/dashboard">Dashboard (admin only)</Nav.Link>
+								{user?.admin ? <Nav.Link as={NavLink} to="/user/dashboard"><span className="admin">Dashboard</span></Nav.Link> : null}
 								<Nav.Link as={NavLink} to="/user/update-profile">Update Profile</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/create-places">Create Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>
