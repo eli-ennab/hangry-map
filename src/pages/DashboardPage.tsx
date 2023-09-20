@@ -11,6 +11,7 @@ import {Place} from '../types/Places.types.ts'
 import useGetUsers from '../hooks/useGetUsers.ts'
 import {User} from '../types/User.types.ts'
 import useGetUser from "../hooks/useGetUser.ts"
+import { Link } from 'react-router-dom'
 
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
@@ -55,11 +56,6 @@ const  {data: users} = useGetUsers()
 			columns: [
 				columnPlaceHelper.accessor('name', {
 					header: 'Name',
-					// cell: props => (
-					// 	<Link to={`/authors/${props.row.original.id}`}>
-					// 		{props.getValue()}
-					// 	</Link>
-					// )
 				}),
 				columnPlaceHelper.accessor('address', {
 					header: 'Address',
@@ -71,7 +67,12 @@ const  {data: users} = useGetUsers()
 					header: 'Category',
 				}),
 				columnPlaceHelper.accessor('_id', {
-					header: 'ID',
+					header: '',
+					cell: props => (
+						<Link to={`/places/${props.row.original._id}`}>
+							Edit place
+						</Link>
+					)
 				}),
 			],
 		}),
