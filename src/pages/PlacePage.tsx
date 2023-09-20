@@ -2,9 +2,9 @@ import { useParams } from 'react-router-dom'
 import useGetPlace from '../hooks/useGetPlace'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { db, placeCol } from '../services/firebase'
+import {db, imgCol, placeCol} from '../services/firebase'
 import { useForm } from 'react-hook-form'
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import {deleteDoc, doc, serverTimestamp, updateDoc} from 'firebase/firestore'
 import { Place } from '../types/Places.types'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
@@ -14,10 +14,12 @@ import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import ConfirmationModal from '../components/ConfimationModal'
+import UploadImage from '../components/UploadImage.tsx'
 
 const PlacePage = () => {
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
 	const [message, setMessage] = useState('')
+	const [error, setError] = useState<string | null>(null)
 	const navigate = useNavigate()
 	const { id } = useParams()
 	const { data: place } = useGetPlace(id!)
@@ -50,17 +52,46 @@ const PlacePage = () => {
 		})
 	}
 	
+	const onUpdateDb = async (url: string|null, ref: string|null) => {
+		if (!place || !url || !ref ) return
+		const placeDocRef = doc(placeCol, place._id)
+		const imgDocRef = doc(imgCol, ref)
+		
+		try {
+			setError(null)
+			await updateDoc(placeDocRef, {
+				photoUrl: url,
+				updated_at: serverTimestamp()
+			})
+			
+			await updateDoc(imgDocRef, {
+				place_id: place._id,
+				updated_at: serverTimestamp()
+			})
+		} catch (err) {
+			console.log("Something went wrong with the upload", err)
+			if (err instanceof Error) {
+				setError(err.message)
+			} else {
+				setError("Something unexpected happened, try again... ")
+			}
+		}	
+
+	}
+	
+	
 	return (
 		<>
 			{place && 
 				<Container className="py-3">
 					<Row>
-						<Col md={{ span: 6, offset: 3 }}>
+						<Col md={{ span: 8, offset: 2 }}>
 							<Card>
 								<Card.Body>
 									<Card.Title className="mb-3">Update Place</Card.Title>
 
 									{message && <Alert variant="dark">{message}</Alert>}
+									{error && <Alert variant="dark-danger">{error}</Alert>}
 
 									<Form onSubmit={handleSubmit(onSubmit)}>
 										<Form.Group className="mb-3">
@@ -189,7 +220,9 @@ const PlacePage = () => {
 												defaultChecked={place.isApproved}
 												{...register('isApproved')}
 											/>
-										</Form.Group>										
+										</Form.Group>
+
+										<UploadImage update={onUpdateDb} />
 									
 										<Button 
 											type="submit"
