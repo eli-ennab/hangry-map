@@ -8,6 +8,8 @@ import {
 import { useMemo, useState } from "react"
 import AutoComplete from "../components/AutoComplete"
 import useGetPlacesApproved from "../hooks/useGetPlacesApproved"
+import PlaceDetailsOffCanvas from "../components/PlaceDetailsOffCanvas"
+import { Place } from "../types/Places.types"
 
 // css for map to cover screen
 const containerStyle = {
@@ -21,6 +23,9 @@ export type LatLngLiteral = {
 }
 
 const HomePage = () => {
+
+	const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+
 	const { data: places, loading } = useGetPlacesApproved()
 
 	// states
@@ -112,12 +117,16 @@ const HomePage = () => {
 					<Marker
 						key={place._id}
 						position={{ lat: Number(place.lat), lng: Number(place.lng) }}
-					//title={place.name}
-					// onClick?
+						//title={place.name}
+						onClick={() => setSelectedPlace(place)}
 					/>
 				))}
 				<MarkerF position={marker} />
 			</GoogleMap>
+			<PlaceDetailsOffCanvas
+				selectedPlace={selectedPlace}
+				onHide={() => setSelectedPlace(null)}
+			/>
 		</>
 	)
 }
