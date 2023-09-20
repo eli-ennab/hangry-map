@@ -10,6 +10,7 @@ export type SignUpCredentials = {
 	password: string
 	passwordConfirm: string
 	admin: boolean
+	username: string
 }
 
 export type ForgotPasswordFormData = {
