@@ -10,4 +10,5 @@ export type Image = {
 	type: string
 	uid?: string | null
 	url: string
+	placeId?: string
 }
