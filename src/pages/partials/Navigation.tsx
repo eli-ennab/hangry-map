@@ -13,7 +13,7 @@ const Navigation = () => {
 	const {data: user} = useGetUser(userId)
 	
 	return (
-		<Navbar className="navigation" bg="dark" variant="dark" expand="md">
+		<Navbar className="navigation" variant="dark" expand="md">
 			<Container>
 				<Navbar.Brand as={Link} to="/">HangryMap</Navbar.Brand>
 
