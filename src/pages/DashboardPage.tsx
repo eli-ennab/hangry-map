@@ -8,7 +8,8 @@ import useGetUsers from '../hooks/useGetUsers.ts'
 import { Place } from '../types/Places.types.ts'
 import { User } from '../types/User.types.ts'
 import Image from 'react-bootstrap/Image'
-
+import UploadImage from '../components/UploadImage.tsx'
+import useGetPlace from '../hooks/useGetPlace.ts'
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
 	const {data: user} = useGetUser(currentUser!.uid)
@@ -72,14 +73,73 @@ const DashboardPage = () => {
 			],
 		}),
 	]
-
-	return user?.admin === true && places && users ? (
-		<>
+	return currentUser && places && users ? (
+			<>
 			<PlacesTable columns={columns} data={places} />
 			<PlacesTable columns={userColumns} data={users} />
-		</>
 
-	) : <p>You must be an Admin to access the Dashboard.</p>
+			</>
+		
+		// <Container>
+		// 	<h2>Users</h2>
+		// 	<Table responsive bordered hover>
+		// 		<thead>
+		// 			<th>Profile image</th>
+		// 			<th>User</th>
+		// 			<th>Id</th>
+		// 			<th>Admin status</th>
+		// 		</thead>
+		// 		<tbody>
+		// 			{exampleUsers.map(user => (
+		// 				<tr key={user.id}>
+		// 					<td>
+		// 						<Image
+		// 							src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+		// 							height={50}
+		// 							width={50}
+		// 							fluid
+		// 						/>
+		// 					</td>
+		// 					<td>{user.email}</td>
+		// 					<td>{user.id}</td>
+		// 					<td>
+		// 						<Button>
+		// 							Change status
+		// 						</Button>
+		// 					</td>
+		// 				</tr>
+		// 			))}
+		// 		</tbody>
+		// 	</Table>
+		//
+		// 	<h2>Admin</h2>
+		// 	<Table responsive bordered hover width={100}>
+		// 		<thead>
+		// 			<th>Profile Image</th>
+		// 			<th>Admin</th>
+		// 			<th>Id</th>
+		// 		</thead>
+		// 		<tbody>
+		// 			{exampleAdmins.map(user => (
+		// 				<tr key={user.id}>
+		// 					<td>
+		// 						<Image
+		// 							src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+		// 							height={50}
+		// 							width={50}
+		// 							fluid
+		// 						/>
+		// 					</td>
+		// 					<td>{user.email}</td>
+		// 					<td>{user.id}</td>
+		// 				</tr>
+		// 			))}
+		// 		</tbody>
+		// 	</Table>
+		//
+		// 	<PlacesList onApprove={handleApprove} />
+		// </Container>
+	) : null
 }
 
 export default DashboardPage
