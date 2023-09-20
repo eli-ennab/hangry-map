@@ -2,10 +2,12 @@ import {
 	GoogleMap,
 	useJsApiLoader,
 	MarkerF,
-	Libraries
+	Libraries,
+	Marker
 } from "@react-google-maps/api"
 import { useMemo, useState } from "react"
 import AutoComplete from "../components/AutoComplete"
+import useGetPlacesApproved from "../hooks/useGetPlacesApproved"
 
 // css for map to cover screen
 const containerStyle = {
@@ -19,6 +21,8 @@ export type LatLngLiteral = {
 }
 
 const HomePage = () => {
+	const { data: places, loading } = useGetPlacesApproved()
+
 	// states
 	const [userPos, setUserPos] = useState<google.maps.LatLngLiteral>({
 		// malmö, default position
@@ -75,6 +79,8 @@ const HomePage = () => {
 		center: userPos ?? mapCenter,
 	}
 
+	console.log(places)
+
 	return (
 		<>
 			{/* input field with autocomplete functionallity */}
@@ -102,6 +108,14 @@ const HomePage = () => {
 
 			{/* main map view */}
 			<GoogleMap options={mapOptions} mapContainerStyle={containerStyle}>
+				{places && places.map(place => (
+					<Marker
+						key={place._id}
+						position={{ lat: Number(place.lat), lng: Number(place.lng) }}
+					//title={place.name}
+					// onClick?
+					/>
+				))}
 				<MarkerF position={marker} />
 			</GoogleMap>
 		</>
