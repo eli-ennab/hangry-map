@@ -9,7 +9,6 @@ import LogoutPage from './pages/LogoutPage'
 import PlacePage from './pages/PlacePage'
 import RequireAuth from './components/RequireAuth'
 import SignupPage from './pages/SignupPage'
-import TipsPage from './pages/TipsPage'
 import UpdateProfilePage from './pages/UpdateProfilePage'
 
 import './assets/App.scss'
@@ -28,7 +27,6 @@ const App = () => {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/logout" element={<LogoutPage />} />
 				<Route path="/signup" element={<SignupPage />} />
-				<Route path="/tips" element={<TipsPage />} />
 				<Route path="/forgot-password" element={<ForgotPasswordPage />} />
 				<Route path="*" element={<NotFound />} />
 
