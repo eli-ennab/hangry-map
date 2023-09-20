@@ -1,0 +1,12 @@
+.table-tabs {
+	background-color: rgb(148, 148, 148);
+	border: none;
+
+	.nav-link {
+		color: white;
+	}
+
+	.nav-link.active {
+		color: black;
+	}
+}
