@@ -6,6 +6,8 @@ import useGetUsers from '../hooks/useGetUsers.ts'
 import { placesColumns } from '../tableSchema/Places.tsx'
 import { userColumns } from '../tableSchema/Users.tsx'
 import { adminColumns } from '../tableSchema/Admins.tsx'
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
@@ -15,22 +17,31 @@ const DashboardPage = () => {
 
 	return currentUser && places && users && admins ? (
 			<>
-				<PlacesTable 
-					columns={placesColumns} 	
-					data={places} 
-				/>
-
-				<PlacesTable 
-					columns={userColumns} 
-					data={users} 
-				/>
-
-				<PlacesTable 
-					columns={adminColumns} 
-					data={admins} 
-				/>
+				<Tabs
+					defaultActiveKey="places"
+					className="table-tabs mb-3"
+					fill
+				>
+					<Tab eventKey="places" title="Places">
+						<PlacesTable 
+							columns={placesColumns} 	
+							data={places} 
+						/>
+					</Tab>
+					<Tab eventKey="users" title="Users">
+						<PlacesTable 
+							columns={userColumns} 
+							data={users} 
+						/>
+					</Tab>
+					<Tab eventKey="admins" title="Admins">
+						<PlacesTable 
+							columns={adminColumns} 
+							data={admins} 
+						/>
+					</Tab>
+				</Tabs>
 			</>
-		
 	) : null
 }
 
