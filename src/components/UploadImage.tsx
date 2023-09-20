@@ -17,7 +17,7 @@ const UploadImage: React.FC<Props> = ({update}) => {
 			return
 		}
 		await uploadImg.upload(acceptImg[0])
-		update(uploadImg.url, uploadImg.imgRef)
+		await update(uploadImg.url, uploadImg.imgRef)
 	}, [uploadImg])
 	
 	const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
