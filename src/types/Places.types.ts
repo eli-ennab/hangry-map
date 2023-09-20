@@ -16,7 +16,7 @@ export type Place = {
 	facebook?: string
 	instagram?: string
 	lat?: number 
-	long?: number 
+	lng?: number 
 	photoUrl: string
 	updated_at?: Timestamp
   }
