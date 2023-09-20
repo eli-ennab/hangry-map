@@ -1,50 +1,20 @@
+import { createColumnHelper } from '@tanstack/react-table'
 import useAuth from "../hooks/useAuth"
-import { Table } from 'react-bootstrap'
-import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container'
-import Image from 'react-bootstrap/Image'
-import PlacesList from "../components/PlaceList"
+import { Link } from 'react-router-dom'
 import PlacesTable from '../components/PlacesTable.tsx'
 import useGetPlaces from '../hooks/useGetPlaces.ts'
-import {createColumnHelper} from '@tanstack/react-table'
-import {Place} from '../types/Places.types.ts'
+import useGetUser from "../hooks/useGetUser.ts"
 import useGetUsers from '../hooks/useGetUsers.ts'
-import {User} from '../types/User.types.ts'
+import { Place } from '../types/Places.types.ts'
+import { User } from '../types/User.types.ts'
+import Image from 'react-bootstrap/Image'
 import UploadImage from '../components/UploadImage.tsx'
 import useGetPlace from '../hooks/useGetPlace.ts'
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
-	
-
-	const exampleUsers = [
-		{
-			id: 1,
-			email: 'eli@gmail.com',
-		},
-		{
-			id: 2,
-			email: 'harald@gmail.com',
-		}
-	]
-
-	const exampleAdmins = [
-		{
-			id: 1,
-			email: 'jonas@gmail.com',
-		},
-		{
-			id: 2,
-			email: 'johan@gmail.com',
-		}
-	]
-
-	const handleApprove = (placeId: string) => {
-		// approval logic to be 
-		console.log(`Approved place with ID: ${placeId}`)
-	}
-	
-const  {data: places} = useGetPlaces()
-const  {data: users} = useGetUsers()
+	const {data: user} = useGetUser(currentUser!.uid)
+	const {data: places} = useGetPlaces()
+	const {data: users} = useGetUsers()
 	
 	const columnPlaceHelper = createColumnHelper<Place>()
 	const columnUsersHelper = createColumnHelper<User>()
@@ -55,11 +25,6 @@ const  {data: users} = useGetUsers()
 			columns: [
 				columnPlaceHelper.accessor('name', {
 					header: 'Name',
-					// cell: props => (
-					// 	<Link to={`/authors/${props.row.original.id}`}>
-					// 		{props.getValue()}
-					// 	</Link>
-					// )
 				}),
 				columnPlaceHelper.accessor('address', {
 					header: 'Address',
@@ -69,6 +34,17 @@ const  {data: users} = useGetUsers()
 				}),
 				columnPlaceHelper.accessor('category', {
 					header: 'Category',
+				}),
+				columnPlaceHelper.accessor('isApproved', {
+					header: 'Is Approved',
+				}),
+				columnPlaceHelper.accessor('_id', {
+					header: '',
+					cell: props => (
+						<Link to={`/places/${props.row.original._id}`}>
+							Edit place
+						</Link>
+					)
 				}),
 			],
 		}),
@@ -97,14 +73,11 @@ const  {data: users} = useGetUsers()
 			],
 		}),
 	]
-	
-	const {data: place} = useGetPlace('dJxxvzgSJcEnbqBJsiMk')
 	return currentUser && places && users ? (
 			<>
 			<PlacesTable columns={columns} data={places} />
 			<PlacesTable columns={userColumns} data={users} />
 
-				<UploadImage placeInfo={place} />
 			</>
 		
 		// <Container>

@@ -4,7 +4,6 @@ import useAuth from '../hooks/useAuth'
 import {useForm, SubmitHandler} from 'react-hook-form'
 import {SignUpCredentials} from '../types/User.types.ts'
 import {FirebaseError} from 'firebase/app'
-// style 
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'

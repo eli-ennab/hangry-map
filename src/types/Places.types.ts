@@ -1,5 +1,6 @@
 export type Place = {
-	id?: string 
+	_id: string 
+	isApproved: boolean
 	name: string
 	address: string
 	city: string
@@ -14,19 +15,19 @@ export type Place = {
 	instagram?: string
 	latitude?: number 
 	longitude?: number 
-  }
+}
   
-  export enum PlaceCategory {
+export enum PlaceCategory {
 	Cafe = "Café",
-	Restaurant = "Restaurang",
-	FastFood = "Snabbmat",
-	KioskGrill = "Kiosk/grill",
+	Restaurant = "Restaurant",
+	FastFood = "Fastfood",
+	KioskGrill = "Kiosk/Grill",
 	FoodTruck = "Foodtruck"
-  }
+}
   
-  export enum PlaceOfferings {
+export enum PlaceOfferings {
 	Lunch = "Lunch",
 	AfterWork = "After Work",
-	Dinner = "Middag/Á la carte"
-  }
+	Dinner = "Dinner/Á la carte"
+}
   
