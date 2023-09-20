@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 export type Place = {
 	_id: string 
 	isApproved: boolean
@@ -15,7 +17,9 @@ export type Place = {
 	instagram?: string
 	latitude?: number 
 	longitude?: number 
-}
+	photoUrl: string
+	updated_at?: Timestamp
+  }
   
 export enum PlaceCategory {
 	Cafe = "Café",
