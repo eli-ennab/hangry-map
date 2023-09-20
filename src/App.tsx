@@ -3,15 +3,16 @@ import Navigation from './pages/partials/Navigation'
 import CreatePlacesPage from './pages/CreatePlacesPage'
 import DashboardPage from './pages/DashboardPage'
 import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import SignupPage from './pages/SignupPage'
-import LogoutPage from './pages/LogoutPage'
 import NotFound from './pages/NotFound'
-import TipsPage from './pages/TipsPage'
+import LoginPage from './pages/LoginPage'
+import LogoutPage from './pages/LogoutPage'
+import PlacePage from './pages/PlacePage'
 import RequireAuth from './components/RequireAuth'
+import SignupPage from './pages/SignupPage'
+import TipsPage from './pages/TipsPage'
+import UpdateProfilePage from './pages/UpdateProfilePage'
 
 import './assets/App.scss'
-import UpdateProfilePage from './pages/UpdateProfilePage'
 
 const App = () => {
 	return (
@@ -46,6 +47,12 @@ const App = () => {
 				<Route path="/user/dashboard" element={
 					<RequireAuth>
 						<DashboardPage />
+					</RequireAuth>
+				}/> 
+
+				<Route path="/places/:id" element={
+					<RequireAuth>
+						<PlacePage />
 					</RequireAuth>
 				}/> 
 			</Routes>
