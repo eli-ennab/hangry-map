@@ -15,6 +15,8 @@ import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import ConfirmationModal from '../components/ConfimationModal'
 import UploadImage from '../components/UploadImage.tsx'
+import useAuth from '../hooks/useAuth.tsx'
+import useGetUser from '../hooks/useGetUser.ts'
 
 const PlacePage = () => {
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
@@ -23,7 +25,13 @@ const PlacePage = () => {
 	const navigate = useNavigate()
 	const { id } = useParams()
 	const { data: place } = useGetPlace(id!)
-
+	const {currentUser} = useAuth()
+	if (!currentUser) {
+		throw new Error("Error.")
+	}
+	const {data: user} = useGetUser(currentUser?.uid)
+	
+	
 	if (!id) {
 		throw new Error("Error.")
 	}
@@ -56,17 +64,17 @@ const PlacePage = () => {
 		if (!place || !url || !ref ) return
 		const placeDocRef = doc(placeCol, place._id)
 		const imgDocRef = doc(imgCol, ref)
-		
 		try {
 			setError(null)
 			await updateDoc(placeDocRef, {
-				photoUrl: url,
-				updated_at: serverTimestamp()
+				photoUrl: user?.admin ? url : '',
+				updated_at: serverTimestamp(),
 			})
 			
 			await updateDoc(imgDocRef, {
 				place_id: place._id,
-				updated_at: serverTimestamp()
+				updated_at: serverTimestamp(),
+				isApproved: user?.admin ? true : false
 			})
 		} catch (err) {
 			console.log("Something went wrong with the upload", err)
