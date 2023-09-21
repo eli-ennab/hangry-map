@@ -6,9 +6,7 @@ export type Image = {
 	created_at: Timestamp
 	updated_at?: Timestamp
 	isApproved: boolean
-	size: number
-	type: string
-	uid?: string | null
+	uploadedBy?: string | null
 	url: string
-	placeId?: string
+	place?: string
 }

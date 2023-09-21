@@ -6,6 +6,7 @@ import {doc, serverTimestamp, setDoc} from 'firebase/firestore'
 import {imgCol, storage} from '../services/firebase'
 const useUploadImg = () => {
     const { currentUser } = useAuth()
+	
     
     const [progress, setProgress] = useState<number | null>(null)
     const [error, setError] = useState<string | null>(null)
@@ -43,16 +44,17 @@ const useUploadImg = () => {
                 name: image.name,
                 created_at: serverTimestamp(),
                 isApproved: false,
-                size: image.size,
-                type: image.type,
-                uid: currentUser?.uid,
+                uploadedBy: currentUser?.displayName,
                 url: url
             })
+			
 			setImgRef(docRef.id)
 			setUrl(url)
+			
             setIsSuccess(true)
             setIsUploading(false)
             setProgress(null)
+			
         } catch (err) {
             console.log("Something went wrong with the upload", err)
             setIsError(true)
