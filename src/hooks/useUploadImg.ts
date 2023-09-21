@@ -2,10 +2,16 @@ import useAuth from './useAuth.tsx'
 import {useState} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage'
-import {doc, serverTimestamp, setDoc} from 'firebase/firestore'
-import {imgCol, storage} from '../services/firebase'
+import {doc, serverTimestamp, setDoc, updateDoc} from 'firebase/firestore'
+import {imgCol, placeCol, storage} from '../services/firebase'
+import {Place} from '../types/Places.types.ts'
+import useGetUser from './useGetUser.ts'
 const useUploadImg = () => {
-    const { currentUser } = useAuth()
+    const {currentUser} = useAuth()
+    if (!currentUser) {
+        throw new Error("Error.")
+    }
+    const {data: user} = useGetUser(currentUser?.uid)
 	
     
     const [progress, setProgress] = useState<number | null>(null)
@@ -15,12 +21,8 @@ const useUploadImg = () => {
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
     const [isUploading, setIsUploading] = useState<boolean | null>(null)
 	
-	const [url, setUrl] = useState<string | null>(null)
-	const [imgRef, setImgRef] = useState<string | null>(null)
-	
-    const upload = async (image: File) => {
-		setImgRef(null)
-		setUrl(null)
+    
+    const upload = async (image: File, place: Place) => {
         setError(null)
         setIsError(null)
         setIsSuccess(null)
@@ -35,6 +37,7 @@ const useUploadImg = () => {
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 1000) / 10
                 )
             })
+            
             await uploadTask.then()
             const url = await getDownloadURL(storageRef)
             const docRef = doc(imgCol)
@@ -43,14 +46,18 @@ const useUploadImg = () => {
                 _id: docRef.id,
                 name: image.name,
                 created_at: serverTimestamp(),
-                isApproved: false,
+                isApproved: !!user?.admin,
                 uploadedBy: currentUser?.displayName,
+                place_id: place._id,
+                place: place.name,
                 url: url
             })
-			
-			setImgRef(docRef.id)
-			setUrl(url)
-			
+            
+            await updateDoc(doc(placeCol, place._id), {
+                photoUrl: user?.admin ? url : '',
+                updated_at: serverTimestamp(),
+            })
+            
             setIsSuccess(true)
             setIsUploading(false)
             setProgress(null)
@@ -77,9 +84,7 @@ const useUploadImg = () => {
         error,
         isError,
         isSuccess,
-        isUploading,
-		url, 
-		imgRef
+        isUploading
     }
 }
     

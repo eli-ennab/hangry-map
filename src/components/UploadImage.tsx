@@ -4,12 +4,13 @@ import classNames from 'classnames'
 import useUploadImg from '../hooks/useUploadImg.ts'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Alert from 'react-bootstrap/Alert'
+import {Place} from '../types/Places.types.ts'
 
 interface Props {
-	update: (url: string | null, ref: string | null) => void
+	place: Place
 }
 
-const UploadImage: React.FC<Props> = ({update, }) => {
+const UploadImage: React.FC<Props> = ({place }) => {
 	
 	const uploadImg = useUploadImg()
 	
@@ -17,12 +18,8 @@ const UploadImage: React.FC<Props> = ({update, }) => {
 		if (!acceptImg.length || !uploadImg) {
 			return
 		}
-			await uploadImg.upload(acceptImg[0])
-			
-			update(uploadImg.url, uploadImg.imgRef)
-		
+			await uploadImg.upload(acceptImg[0], place)		
 	}, [uploadImg])
-	
 	
 	const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
 		accept: {

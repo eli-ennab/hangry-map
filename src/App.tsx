@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
-import PlacePage from './pages/PlacePage'
+import EditPlacePage from './pages/EditPlacePage.tsx'
 import RequireAuth from './components/RequireAuth'
 import SignupPage from './pages/SignupPage'
 import UpdateProfilePage from './pages/UpdateProfilePage'
@@ -51,7 +51,7 @@ const App = () => {
 
 				<Route path="/places/:id" element={
 					<RequireAuth>
-						<PlacePage />
+						<EditPlacePage />
 					</RequireAuth>
 				} />
 			</Routes>
