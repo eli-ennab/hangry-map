@@ -147,7 +147,7 @@ const CreatePlacesPage = () => {
 								<Form.Group className="mb-3">
 									<Form.Label>Phone</Form.Label>
 									<Form.Control
-										type="number"
+										type="tel"
 										placeholder="Enter phone number (optional)"
 										{...register('phone')}
 									/>
