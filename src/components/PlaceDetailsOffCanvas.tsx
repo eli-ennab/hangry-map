@@ -1,5 +1,6 @@
 import { Offcanvas } from 'react-bootstrap'
 import { Place } from "../types/Places.types"
+import UploadImage from './UploadImage.tsx'
 
 type PlaceDetailsOffCanvasProps = {
 	selectedPlace: Place | null
@@ -7,6 +8,8 @@ type PlaceDetailsOffCanvasProps = {
 }
 
 const PlaceDetailsOffCanvas: React.FC<PlaceDetailsOffCanvasProps> = ({ selectedPlace, onHide }) => {
+	if(!selectedPlace) return
+	const text = 'Please contribute with a picture of the place'
 	return (
 		<Offcanvas show={selectedPlace !== null} onHide={onHide} placement="end">
 			<Offcanvas.Header closeButton>
@@ -39,6 +42,7 @@ const PlaceDetailsOffCanvas: React.FC<PlaceDetailsOffCanvasProps> = ({ selectedP
 						)}
 					</>
 				)}
+				<UploadImage place={selectedPlace} text={text} />
 			</Offcanvas.Body>
 		</Offcanvas>
 	)

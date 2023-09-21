@@ -22,6 +22,7 @@ const EditPlacePage = () => {
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
 	const [message, setMessage] = useState('')
 	const [error, setError] = useState<string | null>(null)
+	const text = 'Drag Image here, or click to open upload<'
 	const navigate = useNavigate()
 	const {id} = useParams()
 	const {data: place} = useGetPlace(id!)
@@ -210,7 +211,7 @@ const EditPlacePage = () => {
                                         />
                                     </Form.Group>
 
-                                    <UploadImage place={place}/>
+                                    <UploadImage place={place} text={text}/>
 
                                     <Button
                                         type="submit"

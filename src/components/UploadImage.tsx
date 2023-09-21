@@ -8,9 +8,10 @@ import {Place} from '../types/Places.types.ts'
 
 interface Props {
 	place: Place
+	text: string
 }
 
-const UploadImage: React.FC<Props> = ({place }) => {
+const UploadImage: React.FC<Props> = ({place, text }) => {
 	
 	const uploadImg = useUploadImg()
 	
@@ -54,7 +55,7 @@ const UploadImage: React.FC<Props> = ({place }) => {
 						? isDragAccept
 							? <p>Yeah! Drop that file...</p>
 							: <p>Nope, either to many images or wrong format</p>
-						: <p>Drag Image here, or click to open upload</p>}
+						: <p>{text}</p>}
 				</div>
 			</div>
 		</>
