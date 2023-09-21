@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
@@ -40,7 +40,7 @@ const CreatePlacesPage = () => {
 				...data,
 				lat,
 				lng,
-				timestamp: new Date(),
+				created_at: serverTimestamp(),
 				isApproved: !!user?.admin
 			})
 		
@@ -57,7 +57,7 @@ const CreatePlacesPage = () => {
 	return (
 		<Container className="py-3">
 			<Row>
-				<Col md={{ span: 6, offset: 3 }}>
+				<Col md={{ span: 10, offset: 1 }}>
 					<Card>
 						<Card.Body>
 							<Card.Title className="mb-3">Add a New Place</Card.Title>
