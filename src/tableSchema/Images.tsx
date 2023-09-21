@@ -7,6 +7,7 @@ import {approveImage} from '../services/firebase.ts'
 
 
 
+
 const imagesColumnsHelper = createColumnHelper<TImages>()
 
 export const imagesColumns = [
@@ -38,7 +39,10 @@ export const imagesColumns = [
 			imagesColumnsHelper.accessor('isApproved', {
 				header: 'Is Approved',
 				cell: props => (
-					<Button onClick={() => approveImage(props.row.original._id, props.row.original.isApproved)} variant={props.getValue() === true ? 'outline-success' : 'outline-danger'}>{props.getValue() === true ? 'Approved' : 'Not Approved'}</Button>
+					<Button onClick={() => {
+						approveImage(props.row.original._id, props.row.original.isApproved, props.row.original.url, props.row.original.place_id)}} 
+									variant={props.getValue() === true ? 'outline-success' : 'outline-danger'}>
+						{props.getValue() === true ? 'Approved' : 'Not Approved'}</Button>
 				)
 			}),
 			imagesColumnsHelper.accessor('place', {

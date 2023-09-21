@@ -33,10 +33,13 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 	return collection(db, collectionName) as CollectionReference<T>
 }
 
-export const approveImage = async (docRef: string, isApproved: boolean) => {
-	await updateDoc(doc(imgCol, docRef), {
+export const approveImage = async (imgDocRef: string, isApproved: boolean, url: string, placeDocRef: string) => {
+	await updateDoc(doc(imgCol, imgDocRef), {
 		updated_at: serverTimestamp(),
 		isApproved: !isApproved
+	})
+	await updateDoc(doc(placeCol, placeDocRef), {
+			photoUrl: !isApproved ? url : ''
 	})
 }
 
