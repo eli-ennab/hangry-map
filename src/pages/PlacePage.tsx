@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import useGetPlace from '../hooks/useGetPlace'
-import { useState } from 'react'
+import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import {db, imgCol, placeCol} from '../services/firebase'
 import { useForm } from 'react-hook-form'
@@ -70,11 +70,10 @@ const PlacePage = () => {
 				photoUrl: user?.admin ? url : '',
 				updated_at: serverTimestamp(),
 			})
-			
 			await updateDoc(imgDocRef, {
-				place_id: place._id,
+				place: place.name,
 				updated_at: serverTimestamp(),
-				isApproved: user?.admin ? true : false
+				isApproved: !!user?.admin
 			})
 		} catch (err) {
 			console.log("Something went wrong with the upload", err)
@@ -83,8 +82,7 @@ const PlacePage = () => {
 			} else {
 				setError("Something unexpected happened, try again... ")
 			}
-		}	
-
+		}
 	}
 	
 	
