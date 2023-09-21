@@ -1,9 +1,11 @@
 .table-tabs {
-	background-color: rgb(148, 148, 148);
+	background-color: rgb(190, 190, 190);
 	border: none;
 
 	.nav-link {
 		color: white;
+		border: none;
+		border-radius: 0.1;
 	}
 
 	.nav-link.active {
