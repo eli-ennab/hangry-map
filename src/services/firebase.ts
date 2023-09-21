@@ -1,7 +1,14 @@
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 import { getStorage } from "firebase/storage"
-import { CollectionReference, collection, DocumentData, getFirestore } from "firebase/firestore"
+import {
+	CollectionReference,
+	collection,
+	DocumentData,
+	getFirestore,
+	updateDoc,
+	serverTimestamp, doc
+} from "firebase/firestore"
 import { User } from '../types/User.types'
 import {Place} from '../types/Places.types.ts'
 import {Image} from '../types/Image.types.ts'
@@ -24,6 +31,13 @@ export const storage = getStorage(app)
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
 	return collection(db, collectionName) as CollectionReference<T>
+}
+
+export const approveImage = async (docRef: string, isApproved: boolean) => {
+	await updateDoc(doc(imgCol, docRef), {
+		updated_at: serverTimestamp(),
+		isApproved: !isApproved
+	})
 }
 
 export const userCol = createCollection<User>('users')

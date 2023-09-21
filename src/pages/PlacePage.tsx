@@ -91,7 +91,7 @@ const PlacePage = () => {
 			{place && 
 				<Container className="py-3">
 					<Row>
-						<Col md={{ span: 8, offset: 2 }}>
+						<Col md={{ span: 10, offset: 1 }}>
 							<Card>
 								<Card.Body>
 									<Card.Title className="mb-3">Update Place</Card.Title>

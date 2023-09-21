@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { createColumnHelper } from '@tanstack/react-table'
 import {Image as TImages} from '../types/Image.types.ts'
 import Image from 'react-bootstrap/Image'
+import Button from 'react-bootstrap/Button'
+import {approveImage} from '../services/firebase.ts'
 
 
 
@@ -35,6 +37,9 @@ export const imagesColumns = [
 			}),
 			imagesColumnsHelper.accessor('isApproved', {
 				header: 'Is Approved',
+				cell: props => (
+					<Button onClick={() => approveImage(props.row.original._id, props.row.original.isApproved)} variant={props.getValue() === true ? 'outline-success' : 'outline-danger'}>{props.getValue() === true ? 'Approved' : 'Not Approved'}</Button>
+				)
 			}),
 			imagesColumnsHelper.accessor('place', {
 				header: 'Place',
