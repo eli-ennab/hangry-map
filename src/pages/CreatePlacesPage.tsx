@@ -1,9 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
-import { Libraries, useJsApiLoader } from '@react-google-maps/api'
 import { getGeocode, getLatLng } from 'use-places-autocomplete'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
@@ -14,13 +13,6 @@ import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 
 const CreatePlacesPage = () => {
-	const libraries: Libraries = useMemo(() => ["places"], [])
-
-	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
-		libraries,
-	})
-
 	const {
 		register,
 		handleSubmit,
@@ -31,11 +23,6 @@ const CreatePlacesPage = () => {
 	const [message, setMessage] = useState('')
 
 	const onSubmit = async (data: Place) => {
-		if (!isLoaded) {
-			setMessage('Please try again')
-			return
-		}
-		
 		try {
 			const fullAddress = `${data.address}, ${data.city}`
 			const results = await getGeocode({ address: fullAddress })
@@ -180,7 +167,9 @@ const CreatePlacesPage = () => {
 									/>
 								</Form.Group>
 
-								<Button type="submit">Submit Place</Button>
+								<Button type="submit">
+									Submit Place
+								</Button>
 							</Form>
 						</Card.Body>
 					</Card>
