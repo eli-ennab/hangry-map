@@ -12,9 +12,17 @@ import {Badge} from 'react-bootstrap'
 
 const DashboardPage = () => {
 	const { currentUser } = useAuth()
-	const {data: places} = useGetPlaces()
-	const {data: users} = useGetUsers()
-	const {data: admins} = useGetAdmins()
+	const { data: places } = useGetPlaces()
+	const { data: users } = useGetUsers()
+	const { data: admins } = useGetAdmins()
+
+	const assignAdmin = (userId: string) => {
+		console.log(`Assign as Admin clicked for user with ID: ${userId}`)
+
+		if (!users || !userId) {
+			return
+		}
+	}
 	
 	// const approvedPlaces = <Badge bg="success" text={'dark'}>{places?.filter(p => p.isApproved) .length}</Badge>
 	// const allPlaces = <Badge bg="danger" className={''} text={'dark'}>{places?.length}</Badge>
@@ -40,7 +48,7 @@ const DashboardPage = () => {
 					</Tab>
 					<Tab eventKey="users" title={!userCount || users.length === 0 ? 'Users' : <>Users {userCount}</>}>
 						<PlacesTable 
-							columns={userColumns} 
+							columns={userColumns(assignAdmin)} 
 							data={users} 
 						/>
 					</Tab>
