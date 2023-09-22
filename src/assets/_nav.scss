@@ -3,15 +3,12 @@
 	text-transform: uppercase;
 
 	.nav-link {
-		color: $white;
+		color: $super-light-blue;
+		font-weight: 300;
 	}
 
-	// .admin {
-	// 	color: $light-purple;
-	// }
-}
-
-.card-body {
-	background-color: $white;
-	border: 1px solid $light-purple;
+	a.nav-link.active {
+		color: $white;
+		font-weight: 800;
+	}
 }

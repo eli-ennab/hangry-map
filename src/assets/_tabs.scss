@@ -1,14 +1,14 @@
 .table-tabs {
-	background-color: rgb(190, 190, 190);
+	background-color: $super-light-blue;
 	border: none;
 
 	.nav-link {
-		color: white;
+		color: black;
 		border: none;
 		border-radius: 0.1;
 	}
 
 	.nav-link.active {
-		color: black;
+		font-weight: 600;
 	}
 }

@@ -27,7 +27,7 @@ const PlacesTable = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 	})
 	
     return (
-		<BTable bordered hover responsive>
+		<BTable bordered hover responsive className="m-3">
 			<thead>
 			{table.getHeaderGroups().map((headerGroup) => (
 				<tr key={headerGroup.id}>

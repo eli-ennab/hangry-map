@@ -28,7 +28,7 @@ const Navigation = () => {
 					<Nav className="ms-auto">
 						{currentUser || user?.admin ? (
 							<> 
-								{user?.admin ? <Nav.Link as={NavLink} to="/user/dashboard"><span className="admin">Dashboard</span></Nav.Link> : null}
+								{user?.admin ? <Nav.Link as={NavLink} to="/user/dashboard">Dashboard</Nav.Link> : null}
 								<Nav.Link as={NavLink} to="/user/update-profile">Update Profile</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/create-places">Create Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>
