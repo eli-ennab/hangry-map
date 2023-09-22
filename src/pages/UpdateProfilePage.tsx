@@ -114,7 +114,7 @@ const UpdateProfilePage = () => {
 	return (
 		<Container className="py-3 center-y">
 			<Row>
-				<Col md={{span: 8, offset: 2}}>
+				<Col md={{span: 10, offset: 1}}>
 					<Card>
 						<Card.Body>
 							<Card.Title className="mb-3">Update Your Profile</Card.Title>
