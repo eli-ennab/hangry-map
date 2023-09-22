@@ -29,7 +29,6 @@ const Navigation = () => {
 							</>
 						) : (
 							<>
-							<p>No user</p>
 								<Nav.Link as={NavLink} to="/places">Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/signup">Sign Up</Nav.Link>
 								<Nav.Link as={NavLink} to="/login">Log In</Nav.Link>
