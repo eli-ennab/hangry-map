@@ -1,10 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { User } from '../types/User.types.ts'
+import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 
 const columnUsersHelper = createColumnHelper<User>()
-	
-export const userColumns = [
+
+export const userColumns = (assignAdmin: (userId: string) => void) => [
 	columnUsersHelper.group({
 		header: 'Users',
 		columns: [
@@ -12,7 +13,7 @@ export const userColumns = [
 			columnUsersHelper.accessor('photoURL', {
 				header: 'IMG',
 				cell: props => (
-					<Image className={'w-25'} src={props.getValue()} />
+					<Image height={50} width={50} roundedCircle src={props.getValue()} />
 				)
 			}),
 			columnUsersHelper.accessor('name', {
@@ -23,6 +24,13 @@ export const userColumns = [
 			}),
 			columnUsersHelper.accessor('admin', {
 				header: 'Admin',
+				cell: (props) => (
+					<Button
+						onClick={() => assignAdmin(props.row.original._id)}
+					>
+						Assign as Admin
+					</Button>
+				)
 			}),
 		],
 	}),

@@ -12,7 +12,7 @@ export const adminColumns = [
 			columnUsersHelper.accessor('photoURL', {
 				header: 'IMG',
 				cell: props => (
-					<Image className={'w-25'} src={props.getValue()} />
+					<Image height={50} width={50} roundedCircle src={props.getValue()} />
 				)
 			}),
 			columnUsersHelper.accessor('name', {
