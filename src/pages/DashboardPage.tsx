@@ -9,32 +9,19 @@ import { adminColumns } from '../tableSchema/Admins.tsx'
 import Badge from 'react-bootstrap/Badge'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore"
-import { userCol } from "../services/firebase.ts"
 
 const DashboardPage = () => {
-	const { currentUser } = useAuth()
+	const { currentUser, onAssignAdmin } = useAuth()
 	const { data: places } = useGetPlaces()
 	const { data: users } = useGetUsers()
 	const { data: admins } = useGetAdmins()
 
-	const onAssignAdmin = async (id: string) => {
-		const userRef = doc(userCol, id)
-		await updateDoc(userRef, {
-			admin: true,
-			updated_at: serverTimestamp()
-		})
-	}
-	
-	const assignAdmin = (userId: string) => {
-		console.log(`Assign as Admin clicked for user with ID: ${userId}`)
-		
+	const assignAdmin = (userId: string) => {		
 		if (!users || !userId) {
 			return
 		}
 		
 		const user = users.filter(user => user._id === userId)
-		console.log(user[0].admin)
 
 		if (user[0]) {
 			user[0].admin === !user[0].admin
