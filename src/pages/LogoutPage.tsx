@@ -19,7 +19,7 @@ const LogoutPage = () => {
 	}, [logout, navigate])
 
 	return (
-		<Container className="">
+		<Container className="py-3">
 			<Row>
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
