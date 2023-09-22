@@ -26,7 +26,7 @@ export const userColumns = (assignAdmin: (userId: string) => void) => [
 				header: 'Admin',
 				cell: (props) => (
 					<Button
-					onClick={() => assignAdmin(props.row.original._id)}
+						onClick={() => assignAdmin(props.row.original._id)}
 					>
 						Assign as Admin
 					</Button>
