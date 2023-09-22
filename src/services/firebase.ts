@@ -7,7 +7,7 @@ import {
 	DocumentData,
 	getFirestore,
 	updateDoc,
-	serverTimestamp, doc
+	serverTimestamp, doc, getDoc
 } from "firebase/firestore"
 import { User } from '../types/User.types'
 import {Place} from '../types/Places.types.ts'
@@ -34,13 +34,28 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 }
 
 export const approveImage = async (imgDocRef: string, isApproved: boolean, url: string, placeDocRef: string) => {
+	console.log(isApproved)
 	await updateDoc(doc(imgCol, imgDocRef), {
 		updated_at: serverTimestamp(),
 		isApproved: !isApproved
 	})
-	await updateDoc(doc(placeCol, placeDocRef), {
-			photoUrl: !isApproved ? url : ''
-	})
+	
+	const getPlace = await  getDoc(doc(placeCol,placeDocRef))
+	const imgArr = getPlace.data()?.images
+	
+	if (!isApproved) {
+		const addPhoto = {photoUrl:  url}
+		imgArr?.push(addPhoto)
+		await updateDoc(doc(placeCol, placeDocRef), {
+				images: imgArr
+		})
+	}
+	if (isApproved) {
+		const newImgArrWithoutImg = imgArr?.filter(f => f.photoUrl !== url)
+		await updateDoc(doc(placeCol, placeDocRef), {
+			images: newImgArrWithoutImg
+		})
+	}
 }
 
 export const userCol = createCollection<User>('users')
