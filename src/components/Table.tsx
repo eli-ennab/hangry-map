@@ -13,7 +13,7 @@ interface Props<TData, TValue> {
 	data: TData[]
 }
 
-const PlacesTable = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
+const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 		
 	const [sorting, setSorting] = useState<SortingState>([])
 	
@@ -82,4 +82,4 @@ const PlacesTable = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
     ) 
 }
     
-export default PlacesTable
+export default Table

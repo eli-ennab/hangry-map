@@ -11,9 +11,6 @@ export const placesColumns = [
 			columnPlaceHelper.accessor('name', {
 				header: 'Name',
 			}),
-			columnPlaceHelper.accessor('address', {
-				header: 'Address',
-			}),
 			columnPlaceHelper.accessor('city', {
 				header: 'City',
 			}),
@@ -26,7 +23,7 @@ export const placesColumns = [
 			columnPlaceHelper.accessor('_id', {
 				header: '',
 				cell: props => (
-					<Link to={`/places/${props.row.original._id}`}>Edit place </Link>
+					<Link to={`/places/${props.row.original._id}`}>See Details </Link>
 				)
 			}),
 		],
