@@ -2,7 +2,7 @@ import useAuth from './useAuth.tsx'
 import {useState} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage'
-import {doc, serverTimestamp, setDoc, updateDoc} from 'firebase/firestore'
+import {doc, serverTimestamp, setDoc, updateDoc, getDoc} from 'firebase/firestore'
 import {imgCol, placeCol, storage} from '../services/firebase'
 import {Place} from '../types/Places.types.ts'
 import useGetUser from './useGetUser.ts'
@@ -52,10 +52,15 @@ const useUploadImg = () => {
                 place: place.name,
                 url: url
             })
-            
+			
+            const getPlace = await  getDoc(doc(placeCol, place._id))
+			const imgArr = getPlace.data()?.images
+			const addPhoto = {photoUrl: user?.admin ? url : ''}
+			imgArr?.push(addPhoto)
+			
             await updateDoc(doc(placeCol, place._id), {
-                photoUrl: user?.admin ? url : '',
-                updated_at: serverTimestamp(),
+                images: imgArr, 
+				updated_at: serverTimestamp(),
             })
             
             setIsSuccess(true)

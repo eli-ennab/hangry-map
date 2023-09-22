@@ -22,7 +22,7 @@ const EditPlacePage = () => {
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
 	const [message, setMessage] = useState('')
 	const [error, setError] = useState<string | null>(null)
-	const text = 'Drag Image here, or click to open upload<'
+	const text = 'Drag an Image here, or click to open the upload window'
 	const navigate = useNavigate()
 	const {id} = useParams()
 	const {data: place} = useGetPlace(id!)

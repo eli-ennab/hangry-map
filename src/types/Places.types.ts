@@ -17,7 +17,7 @@ export type Place = {
 	instagram?: string
 	lat?: number 
 	lng?: number 
-	photoUrl: string
+	images: photoObj[]
 	updated_at?: Timestamp
   }
   
@@ -34,4 +34,7 @@ export enum PlaceOfferings {
 	AfterWork = "After Work",
 	Dinner = "Dinner/Á la carte"
 }
-  
+
+type photoObj = {
+	photoUrl: string
+}
