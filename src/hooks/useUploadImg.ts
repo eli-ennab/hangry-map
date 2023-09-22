@@ -29,7 +29,8 @@ const useUploadImg = () => {
         setIsUploading(true)
         try {
             const uuid = uuidv4()
-            const storageRef = ref(storage, `img/placePic/${uuid}.${image.name.substring(image.name.lastIndexOf(".") + 1) }`)
+						
+            const storageRef = ref(storage, `img/placePic/${place.name}/${uuid}.${image.name.substring(image.name.lastIndexOf(".") + 1) }`)
             const uploadTask = uploadBytesResumable(storageRef, image)
             uploadTask.on('state_changed', snapshot => {
                 setProgress(
