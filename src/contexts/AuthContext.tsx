@@ -40,7 +40,6 @@ type AuthContextProps = {
 }
 
 const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
-
 	const [currentUser, setCurrentUser] = useState<User | null>(null)
 	const [loading, setLoading] = useState(true)
 	const [userEmail, setUserEmail] = useState<string | null>(null)
