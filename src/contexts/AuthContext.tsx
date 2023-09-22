@@ -27,6 +27,7 @@ type AuthContextType = {
 	userPhotoUrl: string | null
 
 	reloadUser: () => Promise<boolean>
+	onAssignAdmin: (id: string) => Promise<void>
 	onNameChange: (name: string) => Promise<void>
 	onMailChange: (email: string) => Promise<void>
 	onPassword: (password: string) => Promise<void> | undefined
@@ -40,7 +41,6 @@ type AuthContextProps = {
 }
 
 const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
-
 	const [currentUser, setCurrentUser] = useState<User | null>(null)
 	const [loading, setLoading] = useState(true)
 	const [userEmail, setUserEmail] = useState<string | null>(null)
@@ -77,7 +77,14 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
 		} catch (error) {
 			alert(error)
 		}
+	}
 
+	const onAssignAdmin = async (id: string) => {
+		const userRef = doc(userCol, id)
+		await updateDoc(userRef, {
+			admin: true,
+			updated_at: serverTimestamp()
+		})
 	}
 
 	const onNameChange = async (name: string) => {
@@ -154,6 +161,7 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
 				login,
 				logout,
 				signup,
+				onAssignAdmin,
 				onNameChange,
 				onMailChange,
 				onPassword,

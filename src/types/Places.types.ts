@@ -9,7 +9,7 @@ export type Place = {
 	description: string
 	category: PlaceCategory
 	offerings: PlaceOfferings[]
-	timestamp?: Date 
+	created_at?: Date 
 	email?: string
 	phone?: string
 	website?: string

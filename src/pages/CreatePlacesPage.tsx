@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
@@ -11,6 +11,8 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
+import useAuth from '../hooks/useAuth.tsx'
+import useGetUser from '../hooks/useGetUser.ts'
 
 const CreatePlacesPage = () => {
 	const {
@@ -19,6 +21,12 @@ const CreatePlacesPage = () => {
 		reset,
 		formState: { errors }
 	} = useForm<Place>()
+	
+	const {currentUser} = useAuth()
+	if (!currentUser) {
+		throw new Error("Error.")
+	}
+	const {data: user} = useGetUser(currentUser?.uid)
 
 	const [message, setMessage] = useState('')
 
@@ -32,15 +40,15 @@ const CreatePlacesPage = () => {
 				...data,
 				lat,
 				lng,
-				timestamp: new Date(),
-				isApproved: false
+				created_at: serverTimestamp(),
+				isApproved: !!user?.admin
 			})
 		
 			const placeId = docRef.id
 			await updateDoc(doc(db, 'places', placeId), { _id: placeId })
 		
 			reset()
-			setMessage('Place added successfully!')
+			setMessage(user?.admin ? 'Place added successfully and waiting for approval' : '')
 		} catch (error) {
 			setMessage('Error while adding place. Please try again.')
 		}
@@ -49,7 +57,7 @@ const CreatePlacesPage = () => {
 	return (
 		<Container className="py-3">
 			<Row>
-				<Col md={{ span: 6, offset: 3 }}>
+				<Col md={{ span: 10, offset: 1 }}>
 					<Card>
 						<Card.Body>
 							<Card.Title className="mb-3">Add a New Place</Card.Title>

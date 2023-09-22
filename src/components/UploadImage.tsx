@@ -4,11 +4,14 @@ import classNames from 'classnames'
 import useUploadImg from '../hooks/useUploadImg.ts'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Alert from 'react-bootstrap/Alert'
+import {Place} from '../types/Places.types.ts'
+
 interface Props {
-	update: (url: string|null, ref: string|null) => void
+	place: Place
+	text: string
 }
 
-const UploadImage: React.FC<Props> = ({update}) => {
+const UploadImage: React.FC<Props> = ({place, text }) => {
 	
 	const uploadImg = useUploadImg()
 	
@@ -16,8 +19,7 @@ const UploadImage: React.FC<Props> = ({update}) => {
 		if (!acceptImg.length || !uploadImg) {
 			return
 		}
-		await uploadImg.upload(acceptImg[0])
-		await update(uploadImg.url, uploadImg.imgRef)
+			await uploadImg.upload(acceptImg[0], place)		
 	}, [uploadImg])
 	
 	const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
@@ -37,8 +39,8 @@ const UploadImage: React.FC<Props> = ({update}) => {
 		"drag-reject": isDragReject,
 	})
 	
-	if( !uploadImg) return
-		
+	if (!uploadImg) return
+	
 	return (
 		<>
 			{uploadImg.isError && <Alert variant="danger">❌ {uploadImg.error}</Alert>}
@@ -53,8 +55,8 @@ const UploadImage: React.FC<Props> = ({update}) => {
 						? isDragAccept
 							? <p>Yeah! Drop that file...</p>
 							: <p>Nope, either to many images or wrong format</p>
-							: <p>Drag Image here, or click to open upload</p>}
-			</div>
+						: <p>{text}</p>}
+				</div>
 			</div>
 		</>
 	)
