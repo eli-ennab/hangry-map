@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useMemo, useState} from 'react'
-import {GoogleMap, InfoWindowF, Libraries, MarkerF, useLoadScript,} from '@react-google-maps/api'
+import {GoogleMap, InfoWindowF, Libraries, MarkerF, useLoadScript} from '@react-google-maps/api'
 import useGetPlacesApproved from '../hooks/useGetPlacesApproved.ts'
 import {LatLngLiteral} from '../types/Places.types.ts'
 import AutoComplete from './AutoComplete.tsx'
@@ -8,20 +8,20 @@ import person from '../assets/img/person.png'
 import pin from '../assets/img/pin.png'
 import Animation = google.maps.Animation
 import Alert from 'react-bootstrap/Alert'
+import PlacesOffCanvas from './PlacesOffCanvas.tsx'
+import {Button} from 'react-bootstrap'
 
 interface Props {
-	userPos: LatLngLiteral
 	zoom: number
-	setUserPos: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 	setZoom: React.Dispatch<React.SetStateAction<number>>
-	searchCenter: LatLngLiteral
-	setSearchCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
+	mapCenter: LatLngLiteral
+	setMapCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 }
 
-const Map: React.FC<Props> = ({userPos, zoom, setZoom, setUserPos, searchCenter, setSearchCenter}) => {
-	
+const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter}) => {
+
 	const {data: places, loading} = useGetPlacesApproved()
-	
+	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
@@ -52,41 +52,50 @@ const Map: React.FC<Props> = ({userPos, zoom, setZoom, setUserPos, searchCenter,
 	const filtCatPlaces = places.filter(p => p.category === selectCat)
 	const filtOfferPlaces = places.filter(p => p.offerings === selectOffer)
 	
+	
 	return (
 			<>
 				{loading && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>Fetching places...</Alert>}
-				<div className="sub-nav-menu">
-					<AutoComplete
-							setZoom={setZoom}
-							setSearchMarker={setSearchCenter}
-							setUserPos={setUserPos}
-					/>
-					
-					<Form.Select size="sm" onChange={onCatSelect}>
-						<option value=''>Select a category</option>
-						<option value="Café">Café</option>
-						<option value="Restaurant">Restaurant</option>
-						<option value="FastFood">Fastfood</option>
-						<option value="KioskGrill">Kiosk/Grill</option>
-						<option value="FoodTruck">Foodtruck</option>
-					</Form.Select>
-					
-					
-					<Form.Select size="sm" onChange={onOfferSelect}>
-						<option value=''>Select type of offerings</option>
-						<option value="Lunch">Lunch</option>
-						<option value="AfterWork">After work</option>
-						<option value="Dinner">Dinner/Á la carte</option>
-					</Form.Select>
 				
+				<div className={'sub-nav-menu-wrap'}>
+					<div className="sub-nav-menu">
+						<Button onClick={() => setShowPlacesCanvas(true)}>All places in your area</Button>
+						<AutoComplete
+								setZoom={setZoom}
+								setSearchMarker={setMapCenter}
+						/>
+						<div className={'selectWrap'}>
+							<Form.Select size="sm" onChange={onCatSelect}>
+								<option value=''>Select a category</option>
+								<option value="Café">Café</option>
+								<option value="Restaurant">Restaurant</option>
+								<option value="FastFood">Fastfood</option>
+								<option value="KioskGrill">Kiosk/Grill</option>
+								<option value="FoodTruck">Foodtruck</option>
+							</Form.Select>
+							
+							<Form.Select size="sm" onChange={onOfferSelect}>
+								<option value=''>Select type of offerings</option>
+								<option value="Lunch">Lunch</option>
+								<option value="AfterWork">After work</option>
+								<option value="Dinner">Dinner/Á la carte</option>
+							</Form.Select>
+						</div>
+					</div>
 				</div>
+				
+				<PlacesOffCanvas
+						places={places}
+						show={showPlacesCanvas}
+						onHide={() => setShowPlacesCanvas(false)}
+				/>
 				
 				<GoogleMap
 						onClick={() => setActiveMarker(null)}
 						mapContainerStyle={{width: "100dvw", height: '91dvh'}}
 						options={{
 							zoom: zoom,
-							center: userPos,
+							center: mapCenter,
 							mapTypeControl: false,
 						}}
 						clickableIcons={false}
@@ -94,7 +103,7 @@ const Map: React.FC<Props> = ({userPos, zoom, setZoom, setUserPos, searchCenter,
 				>
 					
 					<MarkerF
-							position={userPos}
+							position={mapCenter}
 							icon={person}
 							// animation={Animation.BOUNCE}
 					/>
@@ -151,8 +160,7 @@ const Map: React.FC<Props> = ({userPos, zoom, setZoom, setUserPos, searchCenter,
 							
 							</MarkerF>
 					))}
-				
-				
+					
 				</GoogleMap>
 			</>
 	)

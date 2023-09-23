@@ -13,18 +13,37 @@ body {
 p {
 	margin-bottom: 0.25rem;
 }
+.sub-nav-menu-wrap {
+	
+	background: $green;
+}
 .sub-nav-menu {
 	background: $green;
 	outline: 1px solid red;
 	padding: 0.5em 1em;
 	display: flex;
 	justify-content: space-around;
+	max-width: 1320px;
+	margin: 0 auto;
 	form {
 		display: flex;
 		justify-content: space-around;
 		width: 90%;
 
 	}
+	button {
+		background: $purple;
+		&:hover {
+			background: $light-purple;
+
+		}
+	}
+}
+
+.selectWrap {
+	width: 400px;
+	display: flex;
+	gap: 0.5rem;
 }
 
 #initial-loader {
