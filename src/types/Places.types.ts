@@ -19,6 +19,7 @@ export type Place = {
 	lng?: number 
 	images: photoObj[]
 	updated_at?: Timestamp
+	gMapsLink: string
   }
   
 export enum PlaceCategory {

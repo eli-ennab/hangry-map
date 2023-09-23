@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { addDoc, collection, doc, updateDoc, serverTimestamp } from 'firebase/firestore'
-import { db } from '../services/firebase'
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { placeCol } from '../services/firebase'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
 import { getGeocode, getLatLng } from 'use-places-autocomplete'
@@ -31,22 +31,23 @@ const CreatePlacesPage = () => {
 	const [message, setMessage] = useState('')
 
 	const onSubmit = async (data: Place) => {
+		console.log(data)
 		try {
-			const fullAddress = `${data.address}, ${data.city}`
+			const fullAddress = `${data.address}, ${data.city}` 
 			const results = await getGeocode({ address: fullAddress })
 			const { lat, lng } = getLatLng(results[0])
-		
-			const docRef = await addDoc(collection(db, 'places'), {
+			console.log({lat, lng})
+			const docRef = doc(placeCol)
+			
+			await setDoc(docRef, {
 				...data,
+				_id: docRef.id,
 				lat,
 				lng,
 				created_at: serverTimestamp(),
-				isApproved: !!user?.admin
-			})
-		
-			const placeId = docRef.id
-			await updateDoc(doc(db, 'places', placeId), { _id: placeId })
-		
+				isApproved: !!user?.admin,
+				gMapsLink: `https://www.google.se/maps/dir//${data.name},+${data.address},+${data.city}/@${lat},${lng}z`
+			})		
 			reset()
 			setMessage(user?.admin ? 'Place added successfully and waiting for approval' : '')
 		} catch (error) {
