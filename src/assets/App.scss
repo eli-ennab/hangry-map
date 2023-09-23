@@ -4,13 +4,51 @@
 @import 'nav';
 @import 'tables';
 @import 'tabs';
+@import '_infoWindow';
 
 body {
 	background-color: $white;
 	font-family: "Karla", sans-serif;
 }
+p {
+	margin-bottom: 0.25rem;
+}
+.sub-nav-menu {
+	background: #c3e6cb;
+	outline: 1px solid red;
+	padding: 0.5em 1em;
+	display: flex;
+	justify-content: space-around;
+	form {
+		display: flex;
+		justify-content: space-around;
+		width: 90%;
 
-.overlay-container {
-	position: absolute;
-	top: 6vh;
+	}
+}
+
+#initial-loader {
+	background-color: #212529;
+	display: flex;
+	min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
+
+@media (max-width: 585px) {
+
+	.sub-nav-menu {
+		flex-wrap: wrap;
+		input {
+
+			margin-bottom: 0.5rem;
+		}
+		form {
+			flex-wrap: wrap;
+			select {
+
+				margin-bottom: 0.5rem;
+			}
+		}
+	}
 }
