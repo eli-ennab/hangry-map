@@ -8,7 +8,7 @@ export type Place = {
 	city: string
 	description: string
 	category: PlaceCategory
-	offerings: PlaceOfferings[]
+	offerings: PlaceOfferings
 	created_at?: Date 
 	email?: string
 	phone?: string
@@ -21,6 +21,7 @@ export type Place = {
 	updated_at?: Timestamp
 	gMapsLink: string
   }
+  
   
 export enum PlaceCategory {
 	Cafe = "Café",
@@ -38,4 +39,9 @@ export enum PlaceOfferings {
 
 type photoObj = {
 	photoUrl: string
+}
+
+export type LatLngLiteral = {
+	lat: number
+	lng: number
 }
