@@ -16,21 +16,27 @@ interface Props {
 	setZoom: React.Dispatch<React.SetStateAction<number>>
 	mapCenter: LatLngLiteral
 	setMapCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
+	onGetLocation: () => void
 }
 
-const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter}) => {
+const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLocation}) => {
 
 	const {data: places, loading} = useGetPlacesApproved()
+	
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
+
 	const libraries: Libraries = useMemo(() => ["places"], [])
 	
 	const {isLoaded} = useLoadScript({
 		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
 		libraries,
 	})
+	
+	
+
 	
 	const handleActiveMarker = (marker: string) => {
 		if (marker === activeMarker) return
@@ -60,6 +66,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter}) => {
 				<div className={'sub-nav-menu-wrap'}>
 					<div className="sub-nav-menu">
 						<Button onClick={() => setShowPlacesCanvas(true)}>All places in your area</Button>
+						<Button onClick={onGetLocation}>Get Current Location</Button>
 						<AutoComplete
 								setZoom={setZoom}
 								setSearchMarker={setMapCenter}
