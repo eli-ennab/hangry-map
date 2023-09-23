@@ -5,7 +5,7 @@ import {
 	Libraries,
 	Marker
 } from "@react-google-maps/api"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import AutoComplete from "../components/AutoComplete"
 import useGetPlacesApproved from "../hooks/useGetPlacesApproved"
 import PlaceDetailsOffCanvas from "../components/PlaceDetailsOffCanvas"
@@ -31,23 +31,37 @@ const HomePage = () => {
 
 	const { data: places, loading } = useGetPlacesApproved()
 
-	// states
+	const [zoom, setZoom] = useState(14)
+
 	const [userPos, setUserPos] = useState<google.maps.LatLngLiteral>({
-		// malmö, default position
 		lat: 55.60503328539537,
 		lng: 13.002552442039073,
 	})
 	const [marker, setMarker] = useState<google.maps.LatLngLiteral>({
-		// malmö, default position
 		lat: 55.60503328539537,
 		lng: 13.002552442039073,
 	})
-	const [mapCenter, setMapCenter] = useState<google.maps.LatLngLiteral>({
-		// malmö, default position
-		lat: 55.60503328539537,
-		lng: 13.002552442039073,
-	})
-	const [zoom, setZoom] = useState(14)
+
+	useEffect(() => {
+		// This code will run once when the component mounts
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				const newPos: LatLngLiteral = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
+				// update state with new values
+				setZoom(14)
+				setUserPos(newPos)
+				setMarker(newPos)
+			}, (error) => {
+				console.error("Error getting location:", error)
+			})
+		} else {
+			console.log("Geolocation not supported")
+		}
+	}, [])
+
 
 	// workaround for error when loading page
 	const libraries: Libraries = useMemo(() => ["places"], [])
@@ -60,31 +74,10 @@ const HomePage = () => {
 
 	if (!isLoaded) return <div>Loading...</div>
 
-	//  Get user location
-	const getLocation = () => {
-		console.log("Locating...")
-
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((position) => {
-				const newPos: LatLngLiteral = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				}
-				console.log("Got location:", newPos)
-				// update state with new values
-				setZoom(14)
-				setUserPos(newPos)
-				setMarker(newPos)
-			})
-		} else {
-			console.log("Geolocation not supported")
-		}
-	}
-
 	// options for map
 	const mapOptions = {
 		zoom: zoom,
-		center: userPos ?? mapCenter,
+		center: userPos,
 		mapTypeControl: false
 	}
 
@@ -108,14 +101,12 @@ const HomePage = () => {
 					<AutoComplete
 						setZoom={setZoom}
 						setUserPos={setUserPos}
-						setMapCenter={setMapCenter}
 						setMarker={setMarker}
 					/>
 				)}
 
 				<hr />
 
-				<Button onClick={getLocation}>Get Location</Button>
 				{userPos && (
 					<span>
 						User location:
