@@ -1,5 +1,5 @@
 import useAuth from "../hooks/useAuth"
-import PlacesTable from '../components/PlacesTable.tsx'
+import Table from '../components/Table.tsx'
 import useGetAdmins from "../hooks/useGetAdmins.ts"
 import useGetPlaces from '../hooks/useGetPlaces.ts'
 import useGetUsers from '../hooks/useGetUsers.ts'
@@ -49,25 +49,25 @@ const DashboardPage = () => {
 					fill
 				>
 					<Tab eventKey="places" title={!placesBadge || places?.filter(p => p.isApproved).length === places.length  ? <><span>Places</span><span className={'d-block'}>Nothing to approve</span></> : <>Places {placesBadge}</>}>
-						<PlacesTable 
+						<Table 
 							columns={placesColumns} 	
 							data={places} 
 						/>
 					</Tab>
 					<Tab eventKey="images" title={!imagesBadge || images?.filter(i => i.isApproved).length === images.length  ? <>Images<span className={'d-block'}>Nothing to approve</span></> : <> Images {imagesBadge}</>}>
-                        <PlacesTable 
+                        <Table 
                             columns={imagesColumns}
                             data={images} 
                         />
                     </Tab>
 					<Tab eventKey="users" title={!userCount || users.length === 0 ? 'Users' : <>Users {userCount}</>}>
-						<PlacesTable 
+						<Table 
 							columns={userColumns(assignAdmin)} 
 							data={users} 
 						/>
 					</Tab>
 					<Tab eventKey="admins" title={!adminsCount || admins.length === 0 ? 'Admins' : <>Admins {adminsCount}</>}>
-						<PlacesTable 
+						<Table 
 							columns={adminColumns} 
 							data={admins} 
 						/>
