@@ -31,12 +31,10 @@ const CreatePlacesPage = () => {
 	const [message, setMessage] = useState('')
 
 	const onSubmit = async (data: Place) => {
-		console.log(data)
 		try {
 			const fullAddress = `${data.address}, ${data.city}` 
 			const results = await getGeocode({ address: fullAddress })
 			const { lat, lng } = getLatLng(results[0])
-			console.log({lat, lng})
 			const docRef = doc(placeCol)
 			
 			await setDoc(docRef, {
