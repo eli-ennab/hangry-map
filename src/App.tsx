@@ -13,6 +13,8 @@ import UpdateProfilePage from './pages/UpdateProfilePage'
 
 import './assets/App.scss'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import Index from './pages/Index'
+import Places from './pages/Places.tsx'
 
 const App = () => {
 	return (
@@ -22,7 +24,9 @@ const App = () => {
 			<Routes>
 
 				{/* Guest Routes */}
-				<Route path="/" element={<HomePage />} />
+				<Route path="/" element={<Index />} />
+				<Route path="/map" element={<HomePage />} />
+				<Route path="/places" element={<Places />} />
 
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/logout" element={<LogoutPage />} />
