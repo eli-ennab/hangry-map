@@ -23,6 +23,7 @@ const HomePage = () => {
 		lat: 55.60500288357208,
 		lng: 13.00195277298942
 	})
+	const [searchCenter, setSearchCenter] = useState<LatLngLiteral>({lat: 0,lng:0})
 	const [zoom, setZoom] = useState(9)
 	
 	useEffect(() => {
@@ -55,7 +56,7 @@ const HomePage = () => {
 				{error && <Alert variant="danger" className={'text-center mt-3 w-75 mx-auto'}>{errorMsg}</Alert>}
 				{fetchPos && <Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>Fetching your position...</Alert>}
 				
-				<Map userPos={userPos} zoom={zoom}/>
+				<Map userPos={userPos} setUserPos={setUserPos} zoom={zoom} setZoom={setZoom} searchCenter={searchCenter} setSearchCenter={setSearchCenter} />
 				
 				{/*<Button onClick={() => setShowPlacesCanvas(true)}>All places in your area</Button>*/}
 				

@@ -4,15 +4,21 @@ import useGetPlacesApproved from '../hooks/useGetPlacesApproved.ts'
 import {LatLngLiteral} from '../types/Places.types.ts'
 import AutoComplete from './AutoComplete.tsx'
 import Form from 'react-bootstrap/Form'
-import Animation = google.maps.Animation
 import person from '../assets/img/person.png'
 import pin from '../assets/img/pin.png'
+import Animation = google.maps.Animation
+import Alert from 'react-bootstrap/Alert'
+
 interface Props {
 	userPos: LatLngLiteral
 	zoom: number
+	setUserPos: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
+	setZoom: React.Dispatch<React.SetStateAction<number>>
+	searchCenter: LatLngLiteral
+	setSearchCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 }
 
-const Map: React.FC<Props> = ({userPos, zoom}) => {
+const Map: React.FC<Props> = ({userPos, zoom, setZoom, setUserPos, searchCenter, setSearchCenter}) => {
 	
 	const {data: places, loading} = useGetPlacesApproved()
 	
@@ -46,22 +52,14 @@ const Map: React.FC<Props> = ({userPos, zoom}) => {
 	const filtCatPlaces = places.filter(p => p.category === selectCat)
 	const filtOfferPlaces = places.filter(p => p.offerings === selectOffer)
 	
-	console.log(places)
-	
-	const mapOptions = {
-		zoom: zoom, center: userPos, mapTypeControl: false
-	}
-
-
-	
 	return (
 			<>
-				
+				{loading && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>Fetching places...</Alert>}
 				<div className="sub-nav-menu">
 					<AutoComplete
-							// setZoom={setZoom}
-							// setUserPos={setUserPos}
-							// setMarker={setMarker}
+							setZoom={setZoom}
+							setSearchMarker={setSearchCenter}
+							setUserPos={setUserPos}
 					/>
 					
 					<Form.Select size="sm" onChange={onCatSelect}>
@@ -86,27 +84,34 @@ const Map: React.FC<Props> = ({userPos, zoom}) => {
 				<GoogleMap
 						onClick={() => setActiveMarker(null)}
 						mapContainerStyle={{width: "100dvw", height: '91dvh'}}
-						options={mapOptions}
+						options={{
+							zoom: zoom,
+							center: userPos,
+							mapTypeControl: false,
+						}}
+						clickableIcons={false}
+						onMouseDown={() => null}
 				>
-		
-	<MarkerF position={userPos} icon={person}  animation={Animation.BOUNCE}/>
 					
+					<MarkerF
+							position={userPos}
+							icon={person}
+							// animation={Animation.BOUNCE}
+					/>
 					
 					{places && places.map(p => (
 							<MarkerF
-									animation={Animation.DROP}
 									icon={pin}
+									// animation={Animation.DROP}
 									key={p._id}
 									position={{lat: Number(p.lat), lng: Number(p.lng)}}
-									// onClick={() => setSelectedPlace(p)}
 									onClick={() => handleActiveMarker(p._id)}
 							>
-								
 								
 								{activeMarker === p._id ? (
 										<InfoWindowF onCloseClick={() => setActiveMarker(null)}>
 											<div className={'infoWindowWrap'}>
-											<span className={'infoHeading'}>{p.name}</span> 
+												<span className={'infoHeading'}>{p.name}</span>
 												<p>{p.category} {' '} {p.offerings}</p>
 												<p>{p.description}</p>
 												
@@ -116,21 +121,23 @@ const Map: React.FC<Props> = ({userPos, zoom}) => {
 												<div>
 													{p.website && (
 															<p><strong>Website:</strong>{' '}
-																<a href={p.website} target={'_blank'} className="text-decoration-none">{p.website} <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+																<a href={p.website} target={'_blank'} className="text-decoration-none">{p.website}
+																	<span className="material-symbols-outlined infoIcon">open_in_new</span></a>
 															</p>
 													)}
 													{p.facebook && (
 															<p><strong>Facebook:</strong>{' '}
-																<a href={p.facebook} target={'_blank'} className="text-decoration-none">{p.facebook} <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+																<a href={p.facebook} target={'_blank'} className="text-decoration-none">Visit <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
 															</p>
 													)}
 													{p.instagram && (
 															<p><strong>Instagram:</strong>{' '}
-																<a href={p.instagram} target={'_blank'} className="text-decoration-none">{p.instagram} <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+																<a href={p.instagram} target={'_blank'} className="text-decoration-none">{p.instagram}
+																	<span className="material-symbols-outlined infoIcon">open_in_new</span></a>
 															</p>
 													)}
 													{p.images && (
-															<div className="mb-3">
+															<div className="mb-3 imgWrap">
 																{p.images.map(p => [
 																	<img key={p.photoUrl} src={p.photoUrl} alt={p.photoUrl} className="img-fluid rounded shadow w-25"/>
 																])}
@@ -138,14 +145,13 @@ const Map: React.FC<Props> = ({userPos, zoom}) => {
 													)}
 												</div>
 											</div>
-								
+										
 										</InfoWindowF>
 								) : null}
 							
 							</MarkerF>
 					))}
-					
-			
+				
 				
 				</GoogleMap>
 			</>

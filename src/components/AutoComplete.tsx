@@ -10,12 +10,12 @@ import {
 import "@reach/combobox/styles.css"
 
 interface Props {
-	setMarker: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 	setUserPos: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
+	setSearchMarker: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 	setZoom: React.Dispatch<React.SetStateAction<number>>
 }
 
-const AutoComplete: React.FC<Props> = ({ setMarker, setUserPos, setZoom }) => {
+const AutoComplete: React.FC<Props> = ({ setSearchMarker, setZoom, setUserPos }) => {
 	const {
 		ready,
 		value,
@@ -24,26 +24,14 @@ const AutoComplete: React.FC<Props> = ({ setMarker, setUserPos, setZoom }) => {
 		clearSuggestions,
 	} = usePlacesAutocomplete()
 
-	const handleSelect = async (address: any) => {
-		console.log(address)
-
-		// send input value to usePlacesAutocomplete hook
+	const handleSelect = async (address: string) => {
 		setValue(address, false)
-
-		// clear suggestions list
 		clearSuggestions()
-
-		// get address_components
 		const res = await getGeocode({ address })
-
-		// get lat, lng 
 		const { lat, lng } = getLatLng(res[0])
-		console.log({ lat, lng })
-
-		// update states with new values
-		setUserPos({ lat, lng })
 		setZoom(14)
-		setMarker({ lat, lng })
+		// setSearchMarker({ lat, lng })
+		setUserPos({ lat, lng })
 	}
 
 	return (
@@ -52,7 +40,7 @@ const AutoComplete: React.FC<Props> = ({ setMarker, setUserPos, setZoom }) => {
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
 				disabled={!ready}
-				placeholder="Enter your search query"
+				placeholder="Hangry Search 😠"
 			/>
 
 			<ComboboxPopover>
