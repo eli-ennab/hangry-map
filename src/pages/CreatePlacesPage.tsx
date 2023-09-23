@@ -43,6 +43,7 @@ const CreatePlacesPage = () => {
 				lat,
 				lng,
 				created_at: serverTimestamp(),
+				images: [],
 				isApproved: !!user?.admin,
 				gMapsLink: `https://www.google.se/maps/dir//${data.name},+${data.address},+${data.city}/@${lat},${lng}z`
 			})		
