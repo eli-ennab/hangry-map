@@ -37,7 +37,7 @@ const Navigation = () => {
 							<>
 								<Nav.Link as={NavLink} title={'List All Places'} to="/places">Places</Nav.Link>
 								<Nav.Link as={NavLink} title={'Sing Up Now!'} to="/signup">Sign Up</Nav.Link>
-								<Nav.Link as={NavLink} title={'Log In'} to="/login"><span className="material-symbols-outlined">login</span></Nav.Link>
+								<Nav.Link as={NavLink} title={'Log In'} to="/login">Log In<span className="material-symbols-outlined align-middle">login</span></Nav.Link>
 							</>
 						)}
 					</Nav>
