@@ -27,7 +27,7 @@ const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 	})
 	
     return (
-		<BTable bordered hover responsive className="m-3">
+		<BTable bordered hover responsive className="m-3 w-75 mx-auto">
 			<thead>
 			{table.getHeaderGroups().map((headerGroup) => (
 				<tr key={headerGroup.id}>
@@ -49,13 +49,7 @@ const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 										header.getContext()
 									)}
 									
-									{/* Add a sort direction indiciator */}
-									{{
-										asc: " ⬇️",
-										desc: " ⬆️",
-									}[
-										header.column.getIsSorted() as string
-										] ?? null}
+									{{asc: " ⬇️",desc: " ⬆️",} [header.column.getIsSorted() as string] ?? null}
 								</div>
 							)}
 						</th>

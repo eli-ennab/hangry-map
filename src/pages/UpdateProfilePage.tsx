@@ -175,10 +175,11 @@ const UpdateProfilePage = () => {
 									)}</Form.Text>
 								</Form.Group>
 								
-								<Form.Label>Change your mail? </Form.Label>
+								
 								<Form.Group controlId="email" className="mb-3">
-									<Form.Label>Enter new mail</Form.Label>
+									<Form.Label>Your registered mail</Form.Label>
 									<Form.Control
+										disabled
 										placeholder={userEmail ?? 'E-Mail'}
 										type="email"
 										{...register('email', {

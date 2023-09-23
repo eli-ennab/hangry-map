@@ -55,7 +55,10 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 						? isDragAccept
 							? <p>Yeah! Drop that file...</p>
 							: <p>Nope, either to many images or wrong format</p>
-						: <p>{text}</p>}
+						: <p>
+							<span className="material-symbols-outlined d-block">upload_file</span>
+							{text}
+						</p>}
 				</div>
 			</div>
 		</>

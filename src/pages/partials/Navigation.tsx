@@ -25,19 +25,19 @@ const Navigation = () => {
 
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto">
+					<Nav className="ms-auto align-middle">
 						{currentUser || user?.admin ? (
 							<> 
-								{user?.admin ? <Nav.Link as={NavLink} to="/user/dashboard">Dashboard</Nav.Link> : null}
-								<Nav.Link as={NavLink} to="/user/update-profile">Update Profile</Nav.Link>
-								<Nav.Link as={NavLink} to="/user/create-places">Create Places</Nav.Link>
-								<Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>
+								{user?.admin ? <Nav.Link as={NavLink} to="/user/dashboard"><span className="material-symbols-outlined align-middle">table</span> Dashboard</Nav.Link> : null}
+								<Nav.Link as={NavLink} to="/user/create-places"  title={'Add A Place'}><span className="material-symbols-outlined align-middle">note_add</span> Add a place</Nav.Link>
+								<Nav.Link as={NavLink} to="/user/update-profile" title={'Update Profile'}><span className="material-symbols-outlined align-middle">manage_accounts</span> Update profile</Nav.Link>
+								<Nav.Link as={NavLink} to="/logout"><span className="material-symbols-outlined align-middle">logout</span> Log Out</Nav.Link>
 							</>
 						) : (
 							<>
-								<Nav.Link as={NavLink} to="/places">Places</Nav.Link>
-								<Nav.Link as={NavLink} to="/signup">Sign Up</Nav.Link>
-								<Nav.Link as={NavLink} to="/login">Log In</Nav.Link>
+								<Nav.Link as={NavLink} title={'List All Places'} to="/places">Places</Nav.Link>
+								<Nav.Link as={NavLink} title={'Sing Up Now!'} to="/signup">Sign Up</Nav.Link>
+								<Nav.Link as={NavLink} title={'Log In'} to="/login"><span className="material-symbols-outlined">login</span></Nav.Link>
 							</>
 						)}
 					</Nav>

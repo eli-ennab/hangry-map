@@ -42,7 +42,7 @@ export const imagesColumns = [
 					<Button onClick={() => {
 						approveImage(props.row.original._id, props.row.original.isApproved, props.row.original.url, props.row.original.place_id)}} 
 									variant={props.getValue() === true ? 'outline-success' : 'outline-danger'}>
-						{props.getValue() === true ? 'Approved' : 'Not Approved'}</Button>
+						{props.row.original.isApproved ? <span className="material-symbols-outlined align-middle"> check </span> : <span className="material-symbols-outlined align-middle"> cancel </span>}</Button>
 				)
 			}),
 			imagesColumnsHelper.accessor('place', {
