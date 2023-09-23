@@ -35,9 +35,11 @@ const PlaceDetailsOffCanvas: React.FC<PlaceDetailsOffCanvasProps> = ({ selectedP
 						{selectedPlace.instagram && (
 							<p><strong>Instagram:</strong> <a href={selectedPlace.instagram} className="text-decoration-none">{selectedPlace.instagram}</a></p>
 						)}
-						{selectedPlace.photoUrl && (
+						{selectedPlace.images && (
 							<div className="mb-3">
-								<img src={selectedPlace.photoUrl} alt={selectedPlace.name} className="img-fluid rounded shadow" />
+								{selectedPlace.images.map(p => [
+									<img key={selectedPlace._id} src={p.photoUrl} alt={selectedPlace.name} className="img-fluid rounded shadow w-25" />
+								])}
 							</div>
 						)}
 					</>
