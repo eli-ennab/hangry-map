@@ -76,8 +76,8 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
-
-
+	
+	
 	return (
 		<>
 			{loading && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>Fetching places...</Alert>}
@@ -152,14 +152,15 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 								<div className={'infoWindowWrap'}>
 									<span className={'infoHeading'}>{p.name}</span>
 									<p>{p.category} {' '} {p.offerings}</p>
-									<p>{p.description}</p>
-
-									<p><strong>Directions:</strong>{' '}
+									<p className={'my-2'}>{p.description}</p>
+									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
+									<p>{p.address}, {p.city}</p>
+									<p>
 										<a href={p.gMapsLink} target={'_blank'} className="text-decoration-none">Google Maps Directions <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
 									</p>
 									<div>
 										{p.website && (
-											<p><strong>Website:</strong>{' '}
+											<p>
 												<a href={p.website} target={'_blank'} className="text-decoration-none">{p.website}
 													<span className="material-symbols-outlined infoIcon">open_in_new</span></a>
 											</p>
@@ -171,12 +172,12 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 										)}
 										{p.instagram && (
 											<p><strong>Instagram:</strong>{' '}
-												<a href={p.instagram} target={'_blank'} className="text-decoration-none">{p.instagram}
+												<a href={p.instagram} target={'_blank'} className="text-decoration-none">Visit 
 													<span className="material-symbols-outlined infoIcon">open_in_new</span></a>
 											</p>
 										)}
 										{p.images && (
-											<div className="mb-3 imgWrap">
+											<div className="my-3 imgWrap">
 												{p.images.map(p => [
 													<img key={p.photoUrl} src={p.photoUrl} alt={p.photoUrl} className="img-fluid rounded shadow w-25" />
 												])}
