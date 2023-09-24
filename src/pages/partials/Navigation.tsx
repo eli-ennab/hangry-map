@@ -29,18 +29,18 @@ const Navigation = () => {
 						{currentUser || user?.admin ? (
 							<> 
 								{user?.admin ? <Nav.Link as={NavLink} to="/user/dashboard"><span className="material-symbols-outlined align-middle">table</span> Dashboard</Nav.Link> : null}
-								<Nav.Link as={NavLink} title={'The Map'} to="/map"><span className="material-symbols-outlined align-middle">map</span>Map</Nav.Link>
-								<Nav.Link as={NavLink} title={'List All Places'} to="/places"><span className="material-symbols-outlined align-middle">where_to_vote</span>Places</Nav.Link>
+								<Nav.Link as={NavLink} title={'The Map'} to="/map"><span className="material-symbols-outlined align-middle">map</span> Map</Nav.Link>
+								<Nav.Link as={NavLink} title={'List All Places'} to="/places"><span className="material-symbols-outlined align-middle">where_to_vote</span> Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/create-places"  title={'Add A Place'}><span className="material-symbols-outlined align-middle">note_add</span> Add a place</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/update-profile" title={'Update Profile'}><span className="material-symbols-outlined align-middle">manage_accounts</span> Update profile</Nav.Link>
 								<Nav.Link as={NavLink} to="/logout"><span className="material-symbols-outlined align-middle">logout</span> Log Out</Nav.Link>
 							</>
 						) : (
 							<>
-								<Nav.Link as={NavLink} title={'The Map!'} to="/map">Map</Nav.Link>
-								<Nav.Link as={NavLink} title={'List All Places!'} to="/places">Places</Nav.Link>
-								<Nav.Link as={NavLink} title={'Sing Up Now!'} to="/signup">Sign Up</Nav.Link>
-								<Nav.Link as={NavLink} title={'Log In'} to="/login">Log In<span className="material-symbols-outlined align-middle">login</span></Nav.Link>
+								<Nav.Link as={NavLink} title={'The Map!'} to="/map"><span className="material-symbols-outlined align-middle">map</span> Map</Nav.Link>
+								<Nav.Link as={NavLink} title={'List All Places!'} to="/places"><span className="material-symbols-outlined align-middle">where_to_vote</span> Places</Nav.Link>
+								<Nav.Link as={NavLink} title={'Sing Up Now!'} to="/signup"><span className="material-symbols-outlined align-middle">person_add</span> Sign Up</Nav.Link>
+								<Nav.Link as={NavLink} title={'Log In'} to="/login"><span className="material-symbols-outlined align-middle">login</span> Log In</Nav.Link>
 							</>
 						)}
 					</Nav>
