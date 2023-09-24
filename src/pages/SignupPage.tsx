@@ -131,8 +131,8 @@ const SignupPage = () => {
 									}
 								</Form.Group>
 
-								<Button
-									variant="dark"
+								<Button 
+									className={'btnGradient'}
 									type="submit"
 									disabled={loading}
 								>

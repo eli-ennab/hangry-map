@@ -60,7 +60,7 @@ const CreatePlacesPage = () => {
 				<Col md={{ span: 10, offset: 1 }}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3">Add a New Place</Card.Title>
+							<Card.Title className="mb-3 headingGradient">Add a New Place</Card.Title>
 
 							{message && <Alert variant="dark">{message}</Alert>}
 
@@ -175,7 +175,7 @@ const CreatePlacesPage = () => {
 									/>
 								</Form.Group>
 
-								<Button type="submit">
+								<Button type="submit" className={'btnGradient'}>
 									Submit Place
 								</Button>
 							</Form>

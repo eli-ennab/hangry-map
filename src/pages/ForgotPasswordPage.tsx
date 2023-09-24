@@ -48,7 +48,7 @@ const ForgotPassword: React.FC = () => {
 									{errors.email && <p className="text-danger">{errors.email.message}</p>}
 								</Form.Group>
 
-								<Button type="submit">
+								<Button type="submit" className={'btnGradient'}>
 									Send Password Reset Email
 								</Button>
 							</Form>

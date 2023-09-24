@@ -13,13 +13,38 @@ body {
 p {
 	margin-bottom: 0.25rem;
 }
+.headingGradient {
+	font-weight: 800;
+	background: rgb(61,218,180);
+	background: -moz-linear-gradient(275deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 75%, rgba(33,0,196,1) 100%);
+	background: -webkit-linear-gradient(275deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 75%, rgba(33,0,196,1) 100%);
+	background: linear-gradient(275deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 75%, rgba(33,0,196,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3ddab4",endColorstr="#2100c4",GradientType=1);
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	width: fit-content;
+}
+
+.btnGradient {
+	transition: 0.5s;
+	background: rgb(61,218,180);
+	background: -moz-linear-gradient(90deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 50%, rgba(61,218,180,1) 100%);
+	background: -webkit-linear-gradient(90deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 50%, rgba(61,218,180,1) 100%);
+	background: linear-gradient(90deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 50%, rgba(61,218,180,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3ddab4",endColorstr="#3ddab4",GradientType=1);
+	background-size: 200% auto;
+	border: none;
+	&:hover {
+	background-position: right center;
+	}
+}
+
 .sub-nav-menu-wrap {
 	
 	background: $green;
 }
 .sub-nav-menu {
 	background: $green;
-	outline: 1px solid red;
 	padding: 0.5em 1em;
 	display: flex;
 	justify-content: space-around;
@@ -29,9 +54,9 @@ p {
 		display: flex;
 		justify-content: space-around;
 		width: 90%;
-
 	}
 	button {
+		border: none;
 		background: $purple;
 		&:hover {
 			background: $light-purple;
@@ -53,6 +78,8 @@ p {
 	justify-content: center;
 	align-items: center;
 }
+
+
 
 @media (max-width: 585px) {
 

@@ -117,7 +117,7 @@ const UpdateProfilePage = () => {
 				<Col md={{span: 10, offset: 1}}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3">Update Your Profile</Card.Title>
+							<Card.Title className="mb-3 headingGradient">Update Your Profile</Card.Title>
 							
 							{errorMessage && (<Alert variant="danger">{errorMessage}</Alert>)}
 							<div className="d-flex justify-content-center my-3">
@@ -125,7 +125,7 @@ const UpdateProfilePage = () => {
 									src={userPhotoUrl || `https://placehold.co/100x100?text=${currentUser?.displayName ?? 'Name'}`}
 									fluid
 									roundedCircle
-									className="w-50 img-square"
+									className="w-25"
 								/>
 							</div>
 							
@@ -229,7 +229,7 @@ const UpdateProfilePage = () => {
 								<div className="d-grid gap-2">
 									<Button
 										disabled={loading}
-										variant="outline-primary"
+										className={'btnGradient mx-auto'}
 										type="submit">
 										{loading
 											? "saving..."
