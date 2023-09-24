@@ -7,6 +7,7 @@ import logo from '../../images/logo.png'
 import Container from 'react-bootstrap/Container'
 import Image from 'react-bootstrap/Image'
 import Navbar from 'react-bootstrap/Navbar'
+import {NavDropdown} from 'react-bootstrap'
 
 const Navigation = () => {
 	const {
@@ -32,8 +33,16 @@ const Navigation = () => {
 								<Nav.Link as={NavLink} title={'The Map'} to="/map"><span className="material-symbols-outlined align-middle">map</span> Map</Nav.Link>
 								<Nav.Link as={NavLink} title={'List All Places'} to="/places"><span className="material-symbols-outlined align-middle">where_to_vote</span> Places</Nav.Link>
 								<Nav.Link as={NavLink} to="/user/create-places"  title={'Add A Place'}><span className="material-symbols-outlined align-middle">note_add</span> Add a place</Nav.Link>
-								<Nav.Link as={NavLink} to="/user/update-profile" title={'Update Profile'}><span className="material-symbols-outlined align-middle">manage_accounts</span> Update profile</Nav.Link>
-								<Nav.Link as={NavLink} to="/logout"><span className="material-symbols-outlined align-middle">logout</span> Log Out</Nav.Link>
+								<NavDropdown
+								title={currentUser?.photoURL 
+										? <><Image src={currentUser.photoURL} height={30} width={30} fluid roundedCircle />{' '}{currentUser.displayName} </> 
+										: currentUser?.displayName}
+								>
+									
+								<NavDropdown.Item as={NavLink} to="/user/update-profile" title={'Update Profile'}><span className="material-symbols-outlined align-middle">manage_accounts</span> Update profile</NavDropdown.Item>
+									<NavDropdown.Divider />
+								<NavDropdown.Item as={NavLink} to="/logout"><span className="material-symbols-outlined align-middle">logout</span> Log Out</NavDropdown.Item>
+								</NavDropdown>
 							</>
 						) : (
 							<>
