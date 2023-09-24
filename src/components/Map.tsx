@@ -39,7 +39,6 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 		}
 	}, [city])
 
-	console.log("New places data:", places)
 	//const {data: places, loading} = useGetPlacesApproved()
 
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
@@ -53,11 +52,6 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
 		libraries,
 	})
-
-	console.log("Places for city:", userCity, places)
-
-
-
 
 	const handleActiveMarker = (marker: string) => {
 		if (marker === activeMarker) return
