@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col'
 import Container from "react-bootstrap/Container"
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+import Alert from 'react-bootstrap/Alert'
 
 const SignupPage = () => {
 	const [loading, setLoading] = useState(false)
@@ -47,9 +48,8 @@ const SignupPage = () => {
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3">Sign Up</Card.Title>
-							{/* {errorMessage && {errorMessage}} */}
-
+							<Card.Title className="mb-3 headingGradient">Sign Up</Card.Title>
+							{errorMessage && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>{errorMessage}</Alert>}
 							<Form onSubmit={handleSubmit(onSignup)}>
 
 								<Form.Group controlId="username" className="mb-3">
