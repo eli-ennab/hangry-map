@@ -29,22 +29,16 @@ const HomePage = () => {
 
 	const [zoom, setZoom] = useState(13)
 
-	const getLocation = () => {
-		setError(false)
-		if (navigator.geolocation) {
-			setFetchPos(true)
-			navigator.geolocation.getCurrentPosition(async (position) => {
-				const newPos: LatLngLiteral = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				}
-				setSearchParams({ lat: `${position.coords.latitude}`, lng: `${position.coords.longitude}` })
-				setZoom(16)
-				setMapCenter(newPos)
+	useEffect(() => {
+		setSearchParams({ lat: `${mapCenter.lat}`, lng: `${mapCenter.lng}` })
+	}, [mapCenter, setSearchParams])
 
-				// Fetch city name based on lat and lng
+	// Fetch city name based on lat and lng
+	useEffect(() => {
+		if (latParam && lngParam) {
+			const fetchCityFromLatLng = async () => {
 				try {
-					const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${newPos.lat},${newPos.lng}&key=${import.meta.env.VITE_GMAP_API_KEY}`)
+					const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latParam},${lngParam}&key=${import.meta.env.VITE_GMAP_API_KEY}`)
 					const data = await response.json()
 					const cityFromPlusCode = data.plus_code.compound_code.split(' ')[1].replace(',', '')
 					if (cityFromPlusCode) {
@@ -55,6 +49,24 @@ const HomePage = () => {
 				} catch (error) {
 					console.error("Error fetching city from Google Maps API:", error)
 				}
+			};
+
+			fetchCityFromLatLng()
+		}
+	}, [latParam, lngParam])
+
+	const getLocation = () => {
+		setError(false)
+		if (navigator.geolocation) {
+			setFetchPos(true)
+			navigator.geolocation.getCurrentPosition(async (position) => {
+				const newPos: LatLngLiteral = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				}
+
+				setZoom(16)
+				setMapCenter(newPos)
 
 				setFetchPos(false)
 			}, (error) => {
