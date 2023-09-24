@@ -1,32 +1,14 @@
-import { useState, useEffect } from 'react'
-import { query, where, getDocs } from 'firebase/firestore'
-import { placeCol } from '../services/firebase.ts'
-import { Place } from '../types/Places.types.ts'
+import { QueryConstraint } from 'firebase/firestore';
+import { placeCol } from '../services/firebase.ts';
+import { Place } from '../types/Places.types.ts';
+import useStreamCollectionWithConditions from './useStreamCollectionWithConditions.ts';
 
-const usePlacesByCity = (city: string) => {
-  const [places, setPlaces] = useState<Place[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchPlaces = async () => {
-      const q = query(
+const usePlacesByCity = (city: string, queryConditions: QueryConstraint[]) => {
+	console.log(`Fetching places for city: ${city} and isApproved: true`)
+    return useStreamCollectionWithConditions<Place>(
         placeCol, 
-        where('city', '==', city),
-        where('isApproved', '==', true)
-      )
-      const querySnapshot = await getDocs(q)
-      const placesData: Place[] = []
-      querySnapshot.forEach((doc) => {
-        placesData.push(doc.data() as Place)
-      });
-      setPlaces(placesData)
-      setLoading(false)
-    }
-
-    fetchPlaces()
-  }, [city])
-
-  return { places, loading }
+        queryConditions
+    )
 }
 
-export default usePlacesByCity
+export default usePlacesByCity;
