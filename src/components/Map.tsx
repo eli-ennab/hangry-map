@@ -11,6 +11,7 @@ import Alert from 'react-bootstrap/Alert'
 import PlacesOffCanvas from './PlacesOffCanvas.tsx'
 import { Button } from 'react-bootstrap'
 import usePlacesByCity from '../hooks/usePlacesByCity.ts'
+import { orderBy, where } from 'firebase/firestore'
 
 interface Props {
 	zoom: number
@@ -23,15 +24,22 @@ interface Props {
 
 const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city }) => {
 
-	const [userCity, setUserCity] = useState<string | null>(null)
+	const [userCity, setUserCity] = useState<string | null>('Malmö')
 
-	const { places, loading } = usePlacesByCity(userCity || 'Malmö')
+	const queryConditions = useMemo(() => {
+		return [orderBy('name'), where('city', '==', userCity!), where('isApproved', '==', true)]
+	}, [userCity])
+
+	const { data: places, loading } = usePlacesByCity(userCity!, queryConditions)
 
 
 	useEffect(() => {
-		setUserCity(city)
+		if (city) {
+			setUserCity(city)
+		}
 	}, [city])
 
+	console.log("New places data:", places)
 	//const {data: places, loading} = useGetPlacesApproved()
 
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
@@ -45,6 +53,8 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
 		libraries,
 	})
+
+	console.log("Places for city:", userCity, places)
 
 
 
@@ -83,7 +93,7 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 					<Button onClick={() => setShowPlacesCanvas(true)}>All places in your area</Button>
 					<Button onClick={() => {
 						onGetLocation(city)
-						setUserCity(null)
+						setUserCity(city)
 					}}>Get Current Location</Button>
 					<AutoComplete
 						setZoom={setZoom}
