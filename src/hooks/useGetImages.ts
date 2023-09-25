@@ -4,7 +4,6 @@ import {imgCol} from '../services/firebase.ts'
 import {Image} from '../types/Image.types.ts'
 
 const useGetPlacesApproved = () => {
-
     return useStreamCollection<Image>(imgCol, 
 		orderBy('created_at'),
 	)

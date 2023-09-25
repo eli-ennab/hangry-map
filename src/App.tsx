@@ -7,14 +7,14 @@ import NotFound from './pages/NotFound'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
 import EditPlacePage from './pages/EditPlacePage.tsx'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import Index from './pages/Index'
+import Places from './pages/Places.tsx'
 import RequireAuth from './components/RequireAuth'
 import SignupPage from './pages/SignupPage'
 import UpdateProfilePage from './pages/UpdateProfilePage'
 
 import './assets/App.scss'
-import ForgotPasswordPage from './pages/ForgotPasswordPage'
-import Index from './pages/Index'
-import Places from './pages/Places.tsx'
 
 const App = () => {
 	return (

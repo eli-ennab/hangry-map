@@ -22,7 +22,6 @@ export type Place = {
 	gMapsLink: string
   }
   
-  
 export enum PlaceCategory {
 	Cafe = "Café",
 	Restaurant = "Restaurant",

@@ -6,21 +6,18 @@ import {doc, serverTimestamp, setDoc, updateDoc, getDoc} from 'firebase/firestor
 import {imgCol, placeCol, storage} from '../services/firebase'
 import {Place} from '../types/Places.types.ts'
 import useGetUser from './useGetUser.ts'
+
 const useUploadImg = () => {
     const {currentUser} = useAuth()
     if (!currentUser) {
         throw new Error("Error.")
     }
     const {data: user} = useGetUser(currentUser?.uid)
-	
-    
     const [progress, setProgress] = useState<number | null>(null)
     const [error, setError] = useState<string | null>(null)
-    
     const [isError, setIsError] = useState<boolean | null>(null)
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
     const [isUploading, setIsUploading] = useState<boolean | null>(null)
-	
     
     const upload = async (image: File, place: Place) => {
         setError(null)
@@ -80,7 +77,7 @@ const useUploadImg = () => {
             setIsUploading(false)
             setTimeout(() => {
                 setIsSuccess(null)
-            },2000)
+            }, 2000)
         }
     }
     if (!currentUser) return

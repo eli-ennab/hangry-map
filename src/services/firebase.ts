@@ -59,9 +59,7 @@ export const approveImage = async (imgDocRef: string, isApproved: boolean, url: 
 }
 
 export const userCol = createCollection<User>('users')
-
 export const placeCol = createCollection<Place>('places')
-
 export const imgCol = createCollection<Image>('images')
 
 export default app

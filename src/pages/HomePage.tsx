@@ -13,7 +13,6 @@ const HomePage = () => {
 
 	const [userCity, setUserCity] = useState<string | null>(null);
 
-
 	const [mapCenter, setMapCenter] = useState<LatLngLiteral>(() => {
 		if (latParam && lngParam) {
 			return {
@@ -87,9 +86,6 @@ const HomePage = () => {
 			{fetchPos && <Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>Fetching your position...</Alert>}
 
 			<Map zoom={zoom} setZoom={setZoom} mapCenter={mapCenter} setMapCenter={setMapCenter} onGetLocation={getLocation} city={userCity} />
-
-
-
 		</>
 	)
 }

@@ -29,8 +29,12 @@ const SignupPage = () => {
 		try {
 			setLoading(true)
 
-			await signup(data.email, data.password, data.username)
-
+			if (data.username.trim().length === 0) {
+				setErrorMessage("You need a valid username")
+				return
+			}
+			
+			await signup(data.email, data.password, data.username.trim())
 			navigate('/login')
 		} catch (error) {
 			if (error instanceof FirebaseError) {

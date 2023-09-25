@@ -7,7 +7,6 @@ const useStreamCollection = <T>(
 	const [data, setData] = useState<T[]|null>(null)
 	const [loading, setLoading] = useState(true)
 	
-	
 	useEffect( () => {
 		const queryRef = query(colRef, ...queryConstraints)
 		return onSnapshot(queryRef, (snapshot) => {

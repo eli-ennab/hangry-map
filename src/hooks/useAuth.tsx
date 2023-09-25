@@ -9,7 +9,6 @@ const useAuth = () => {
 	}
 	
 	return authContext
-	
 }
     
 export default useAuth

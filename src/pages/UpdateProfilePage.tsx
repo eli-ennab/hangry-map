@@ -234,11 +234,9 @@ const UpdateProfilePage = () => {
 											: "Save Changes"}
 									</Button>
 								</div>
-							</Form>
-						
+							</Form>		
 						</Card.Body>
 					</Card>
-				
 				</Col>
 			</Row>
 		</Container>
