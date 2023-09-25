@@ -190,7 +190,7 @@ const [dist, setDist] = useState(0)
 									<p>{p.address}, {p.city}</p>
 									
 									{/*TODO lägga till formatering av talet!*/}
-									<p>Distance: {dist} meters	</p>
+									<p>Distance: {Math.ceil(dist)} meters from your position	</p>
 										<p>
 											<a 
 												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
