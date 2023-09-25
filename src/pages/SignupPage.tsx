@@ -52,7 +52,7 @@ const SignupPage = () => {
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3 headingGradient">Sign Up</Card.Title>
+							<Card.Title className="mb-3">Sign Up</Card.Title>
 							{errorMessage && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>{errorMessage}</Alert>}
 							<Form onSubmit={handleSubmit(onSignup)}>
 

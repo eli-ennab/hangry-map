@@ -114,7 +114,7 @@ const UpdateProfilePage = () => {
 				<Col md={{span: 10, offset: 1}}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3 headingGradient">Update Your Profile</Card.Title>
+							<Card.Title className="mb-3">Update Your Profile</Card.Title>
 							
 							{errorMessage && (<Alert variant="danger">{errorMessage}</Alert>)}
 							<div className="d-flex justify-content-center my-3">
