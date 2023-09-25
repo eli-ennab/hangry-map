@@ -3,7 +3,6 @@ import { NavLink, Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import useGetUser from '../../hooks/useGetUser.ts'
 import logo from '../../images/logo.png'
-// import logo_2 from '../../images/logo_2.png'
 import Container from 'react-bootstrap/Container'
 import Image from 'react-bootstrap/Image'
 import Navbar from 'react-bootstrap/Navbar'
@@ -21,7 +20,6 @@ const Navigation = () => {
 			<Container>
 				<Navbar.Brand as={Link} to="/">
 					<Image src={logo} className="mx-2" height={35} alt="Hangry Map logo" />
-					{/* <Image src={logo_2} className="mx-2" height={55} alt="Hangry Map logo" /> */}
 				</Navbar.Brand>
 
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
