@@ -4,15 +4,15 @@ import { placeCol } from '../services/firebase'
 import { useForm } from 'react-hook-form'
 import { Place } from '../types/Places.types'
 import { getGeocode, getLatLng } from 'use-places-autocomplete'
+import useAuth from '../hooks/useAuth.tsx'
+import useGetUser from '../hooks/useGetUser.ts'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import useAuth from '../hooks/useAuth.tsx'
-import useGetUser from '../hooks/useGetUser.ts'
 
 const CreatePlacesPage = () => {
 	const {
@@ -23,9 +23,11 @@ const CreatePlacesPage = () => {
 	} = useForm<Place>()
 	
 	const {currentUser} = useAuth()
+
 	if (!currentUser) {
 		throw new Error("Error.")
 	}
+
 	const {data: user} = useGetUser(currentUser?.uid)
 
 	const [message, setMessage] = useState('')
@@ -48,7 +50,7 @@ const CreatePlacesPage = () => {
 				gMapsLink: `/${data.name},+${data.address},+${data.city}/@${lat},${lng}z`
 			})		
 			reset()
-			setMessage(user?.admin ? 'Place added successfully and waiting for approval' : '')
+			setMessage(user?.admin === false ? 'Place added successfully and waiting for approval' : 'Place successfully added')
 		} catch (error) {
 			setMessage('Error while adding place. Please try again.')
 		}
