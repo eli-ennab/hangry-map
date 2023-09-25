@@ -1,15 +1,17 @@
 import { useState } from 'react'
+import useAuth from '../hooks/useAuth'
 import { FirebaseError } from 'firebase/app'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import useAuth from '../hooks/useAuth'
 import { LoginCredentials } from '../types/User.types'
+// style
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Container from "react-bootstrap/Container"
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+import Alert from 'react-bootstrap/Alert'
 
 const LoginPage = () => {
 	const [loading, setLoading] = useState(false)
@@ -29,7 +31,7 @@ const LoginPage = () => {
 			if (error instanceof FirebaseError) {
 				setErrorMessage(error.message)
 			} else {
-				setErrorMessage("Unknown error, try again.")
+				setErrorMessage("The stars was not aligned and the whole vibe was off, please try again.")
 			}
 			setLoading(false)
 		}
@@ -43,7 +45,7 @@ const LoginPage = () => {
 						<Card.Body>
 							<Card.Title className="mb-3">Log In</Card.Title>
 
-							{errorMessage && (<p>{errorMessage}</p>)}
+							{errorMessage && (<Alert variant="dark">{errorMessage}</Alert>)}
 
 							<Form onSubmit={handleSubmit(onLogin)}>
 								<Form.Group controlId="email" className="mb-3">

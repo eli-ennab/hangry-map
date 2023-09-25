@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
+// style
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -13,7 +14,7 @@ const LogoutPage = () => {
 	useEffect(() => {
 		const logoutUser = async () => {
 			await logout()
-			setTimeout(() => navigate('/login'), 2000)
+			setTimeout(() => navigate('/login'), 1000)
 		}
 		logoutUser()
 	}, [logout, navigate])

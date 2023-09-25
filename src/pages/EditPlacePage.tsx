@@ -57,8 +57,7 @@ const EditPlacePage = () => {
 			
 			setMessage('Place updated successfully!')
 		} catch (error) {
-			console.error('Error while updating place:', error)
-			setMessage('Error while updating place. Please try again.')
+			setError(`Error while updating place: ${error}`)
 		}
 	}
 	

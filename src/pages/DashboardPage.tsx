@@ -4,10 +4,12 @@ import useGetAdmins from "../hooks/useGetAdmins.ts"
 import useGetImages from '../hooks/useGetImages.ts'
 import useGetPlaces from '../hooks/useGetPlaces.ts'
 import useGetUsers from '../hooks/useGetUsers.ts'
+// table schema
 import { adminColumns } from '../tableSchema/Admins.tsx'
 import { placesColumns } from '../tableSchema/Places.tsx'
-import { userColumns } from '../tableSchema/Users.tsx'
 import { imagesColumns } from '../tableSchema/Images.tsx'
+import { userColumns } from '../tableSchema/Users.tsx'
+// style
 import Badge from 'react-bootstrap/Badge'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
@@ -29,7 +31,6 @@ const DashboardPage = () => {
 		if (user[0]) {
 			user[0].admin === !user[0].admin
 		}
-
 		onAssignAdmin(userId)
 	}
 	

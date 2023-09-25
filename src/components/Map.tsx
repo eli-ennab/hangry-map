@@ -1,14 +1,16 @@
 import React, {ChangeEvent, useEffect, useMemo, useState} from 'react'
 import {GoogleMap, InfoWindowF, Libraries, MarkerF, useLoadScript} from '@react-google-maps/api'
 import {orderBy, where} from 'firebase/firestore'
+import usePlacesByCity from '../hooks/usePlacesByCity.ts'
 import {LatLngLiteral} from '../types/Places.types.ts'
 import AutoComplete from './AutoComplete.tsx'
-import Form from 'react-bootstrap/Form'
-import needle from '../assets/img/needle.png'
-import pin from '../assets/img/pin.png'
-import Alert from 'react-bootstrap/Alert'
 import PlacesOffCanvas from './PlacesOffCanvas.tsx'
-import usePlacesByCity from '../hooks/usePlacesByCity.ts'
+// img
+import pin from '../assets/img/pin.png'
+import needle from '../assets/img/needle.png'
+// style
+import Form from 'react-bootstrap/Form'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 
 interface Props {
@@ -22,16 +24,7 @@ interface Props {
 	userPos: LatLngLiteral | null | undefined
 }
 
-const Map: React.FC<Props> = ({
-								  zoom,
-								  setZoom,
-								  mapCenter,
-								  setMapCenter,
-								  onGetLocation,
-								  city,
-								  haveUserPos,
-								  userPos
-							  }) => {
+const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city, haveUserPos, userPos}) => {
 	
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
 	
@@ -58,16 +51,13 @@ const Map: React.FC<Props> = ({
 		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
 		libraries,
 	})
-	
 	const handleActiveMarker = (marker: string) => {
 		if (marker === activeMarker) return
 		setActiveMarker(marker)
 	}
-	
 	const onCatSelect = (e: ChangeEvent<HTMLSelectElement>) => {
 		setSelectCat(e.currentTarget.value);
 	}
-	
 	const onOfferSelect = (e: ChangeEvent<HTMLSelectElement>) => {
 		setSelectOffer(e.currentTarget.value);
 	}
@@ -83,7 +73,6 @@ const Map: React.FC<Props> = ({
 		(!selectCat || p.category === selectCat) &&
 		(!selectOffer || p.offerings === selectOffer)
 	)
-	
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
@@ -106,16 +95,7 @@ const Map: React.FC<Props> = ({
 		const d = R * c
 		return d
 	}
-	
-	// const sortedFilteredPlaces = [...filteredPlaces].map(place => {
-	// 	const distance = getDistance(place.lat!, place.lng!, userPos)
-	// 	return {
-	// 		...place,
-	// 		distance
-	// 	}
-	// }).sort((a, b) => a.distance - b.distance)
-	
-	
+		
 	return (
 		<>
 			{loading && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>Fetching places...</Alert>}
