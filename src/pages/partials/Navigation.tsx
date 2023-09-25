@@ -2,11 +2,11 @@ import Nav from 'react-bootstrap/Nav'
 import { NavLink, Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import useGetUser from '../../hooks/useGetUser.ts'
-import logo from '../../images/logo.png'
+import logo from '../../assets/img/logo.png'
 import Container from 'react-bootstrap/Container'
 import Image from 'react-bootstrap/Image'
 import Navbar from 'react-bootstrap/Navbar'
-import {NavDropdown} from 'react-bootstrap'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 
 const Navigation = () => {
 	const {
