@@ -19,9 +19,19 @@ interface Props {
 	onGetLocation: (city: string | null) => void
 	city: string | null
 	haveUserPos: boolean
+	userPos: LatLngLiteral | null | undefined
 }
 
-const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city, haveUserPos }) => {
+const Map: React.FC<Props> = ({ 
+	zoom, 
+	setZoom, 
+	mapCenter, 
+	setMapCenter, 
+	onGetLocation, 
+	city,
+	haveUserPos,
+	userPos}) => {
+	
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
 
 	const queryConditions = useMemo(() => {
@@ -37,12 +47,10 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	}, [city])
 
 	const [infoWindowCenter, setInfoWindowCenter] = useState(true)
-
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
-const [dist, setDist] = useState(0)
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useLoadScript({
@@ -82,25 +90,24 @@ const [dist, setDist] = useState(0)
 		return x * Math.PI / 180;
 	}
 
-	const getDistance = (PLlat: number, PLlng: number, p1: LatLngLiteral) => {
+	const getDistance = (PLlat: number, PLlng: number, p1: LatLngLiteral | null | undefined) => {
 		const p2: LatLngLiteral = {
 			lat: PLlat,
 			lng: PLlng
 		}
 		const R = 6378137
-		const dLat = rad(p2.lat - p1.lat)
-		const dLong = rad(p2.lng - p1.lng)
+		const dLat = rad(p2.lat - p1!.lat)
+		const dLong = rad(p2.lng - p1!.lng)
 		const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-			Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+			Math.cos(rad(p1!.lat)) * Math.cos(rad(p2.lat)) *
 			Math.sin(dLong / 2) * Math.sin(dLong / 2)
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 		const d = R * c
-		//setDist(d)
 		return d
 	}
 
 	const sortedFilteredPlaces = [...filteredPlaces].map(place => {
-		const distance = getDistance(place.lat!, place.lng!, mapCenter)
+		const distance = getDistance(place.lat!, place.lng!, userPos)
 		return {
 			...place,
 			distance
@@ -121,6 +128,7 @@ const [dist, setDist] = useState(0)
 					>
 						Places by city, category or offerings
 					</Button>
+					
 					<Button onClick={() => {
 						onGetLocation(city)
 						setUserCity(city)
@@ -129,9 +137,10 @@ const [dist, setDist] = useState(0)
 					>
 						Get your current location
 					</Button>
+					
 					<AutoComplete
 						setZoom={setZoom}
-						setSearchMarker={setMapCenter}
+						setMapCenter={setMapCenter}
 						onCitySelect={handleCitySelect}
 					/>
 					<div className={'selectWrap'}>
@@ -170,14 +179,14 @@ const [dist, setDist] = useState(0)
 				onMouseDown={() => null}
 			>
 				
-				{haveUserPos ? (	<MarkerF
-					position={mapCenter}
+				{haveUserPos && userPos ? (	<MarkerF
+					position={userPos}
 					icon={needle}
 					onClick={() => setInfoWindowCenter(!infoWindowCenter)}
 				>
 					{infoWindowCenter && (
-						<InfoWindowF onCloseClick={() => setInfoWindowCenter(!infoWindowCenter)} position={mapCenter} >
-							<div className={'infoWindowWrap'}>Showing Places for {city}</div>
+						<InfoWindowF onCloseClick={() => setInfoWindowCenter(!infoWindowCenter)} position={userPos} >
+							<div className={'infoWindowWrap'}>Your location in {city}</div>
 						</InfoWindowF>
 					)}
 				</MarkerF>): null}
@@ -191,21 +200,20 @@ const [dist, setDist] = useState(0)
 						onClick={
 						() => {
 							handleActiveMarker(p._id)
-							getDistance(p.lat!, p.lng!, mapCenter)
+							getDistance(p.lat!, p.lng!, userPos)
 						} }
 					>
 
 						{activeMarker === p._id ? (
 							<InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-								<div className={'infoWindowWrap'}>
+								<div className={'infoWindowWrap'} key={p._id}>
 									<span className={'infoHeading'}>{p.name}</span>
 									<p>{p.category} {' '} {p.offerings}</p>
 									<p className={'my-2'}>{p.description}</p>
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
 									
-									{/*TODO lägga till formatering av talet!*/}
-									<p>Distance: {Math.ceil(p.distance!)} meters from your position</p>
+									<p>{Math.ceil(p.distance!) / 1000} km from your position</p>
 									<p>
 										<a
 											href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`}

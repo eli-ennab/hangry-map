@@ -10,12 +10,16 @@ import {
 import "@reach/combobox/styles.css"
 
 interface Props {
-	setSearchMarker: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
+	setMapCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 	setZoom: React.Dispatch<React.SetStateAction<number>>
 	onCitySelect: (selectedPlace: string) => void
 }
 
-const AutoComplete: React.FC<Props> = ({ setSearchMarker, setZoom, onCitySelect }) => {
+const AutoComplete: React.FC<Props> = ({
+	setMapCenter, 
+	setZoom, 
+	onCitySelect, }) => {
+
 	const {
 		ready,
 		value,
@@ -33,10 +37,9 @@ const AutoComplete: React.FC<Props> = ({ setSearchMarker, setZoom, onCitySelect 
 		onCitySelect(selectedCity)
 
 		const { lat, lng } = getLatLng(res[0])
-		setZoom(14)
-		setSearchMarker({ lat, lng })
+		setZoom(15)
+		setMapCenter({ lat, lng })
 		setValue('')
-
 	}
 
 	return (
