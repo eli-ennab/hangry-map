@@ -42,7 +42,7 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
-	
+	const [dist, setDist] = useState(0)
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useLoadScript({
@@ -72,6 +72,29 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
+	const rad = (x) => {
+		return x * Math.PI / 180;
+	}
+	
+	const getDistance = (PLlat: number, PLlng: number, p1: LatLngLiteral) => {
+		const p2: LatLngLiteral = {
+			lat: PLlat,
+			lng: PLlng 
+		}
+		
+		const R = 6378137; // Earth’s mean radius in meter
+		const dLat = rad(p2.lat - p1.lat);
+		const dLong = rad(p2.lng - p1.lng);
+		const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+				Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+				Math.sin(dLong / 2) * Math.sin(dLong / 2);
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		const d = R * c;
+		// return d; // returns the distance in meter
+		setDist(d)
+	}
+	
+	
 
 	return (
 		<>
@@ -145,7 +168,11 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 						icon={pin}
 						key={p._id}
 						position={{ lat: Number(p.lat), lng: Number(p.lng) }}
-						onClick={() => handleActiveMarker(p._id)}
+						onClick={
+						() => {
+							handleActiveMarker(p._id)
+							getDistance(p.lat!, p.lng!, mapCenter)
+						} }
 					>
 
 						{activeMarker === p._id ? (
@@ -156,6 +183,9 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 									<p className={'my-2'}>{p.description}</p>
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
+									
+									{/*TODO lägga till formatering av talet!*/}
+									<p>Distance: {dist} meters	</p>
 										<p>
 											<a 
 												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
