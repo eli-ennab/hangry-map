@@ -52,7 +52,8 @@ const HomePage = () => {
 		}
 	}, [mapCenter])
 
-	useEffect(() => {
+	useEffect(() => {	
+		setError(false)
 		if (latParam && lngParam) {
 			const fetchCityFromLatLng = async () => {
 				try {
@@ -62,10 +63,12 @@ const HomePage = () => {
 					if (cityFromPlusCode) {
 						setUserCity(cityFromPlusCode)
 					} else {
-						console.warn("City component not found in the response.")
+						setError(true)
+						setErrorMsg('City not found..')
 					}
 				} catch (error) {
-					console.error("Error fetching city from Google Maps API:", error)
+					setError(true)
+					setErrorMsg(`Error fetching city from Google Maps API: ${error}`)
 				}
 			}
 			fetchCityFromLatLng()
