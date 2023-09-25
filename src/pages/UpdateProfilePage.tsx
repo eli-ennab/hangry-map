@@ -17,7 +17,6 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import Container from 'react-bootstrap/Container'
 
 const UpdateProfilePage = () => {
-	
 	const {
 		userEmail,
 		userName,
@@ -76,11 +75,9 @@ const UpdateProfilePage = () => {
 						onPhotoUrl(photoUrl)
 						setProgress(null)
 					})
-			}
-			
+			}	
 			await reloadUser()
 			setLoading(false)
-			
 		} catch
 			(error) {
 			if (error instanceof FirebaseError) {
@@ -224,6 +221,7 @@ const UpdateProfilePage = () => {
 									{errors.passwordConfirm &&
 										<p className="invalid">{errors.passwordConfirm.message ?? "Invalid value"}</p>}
 								</Form.Group>
+								
 								<div className="d-grid gap-2">
 									<Button
 										disabled={loading}
