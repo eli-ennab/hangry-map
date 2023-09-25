@@ -76,27 +76,36 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
-	const rad = (x) => {
+	const rad = (x: number) => {
 		return x * Math.PI / 180;
 	}
-	
+
 	const getDistance = (PLlat: number, PLlng: number, p1: LatLngLiteral) => {
 		const p2: LatLngLiteral = {
 			lat: PLlat,
-			lng: PLlng 
+			lng: PLlng
 		}
 		const R = 6378137
 		const dLat = rad(p2.lat - p1.lat)
 		const dLong = rad(p2.lng - p1.lng)
 		const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-				Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
-				Math.sin(dLong / 2) * Math.sin(dLong / 2)
+			Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+			Math.sin(dLong / 2) * Math.sin(dLong / 2)
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 		const d = R * c
+		//setDist(d)
 		return d
 	}
-	
-	
+
+	const sortedFilteredPlaces = [...filteredPlaces].map(place => {
+		const distance = getDistance(place.lat!, place.lng!, mapCenter)
+		return {
+			...place,
+			distance
+		}
+	}).sort((a, b) => a.distance - b.distance)
+
+
 
 	return (
 		<>
@@ -104,16 +113,16 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
-					<Button 
+					<Button
 						onClick={() => setShowPlacesCanvas(true)}
 						className="mb-2 my-1"
 					>
 						Places by city, category or offerings
 					</Button>
 					<Button onClick={() => {
-							onGetLocation(city)
-							setUserCity(city)
-						}}
+						onGetLocation(city)
+						setUserCity(city)
+					}}
 						className="mb-2 my-1"
 					>
 						Get your current location
@@ -126,14 +135,14 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 					<div className={'selectWrap'}>
 						<Form.Select size="sm" onChange={onCatSelect}>
 							<option value=''>Select a category</option>
-							{ categories.map(category => 
+							{categories.map(category =>
 								<option value={category}>{category}</option>)
 							}
 						</Form.Select>
 
 						<Form.Select size="sm" onChange={onOfferSelect}>
 							<option value=''>Select type of offerings</option>
-							{ offerings.map(offering => 
+							{offerings.map(offering =>
 								<option value={offering}>{offering}</option>)
 							}
 						</Form.Select>
@@ -142,7 +151,7 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 			</div>
 
 			<PlacesOffCanvas
-				places={filteredPlaces}
+				places={sortedFilteredPlaces}
 				show={showPlacesCanvas}
 				onHide={() => setShowPlacesCanvas(false)}
 			/>
@@ -172,16 +181,16 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 				</MarkerF>
 
 
-				{filteredPlaces && filteredPlaces.map(p => (
+				{sortedFilteredPlaces && sortedFilteredPlaces.map(p => (
 					<MarkerF
 						icon={pin}
 						key={p._id}
 						position={{ lat: Number(p.lat), lng: Number(p.lng) }}
 						onClick={
-						() => {
-							handleActiveMarker(p._id)
-							getDistance(p.lat!, p.lng!, mapCenter)
-						} }
+							() => {
+								handleActiveMarker(p._id)
+								getDistance(p.lat!, p.lng!, mapCenter)
+							}}
 					>
 
 						{activeMarker === p._id ? (
@@ -192,19 +201,20 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 									<p className={'my-2'}>{p.description}</p>
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
-									
-									<p>Distance: {Math.ceil(getDistance(p.lat!, p.lng!, mapCenter))} meters from your position	</p>
-										<p>
-											<a 
-												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
-												target={'_blank'} 
-												className="text-decoration-none">
-													Google Maps Direction 
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
-												</a>
-										</p>
+
+									{/*TODO lägga till formatering av talet!*/}
+									<p>Distance: {Math.ceil(p.distance!)} meters from your position</p>
+									<p>
+										<a
+											href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`}
+											target={'_blank'}
+											className="text-decoration-none">
+											Google Maps Direction
+											<span className="material-symbols-outlined infoIcon">
+												open_in_new
+											</span>
+										</a>
+									</p>
 									<div>
 										{p.website && (
 											<p>
