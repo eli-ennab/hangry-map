@@ -78,7 +78,6 @@ const HomePage = () => {
 	useEffect(() => {
 		getLocation()
 	}, []);
-	
 	const getLocation = () => {
 		setError(false)
 		if (navigator.geolocation) {
