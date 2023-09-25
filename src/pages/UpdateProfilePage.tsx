@@ -122,7 +122,7 @@ const UpdateProfilePage = () => {
 							{errorMessage && (<Alert variant="danger">{errorMessage}</Alert>)}
 							<div className="d-flex justify-content-center my-3">
 								<Image
-									src={userPhotoUrl || `https://placehold.co/100x100?text=${currentUser?.displayName ?? 'Name'}`}
+									src={userPhotoUrl || `https://placehold.co/100x100?text=${currentUser?.displayName ?? 'N/A'}`}
 									fluid
 									roundedCircle
 									className="w-25"
