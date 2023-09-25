@@ -41,7 +41,6 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
-const [dist, setDist] = useState(0)
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useLoadScript({
@@ -94,7 +93,7 @@ const [dist, setDist] = useState(0)
 				Math.sin(dLong / 2) * Math.sin(dLong / 2)
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 		const d = R * c
-		setDist(d)
+		return d
 	}
 	
 	
@@ -189,8 +188,7 @@ const [dist, setDist] = useState(0)
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
 									
-									{/*TODO lägga till formatering av talet!*/}
-									<p>Distance: {Math.ceil(dist)} meters from your position	</p>
+									<p>Distance: {Math.ceil(getDistance(p.lat!, p.lng!, mapCenter))} meters from your position	</p>
 										<p>
 											<a 
 												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
