@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LatLngLiteral } from "../types/Places.types"
 import Map from '../components/Map.tsx'
 import Alert from 'react-bootstrap/Alert'
-import { useSearchParams } from 'react-router-dom'
 
 const HomePage = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -13,6 +13,8 @@ const HomePage = () => {
 	const [errorMsg, setErrorMsg] = useState('')
 
 	const [userCity, setUserCity] = useState<string | null>(null)
+
+	const navigate = useNavigate()
 
 	const [mapCenter, setMapCenter] = useState<LatLngLiteral>(() => {
 		if (latParam && lngParam) {
@@ -30,8 +32,26 @@ const HomePage = () => {
 	const [zoom, setZoom] = useState(13)
 
 	useEffect(() => {
-		setSearchParams({ lat: `${mapCenter.lat}`, lng: `${mapCenter.lng}` })
-	}, [mapCenter, setSearchParams])
+		if (latParam && lngParam) {
+			const newCenter: LatLngLiteral = {
+				lat: Number(latParam),
+				lng: Number(lngParam),
+			}
+			setMapCenter(newCenter)
+		}
+	}, [latParam, lngParam])
+
+	// update url when mapCenter changes
+	useEffect(() => {
+		// convert mapCenter to string for comparison
+		const currentLat = mapCenter.lat.toFixed(6)
+		const currentLng = mapCenter.lng.toFixed(6)
+
+		// check if theres an change
+		if (currentLat !== latParam || currentLng !== lngParam) {
+			navigate(`?lat=${currentLat}&lng=${currentLng}`)
+		}
+	}, [mapCenter])
 
 	// Fetch city name based on lat and lng
 	useEffect(() => {

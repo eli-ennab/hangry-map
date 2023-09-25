@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { GoogleMap, InfoWindowF, Libraries, MarkerF, useLoadScript } from '@react-google-maps/api'
+import { orderBy, where } from 'firebase/firestore'
 import { LatLngLiteral } from '../types/Places.types.ts'
 import AutoComplete from './AutoComplete.tsx'
 import Form from 'react-bootstrap/Form'
@@ -7,9 +8,8 @@ import needle from '../assets/img/needle.png'
 import pin from '../assets/img/pin.png'
 import Alert from 'react-bootstrap/Alert'
 import PlacesOffCanvas from './PlacesOffCanvas.tsx'
-import { Button } from 'react-bootstrap'
 import usePlacesByCity from '../hooks/usePlacesByCity.ts'
-import { orderBy, where } from 'firebase/firestore'
+import Button from 'react-bootstrap/Button'
 
 interface Props {
 	zoom: number
@@ -21,7 +21,6 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city }) => {
-
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
 
 	const queryConditions = useMemo(() => {
@@ -35,14 +34,14 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 			setUserCity(city)
 		}
 	}, [city])
-	
+
 	const [infoWindowCenter, setInfoWindowCenter] = useState(true)
-	
+
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
-	const [dist, setDist] = useState(0)
+const [dist, setDist] = useState(0)
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useLoadScript({
@@ -66,8 +65,14 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	if (!isLoaded) return <div id={'initial-loader'}>Loading Map</div>
 
 	if (!places) return
-	const filtCatPlaces = places.filter(p => p.category === selectCat)
-	const filtOfferPlaces = places.filter(p => p.offerings === selectOffer)
+
+	const categories = [...new Set(places?.map(place => place.category))]
+	const offerings = [...new Set(places?.map(place => place.offerings))]
+
+	const filteredPlaces = places.filter(p =>
+		(!selectCat || p.category === selectCat) &&
+		(!selectOffer || p.offerings === selectOffer)
+	)
 
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
@@ -102,11 +107,15 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
-					<Button onClick={() => setShowPlacesCanvas(true)}>All places in your area</Button>
+					<Button onClick={() => setShowPlacesCanvas(true)}>
+						Places by city, category or offerings
+					</Button>
 					<Button onClick={() => {
 						onGetLocation(city)
 						setUserCity(city)
-					}}>Get Current Location</Button>
+					}}>
+						Get your current location
+					</Button>
 					<AutoComplete
 						setZoom={setZoom}
 						setSearchMarker={setMapCenter}
@@ -115,25 +124,23 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 					<div className={'selectWrap'}>
 						<Form.Select size="sm" onChange={onCatSelect}>
 							<option value=''>Select a category</option>
-							<option value="Café">Café</option>
-							<option value="Restaurant">Restaurant</option>
-							<option value="FastFood">Fastfood</option>
-							<option value="KioskGrill">Kiosk/Grill</option>
-							<option value="FoodTruck">Foodtruck</option>
+							{ categories.map(category => 
+								<option value={category}>{category}</option>)
+							}
 						</Form.Select>
 
 						<Form.Select size="sm" onChange={onOfferSelect}>
 							<option value=''>Select type of offerings</option>
-							<option value="Lunch">Lunch</option>
-							<option value="AfterWork">After work</option>
-							<option value="Dinner">Dinner/Á la carte</option>
+							{ offerings.map(offering => 
+								<option value={offering}>{offering}</option>)
+							}
 						</Form.Select>
 					</div>
 				</div>
 			</div>
 
 			<PlacesOffCanvas
-				places={places}
+				places={filteredPlaces}
 				show={showPlacesCanvas}
 				onHide={() => setShowPlacesCanvas(false)}
 			/>
@@ -161,9 +168,9 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 						</InfoWindowF>
 					)}
 				</MarkerF>
-				
 
-				{places && places.map(p => (
+
+				{filteredPlaces && filteredPlaces.map(p => (
 					<MarkerF
 						icon={pin}
 						key={p._id}
@@ -200,40 +207,40 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 									<div>
 										{p.website && (
 											<p>
-												<a 
-													href={p.website} 
-													target={'_blank'} 
+												<a
+													href={p.website}
+													target={'_blank'}
 													className="text-decoration-none">
-														{p.website}
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
+													{p.website}
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
 												</a>
 											</p>
 										)}
 										{p.facebook && (
 											<p><strong>Facebook:</strong>{' '}
-												<a 
-													href={p.facebook} 
-													target={'_blank'} 
+												<a
+													href={p.facebook}
+													target={'_blank'}
 													className="text-decoration-none">
-														Visit 
-															<span className="material-symbols-outlined infoIcon">
-																open_in_new
-															</span>
+													Visit
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
 												</a>
 											</p>
 										)}
 										{p.instagram && (
 											<p><strong>Instagram:</strong>{' '}
-												<a 
-													href={p.instagram} 
-													target={'_blank'} 
+												<a
+													href={p.instagram}
+													target={'_blank'}
 													className="text-decoration-none">
-														Visit 
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
+													Visit
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
 												</a>
 											</p>
 										)}
@@ -246,13 +253,10 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 										)}
 									</div>
 								</div>
-
 							</InfoWindowF>
 						) : null}
-
 					</MarkerF>
 				))}
-
 			</GoogleMap>
 		</>
 	)
