@@ -1,14 +1,15 @@
 import useGetPlacesApproved from '../hooks/useGetPlacesApproved.ts'
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from 'react-bootstrap/Accordion'
 import Container from 'react-bootstrap/Container'
-import {Link} from 'react-router-dom'
-import ListGroup from 'react-bootstrap/ListGroup'
+import { Link } from 'react-router-dom'
 import pin from '../assets/img/pin.png'
 import Image from 'react-bootstrap/Image'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 const Places = () => {
 	const {data: places, loading} = useGetPlacesApproved()
 	if (loading) return <div>Fetching Places...</div>
+
 	return (
 		<Container className={'pt-3'}>
 			<h2>Places</h2>
@@ -61,7 +62,15 @@ const Places = () => {
 									{p.facebook && (
 										<ListGroup.Item 
 											key={p.facebook} 
-											action as={Link} to={p.facebook} target={'_blank'}>Visit Their Facebook{' '}<span className="material-symbols-outlined infoIcon">open_in_new</span></ListGroup.Item>)}
+											action 
+											as={Link} 
+											to={p.facebook} 
+											target={'_blank'}>
+												Visit Their Facebook{' '}
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
+										</ListGroup.Item>)}
 									{p.instagram && (
 										<ListGroup.Item 
 											key={p.instagram} 
@@ -73,7 +82,7 @@ const Places = () => {
 													<span className="material-symbols-outlined infoIcon">
 														open_in_new
 													</span>
-											</ListGroup.Item>)}
+										</ListGroup.Item>)}
 								</ListGroup>
 								{p.images && (
 									<div className="mb-3 imgWrap">

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LatLngLiteral } from "../types/Places.types"
 import Map from '../components/Map.tsx'
 import Alert from 'react-bootstrap/Alert'
-import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const HomePage = () => {
 	const [searchParams, setSearchParams] = useSearchParams()

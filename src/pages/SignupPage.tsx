@@ -1,16 +1,16 @@
 import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import useAuth from '../hooks/useAuth'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { SignUpCredentials } from '../types/User.types.ts'
 import { FirebaseError } from 'firebase/app'
+import useAuth from '../hooks/useAuth'
+import { SignUpCredentials } from '../types/User.types.ts'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Container from "react-bootstrap/Container"
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import Alert from 'react-bootstrap/Alert'
 
 const SignupPage = () => {
 	const [loading, setLoading] = useState(false)
@@ -18,12 +18,10 @@ const SignupPage = () => {
 	const { handleSubmit, register, watch, formState: { errors } } = useForm<SignUpCredentials>()
 	const { signup } = useAuth()
 	const navigate = useNavigate()
-
 	const passwordRef = useRef('')
 	passwordRef.current = watch('password')
 
 	const onSignup: SubmitHandler<SignUpCredentials> = async (data) => {
-
 		setErrorMessage(null)
 
 		try {

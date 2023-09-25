@@ -3,12 +3,14 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../services/firebase.ts'
 import { ForgotPasswordFormData } from '../types/User.types.ts'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import { Card, Col, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import Row from 'react-bootstrap/Row'
 
 const ForgotPassword: React.FC = () => {
 	const [message, setMessage] = useState<string | null>(null)
