@@ -3,6 +3,7 @@ import { LatLngLiteral } from "../types/Places.types"
 import Map from '../components/Map.tsx'
 import Alert from 'react-bootstrap/Alert'
 import { useSearchParams } from 'react-router-dom'
+
 const HomePage = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const latParam = searchParams.get('lat')
@@ -11,7 +12,7 @@ const HomePage = () => {
 	const [error, setError] = useState(false)
 	const [errorMsg, setErrorMsg] = useState('')
 
-	const [userCity, setUserCity] = useState<string | null>(null);
+	const [userCity, setUserCity] = useState<string | null>(null)
 
 	const [mapCenter, setMapCenter] = useState<LatLngLiteral>(() => {
 		if (latParam && lngParam) {
@@ -48,7 +49,7 @@ const HomePage = () => {
 				} catch (error) {
 					console.error("Error fetching city from Google Maps API:", error)
 				}
-			};
+			}
 
 			fetchCityFromLatLng()
 		}
@@ -66,7 +67,6 @@ const HomePage = () => {
 
 				setZoom(16)
 				setMapCenter(newPos)
-
 				setFetchPos(false)
 			}, (error) => {
 				setErrorMsg(`Error getting location: ${error.message}. Try reloading and accept "Use your location" to get the best experience!  `)

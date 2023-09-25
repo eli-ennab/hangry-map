@@ -45,7 +45,7 @@ const CreatePlacesPage = () => {
 				created_at: serverTimestamp(),
 				images: [],
 				isApproved: !!user?.admin,
-				gMapsLink: `https://www.google.se/maps/dir//${data.name},+${data.address},+${data.city}/@${lat},${lng}z`
+				gMapsLink: `/${data.name},+${data.address},+${data.city}/@${lat},${lng}z`
 			})		
 			reset()
 			setMessage(user?.admin ? 'Place added successfully and waiting for approval' : '')

@@ -32,7 +32,6 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 
 	const { data: places, loading } = usePlacesByCity(userCity!, queryConditions)
 
-
 	useEffect(() => {
 		if (city) {
 			setUserCity(city)
@@ -58,7 +57,6 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 		setActiveMarker(marker)
 	}
 
-
 	const onCatSelect = (e: ChangeEvent<HTMLSelectElement>) => {
 		setSelectCat(e.currentTarget.value);
 	}
@@ -76,7 +74,6 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
-	
 	
 	return (
 		<>
@@ -155,9 +152,9 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 									<p className={'my-2'}>{p.description}</p>
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
-									<p>
-										<a href={p.gMapsLink} target={'_blank'} className="text-decoration-none">Google Maps Directions <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
-									</p>
+										<p>
+											<a href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}/${p.gMapsLink}`} target={'_blank'} className="text-decoration-none">Google Maps Directions <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+										</p>
 									<div>
 										{p.website && (
 											<p>
