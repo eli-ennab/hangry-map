@@ -11,7 +11,7 @@ const Places = () => {
 	return (
 		
 		<Container className={'pt-3'}>
-			<h2 className={'headingGradient'}>Places</h2>
+			<h2>Places</h2>
 			{places && !loading ? (
 				<Accordion>
 					{places.map(p => (						

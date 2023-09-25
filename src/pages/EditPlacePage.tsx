@@ -77,7 +77,7 @@ const EditPlacePage = () => {
 						<Col md={{span: 10, offset: 1}}>
 							<Card>
 								<Card.Body>
-									<Card.Title className="mb-3 headingGradient">Update Place</Card.Title>
+									<Card.Title className="mb-3">Update Place</Card.Title>
 									
 									{message && <Alert variant="dark">{message}</Alert>}
 									{error && <Alert variant="dark-danger">{error}</Alert>}

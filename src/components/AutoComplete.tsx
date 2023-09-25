@@ -35,6 +35,7 @@ const AutoComplete: React.FC<Props> = ({ setSearchMarker, setZoom, onCitySelect 
 		const { lat, lng } = getLatLng(res[0])
 		setZoom(14)
 		setSearchMarker({ lat, lng })
+		setValue('')
 
 	}
 
