@@ -1,12 +1,10 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { GoogleMap, InfoWindowF, Libraries, MarkerF, useLoadScript } from '@react-google-maps/api'
-import useGetPlacesApproved from '../hooks/useGetPlacesApproved.ts'
 import { LatLngLiteral } from '../types/Places.types.ts'
 import AutoComplete from './AutoComplete.tsx'
 import Form from 'react-bootstrap/Form'
-import person from '../assets/img/person.png'
+import needle from '../assets/img/needle.png'
 import pin from '../assets/img/pin.png'
-import Animation = google.maps.Animation
 import Alert from 'react-bootstrap/Alert'
 import PlacesOffCanvas from './PlacesOffCanvas.tsx'
 import { Button } from 'react-bootstrap'
@@ -37,14 +35,14 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 			setUserCity(city)
 		}
 	}, [city])
-
-	//const {data: places, loading} = useGetPlacesApproved()
-
+	
+	const [infoWindowCenter, setInfoWindowCenter] = useState(true)
+	
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
-
+	
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useLoadScript({
@@ -74,7 +72,7 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
-	
+
 	return (
 		<>
 			{loading && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>Fetching places...</Alert>}
@@ -131,14 +129,20 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 
 				<MarkerF
 					position={mapCenter}
-					icon={person}
-				// animation={Animation.BOUNCE}
-				/>
+					icon={needle}
+					onClick={() => setInfoWindowCenter(!infoWindowCenter)}
+				>
+					{infoWindowCenter && (
+						<InfoWindowF onCloseClick={() => setInfoWindowCenter(!infoWindowCenter)} position={mapCenter} >
+							<div className={'infoWindowWrap'}>Showing Places for {city}</div>
+						</InfoWindowF>
+					)}
+				</MarkerF>
+				
 
 				{places && places.map(p => (
 					<MarkerF
 						icon={pin}
-						// animation={Animation.DROP}
 						key={p._id}
 						position={{ lat: Number(p.lat), lng: Number(p.lng) }}
 						onClick={() => handleActiveMarker(p._id)}
