@@ -30,7 +30,6 @@ const UpdateProfilePage = () => {
 		reloadUser
 	} = useAuth()
 	
-	
 	const [progress, setProgress] = useState<number | null>(null)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const [loading, setLoading] = useState(false)
@@ -47,12 +46,12 @@ const UpdateProfilePage = () => {
 		try {
 			setLoading(true)
 			
-			if (data.name !== (currentUser?.displayName ?? "")) {
-				await onNameChange(data.name)
+			if (data.name !== currentUser?.displayName && data.name.trim().length > 0) {
+				await onNameChange(data.name.trim())
 			}
 			
-			if (data.email !== (currentUser?.email ?? "")) {
-				await onMailChange(data.email)
+			if (data.email !== currentUser?.email) {
+				await onMailChange(data.email.trim())
 			}
 			
 			if (data.password) await onPassword(data.password)
@@ -100,7 +99,6 @@ const UpdateProfilePage = () => {
 	const photoFileRef = useRef<FileList | null>(null)
 	photoFileRef.current = watch("photoFile")
 	
-	
 	const onDeletePic = async () => {
 		await onPhotoUrl('')
 		await reloadUser()
@@ -109,7 +107,6 @@ const UpdateProfilePage = () => {
 	if (!currentUser) {
 		return (<p>Loading ...</p>)
 	}
-	
 	
 	return (
 		<Container className="py-3 center-y">
@@ -139,10 +136,11 @@ const UpdateProfilePage = () => {
 									<Form.Control
 										placeholder={userName ?? 'Enter a name'}
 										type="text"
+										required
 										{...register('name', {
 											minLength: {
-												value: 2,
-												message: "Must be at least 2 characters long..."
+												value: 3,
+												message: "Must be at least 3 characters long..."
 											}
 										})}
 									/>
