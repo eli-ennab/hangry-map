@@ -153,24 +153,54 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
 										<p>
-											<a href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}/${p.gMapsLink}`} target={'_blank'} className="text-decoration-none">Google Maps Directions <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+											<a 
+												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
+												target={'_blank'} 
+												className="text-decoration-none">
+													Google Maps Direction 
+														<span className="material-symbols-outlined infoIcon">
+															open_in_new
+														</span>
+												</a>
 										</p>
 									<div>
 										{p.website && (
 											<p>
-												<a href={p.website} target={'_blank'} className="text-decoration-none">{p.website}
-													<span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+												<a 
+													href={p.website} 
+													target={'_blank'} 
+													className="text-decoration-none">
+														{p.website}
+														<span className="material-symbols-outlined infoIcon">
+															open_in_new
+														</span>
+												</a>
 											</p>
 										)}
 										{p.facebook && (
 											<p><strong>Facebook:</strong>{' '}
-												<a href={p.facebook} target={'_blank'} className="text-decoration-none">Visit <span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+												<a 
+													href={p.facebook} 
+													target={'_blank'} 
+													className="text-decoration-none">
+														Visit 
+															<span className="material-symbols-outlined infoIcon">
+																open_in_new
+															</span>
+												</a>
 											</p>
 										)}
 										{p.instagram && (
 											<p><strong>Instagram:</strong>{' '}
-												<a href={p.instagram} target={'_blank'} className="text-decoration-none">Visit 
-													<span className="material-symbols-outlined infoIcon">open_in_new</span></a>
+												<a 
+													href={p.instagram} 
+													target={'_blank'} 
+													className="text-decoration-none">
+														Visit 
+														<span className="material-symbols-outlined infoIcon">
+															open_in_new
+														</span>
+												</a>
 											</p>
 										)}
 										{p.images && (
