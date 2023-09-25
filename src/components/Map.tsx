@@ -35,14 +35,14 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 			setUserCity(city)
 		}
 	}, [city])
-	
+
 	const [infoWindowCenter, setInfoWindowCenter] = useState(true)
-	
+
 	const [showPlacesCanvas, setShowPlacesCanvas] = useState(false)
 	const [activeMarker, setActiveMarker] = useState<string | null>(null)
 	const [selectCat, setSelectCat] = useState<string | null>(null)
 	const [selectOffer, setSelectOffer] = useState<string | null>(null)
-	
+
 	const libraries: Libraries = useMemo(() => ["places"], [])
 
 	const { isLoaded } = useLoadScript({
@@ -66,8 +66,11 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 	if (!isLoaded) return <div id={'initial-loader'}>Loading Map</div>
 
 	if (!places) return
-	const filtCatPlaces = places.filter(p => p.category === selectCat)
-	const filtOfferPlaces = places.filter(p => p.offerings === selectOffer)
+
+	const filteredPlaces = places.filter(p =>
+		(!selectCat || p.category === selectCat) &&
+		(!selectOffer || p.offerings === selectOffer)
+	)
 
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
@@ -110,7 +113,7 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 			</div>
 
 			<PlacesOffCanvas
-				places={places}
+				places={filteredPlaces}
 				show={showPlacesCanvas}
 				onHide={() => setShowPlacesCanvas(false)}
 			/>
@@ -138,9 +141,9 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 						</InfoWindowF>
 					)}
 				</MarkerF>
-				
 
-				{places && places.map(p => (
+
+				{filteredPlaces && filteredPlaces.map(p => (
 					<MarkerF
 						icon={pin}
 						key={p._id}
@@ -156,54 +159,54 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 									<p className={'my-2'}>{p.description}</p>
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
-										<p>
-											<a 
-												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
-												target={'_blank'} 
-												className="text-decoration-none">
-													Google Maps Direction 
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
-												</a>
-										</p>
+									<p>
+										<a
+											href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`}
+											target={'_blank'}
+											className="text-decoration-none">
+											Google Maps Direction
+											<span className="material-symbols-outlined infoIcon">
+												open_in_new
+											</span>
+										</a>
+									</p>
 									<div>
 										{p.website && (
 											<p>
-												<a 
-													href={p.website} 
-													target={'_blank'} 
+												<a
+													href={p.website}
+													target={'_blank'}
 													className="text-decoration-none">
-														{p.website}
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
+													{p.website}
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
 												</a>
 											</p>
 										)}
 										{p.facebook && (
 											<p><strong>Facebook:</strong>{' '}
-												<a 
-													href={p.facebook} 
-													target={'_blank'} 
+												<a
+													href={p.facebook}
+													target={'_blank'}
 													className="text-decoration-none">
-														Visit 
-															<span className="material-symbols-outlined infoIcon">
-																open_in_new
-															</span>
+													Visit
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
 												</a>
 											</p>
 										)}
 										{p.instagram && (
 											<p><strong>Instagram:</strong>{' '}
-												<a 
-													href={p.instagram} 
-													target={'_blank'} 
+												<a
+													href={p.instagram}
+													target={'_blank'}
 													className="text-decoration-none">
-														Visit 
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
+													Visit
+													<span className="material-symbols-outlined infoIcon">
+														open_in_new
+													</span>
 												</a>
 											</p>
 										)}
