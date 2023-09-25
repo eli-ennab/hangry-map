@@ -24,12 +24,14 @@ const HomePage = () => {
 			}
 		}
 		return {
-			lat: 55.60505657215901,
-			lng: 13.00283069278582,
+			lat: 55.853268746696365,
+			lng: 13.664624604034254,
 		}
 	})
-
-	const [zoom, setZoom] = useState(13)
+	
+	const [haveUserPos, setHaveUserPos] = useState(false)
+	
+	const [zoom, setZoom] = useState(10)
 
 	useEffect(() => {
 		if (latParam && lngParam) {
@@ -70,11 +72,14 @@ const HomePage = () => {
 					console.error("Error fetching city from Google Maps API:", error)
 				}
 			}
-
 			fetchCityFromLatLng()
 		}
 	}, [latParam, lngParam])
-
+	
+	useEffect(() => {
+		getLocation()
+	}, []);
+	
 	const getLocation = () => {
 		setError(false)
 		if (navigator.geolocation) {
@@ -88,6 +93,7 @@ const HomePage = () => {
 				setZoom(16)
 				setMapCenter(newPos)
 				setFetchPos(false)
+				setHaveUserPos(true)
 			}, (error) => {
 				setErrorMsg(`Error getting location: ${error.message}. Try reloading and accept "Use your location" to get the best experience!  `)
 				setFetchPos(false)
@@ -105,7 +111,7 @@ const HomePage = () => {
 			{error && <Alert variant="danger" className={'text-center mt-3 w-75 mx-auto'}>{errorMsg}</Alert>}
 			{fetchPos && <Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>Fetching your position...</Alert>}
 
-			<Map zoom={zoom} setZoom={setZoom} mapCenter={mapCenter} setMapCenter={setMapCenter} onGetLocation={getLocation} city={userCity} />
+			<Map zoom={zoom} setZoom={setZoom} mapCenter={mapCenter} setMapCenter={setMapCenter} onGetLocation={getLocation} city={userCity} haveUserPos={haveUserPos} />
 		</>
 	)
 }

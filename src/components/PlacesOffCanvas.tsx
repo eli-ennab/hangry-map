@@ -1,15 +1,22 @@
 import ListGroup from 'react-bootstrap/ListGroup'
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { Place } from '../types/Places.types'
+import {LatLngLiteral, Place} from '../types/Places.types'
 
 type PlacesOffCanvasProps = {
 	places: Place[] | null
 	show: boolean
 	onHide: () => void
+	userPos: LatLngLiteral
+	onGetDistance: (PLlat: number, PLlng: number, p1: LatLngLiteral) => void
 }
 
-const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({ places, show, onHide }) => {
-	const sortedPlaces = places?.slice().sort((a, b) => a.name.localeCompare(b.name))
+const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({ places, show, onHide , userPos, onGetDistance}) => {
+	// const sortedPlaces = places?.slice().sort((a, b) => a.name.localeCompare(b.name))
+	
+		const sortedPlaces = places!.map((p) => {
+		onGetDistance(p.lat!, p.lng!, userPos)
+	})
+	console.log(sortedPlaces)
 
 	return (
 		<Offcanvas show={show} onHide={onHide} placement="start" title="Places near you">
@@ -20,13 +27,13 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({ places, show, onHide 
 				</Offcanvas.Header>
 			<Offcanvas.Body>
 				<ListGroup>
-					{sortedPlaces?.map(place => (
-						<ListGroup.Item key={place._id} className="mb-3 placeListItem">
-							<strong>{place.name}</strong>
-							<br />
-							{place.address}
-						</ListGroup.Item>
-					))}
+					{/*{sortedPlaces?.map(place => (*/}
+					{/*	<ListGroup.Item key={place._id} className="mb-3 placeListItem">*/}
+					{/*		<strong>{place.name}</strong>*/}
+					{/*		<br />*/}
+					{/*		{place.address}*/}
+					{/*	</ListGroup.Item>*/}
+					{/*))}*/}
 				</ListGroup>
 			</Offcanvas.Body>
 		</Offcanvas>

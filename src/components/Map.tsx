@@ -10,6 +10,7 @@ import Alert from 'react-bootstrap/Alert'
 import PlacesOffCanvas from './PlacesOffCanvas.tsx'
 import usePlacesByCity from '../hooks/usePlacesByCity.ts'
 import Button from 'react-bootstrap/Button'
+import {get} from 'react-hook-form'
 
 interface Props {
 	zoom: number
@@ -18,9 +19,10 @@ interface Props {
 	setMapCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
 	onGetLocation: (city: string | null) => void
 	city: string | null
+	haveUserPos: boolean
 }
 
-const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city }) => {
+const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city, haveUserPos }) => {
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
 
 	const queryConditions = useMemo(() => {
@@ -94,7 +96,8 @@ const [dist, setDist] = useState(0)
 				Math.sin(dLong / 2) * Math.sin(dLong / 2)
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 		const d = R * c
-		setDist(d)
+		// setDist(d)
+		return d
 	}
 	
 	
@@ -138,9 +141,11 @@ const [dist, setDist] = useState(0)
 			</div>
 
 			<PlacesOffCanvas
+				userPos={mapCenter}
 				places={filteredPlaces}
 				show={showPlacesCanvas}
 				onHide={() => setShowPlacesCanvas(false)}
+				onGetDistance={getDistance}
 			/>
 
 			<GoogleMap
@@ -154,8 +159,8 @@ const [dist, setDist] = useState(0)
 				clickableIcons={false}
 				onMouseDown={() => null}
 			>
-
-				<MarkerF
+				
+				{haveUserPos ? (	<MarkerF
 					position={mapCenter}
 					icon={needle}
 					onClick={() => setInfoWindowCenter(!infoWindowCenter)}
@@ -165,7 +170,7 @@ const [dist, setDist] = useState(0)
 							<div className={'infoWindowWrap'}>Showing Places for {city}</div>
 						</InfoWindowF>
 					)}
-				</MarkerF>
+				</MarkerF>): null}
 
 
 				{filteredPlaces && filteredPlaces.map(p => (
