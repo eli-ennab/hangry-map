@@ -10,7 +10,6 @@ import Alert from 'react-bootstrap/Alert'
 import PlacesOffCanvas from './PlacesOffCanvas.tsx'
 import usePlacesByCity from '../hooks/usePlacesByCity.ts'
 import Button from 'react-bootstrap/Button'
-import {get} from 'react-hook-form'
 
 interface Props {
 	zoom: number
@@ -79,28 +78,36 @@ const [dist, setDist] = useState(0)
 	const handleCitySelect = (selectedCity: string) => {
 		setUserCity(selectedCity)
 	}
-	const rad = (x) => {
+	const rad = (x: number) => {
 		return x * Math.PI / 180;
 	}
-	
+
 	const getDistance = (PLlat: number, PLlng: number, p1: LatLngLiteral) => {
 		const p2: LatLngLiteral = {
 			lat: PLlat,
-			lng: PLlng 
+			lng: PLlng
 		}
 		const R = 6378137
 		const dLat = rad(p2.lat - p1.lat)
 		const dLong = rad(p2.lng - p1.lng)
 		const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-				Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
-				Math.sin(dLong / 2) * Math.sin(dLong / 2)
+			Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+			Math.sin(dLong / 2) * Math.sin(dLong / 2)
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 		const d = R * c
-		// setDist(d)
+		//setDist(d)
 		return d
 	}
-	
-	
+
+	const sortedFilteredPlaces = [...filteredPlaces].map(place => {
+		const distance = getDistance(place.lat!, place.lng!, mapCenter)
+		return {
+			...place,
+			distance
+		}
+	}).sort((a, b) => a.distance - b.distance)
+
+
 
 	return (
 		<>
@@ -108,13 +115,18 @@ const [dist, setDist] = useState(0)
 
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
-					<Button onClick={() => setShowPlacesCanvas(true)}>
+					<Button
+						onClick={() => setShowPlacesCanvas(true)}
+						className="mb-2 my-1"
+					>
 						Places by city, category or offerings
 					</Button>
 					<Button onClick={() => {
 						onGetLocation(city)
 						setUserCity(city)
-					}}>
+					}}
+						className="mb-2 my-1"
+					>
 						Get your current location
 					</Button>
 					<AutoComplete
@@ -125,14 +137,14 @@ const [dist, setDist] = useState(0)
 					<div className={'selectWrap'}>
 						<Form.Select size="sm" onChange={onCatSelect}>
 							<option value=''>Select a category</option>
-							{ categories.map(category => 
+							{categories.map(category =>
 								<option value={category}>{category}</option>)
 							}
 						</Form.Select>
 
 						<Form.Select size="sm" onChange={onOfferSelect}>
 							<option value=''>Select type of offerings</option>
-							{ offerings.map(offering => 
+							{offerings.map(offering =>
 								<option value={offering}>{offering}</option>)
 							}
 						</Form.Select>
@@ -141,16 +153,14 @@ const [dist, setDist] = useState(0)
 			</div>
 
 			<PlacesOffCanvas
-				userPos={mapCenter}
-				places={filteredPlaces}
+				places={sortedFilteredPlaces}
 				show={showPlacesCanvas}
 				onHide={() => setShowPlacesCanvas(false)}
-				onGetDistance={getDistance}
 			/>
 
 			<GoogleMap
 				onClick={() => setActiveMarker(null)}
-				mapContainerStyle={{ width: "100dvw", height: '91dvh' }}
+				mapContainerStyle={{ width: "100vw", height: '91vh' }}
 				options={{
 					zoom: zoom,
 					center: mapCenter,
@@ -173,7 +183,7 @@ const [dist, setDist] = useState(0)
 				</MarkerF>): null}
 
 
-				{filteredPlaces && filteredPlaces.map(p => (
+				{sortedFilteredPlaces && sortedFilteredPlaces.map(p => (
 					<MarkerF
 						icon={pin}
 						key={p._id}
@@ -195,18 +205,18 @@ const [dist, setDist] = useState(0)
 									<p>{p.address}, {p.city}</p>
 									
 									{/*TODO lägga till formatering av talet!*/}
-									<p>Distance: {Math.ceil(dist)} meters from your position	</p>
-										<p>
-											<a 
-												href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`} 
-												target={'_blank'} 
-												className="text-decoration-none">
-													Google Maps Direction 
-														<span className="material-symbols-outlined infoIcon">
-															open_in_new
-														</span>
-												</a>
-										</p>
+									<p>Distance: {Math.ceil(p.distance!)} meters from your position</p>
+									<p>
+										<a
+											href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`}
+											target={'_blank'}
+											className="text-decoration-none">
+											Google Maps Direction
+											<span className="material-symbols-outlined infoIcon">
+												open_in_new
+											</span>
+										</a>
+									</p>
 									<div>
 										{p.website && (
 											<p>
