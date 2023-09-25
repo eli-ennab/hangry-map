@@ -44,6 +44,7 @@ const AutoComplete: React.FC<Props> = ({ setSearchMarker, setZoom, onCitySelect 
 			<ComboboxInput
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
+				className="search-input p-2 my-1"
 				disabled={!ready}
 				placeholder="Hangry Search 😠"
 			/>

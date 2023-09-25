@@ -104,13 +104,18 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
-					<Button onClick={() => setShowPlacesCanvas(true)}>
+					<Button 
+						onClick={() => setShowPlacesCanvas(true)}
+						className="mb-2 my-1"
+					>
 						Places by city, category or offerings
 					</Button>
 					<Button onClick={() => {
-						onGetLocation(city)
-						setUserCity(city)
-					}}>
+							onGetLocation(city)
+							setUserCity(city)
+						}}
+						className="mb-2 my-1"
+					>
 						Get your current location
 					</Button>
 					<AutoComplete
@@ -144,7 +149,7 @@ const Map: React.FC<Props> = ({ zoom, setZoom, mapCenter, setMapCenter, onGetLoc
 
 			<GoogleMap
 				onClick={() => setActiveMarker(null)}
-				mapContainerStyle={{ width: "100dvw", height: '91dvh' }}
+				mapContainerStyle={{ width: "100vw", height: '91vh' }}
 				options={{
 					zoom: zoom,
 					center: mapCenter,
