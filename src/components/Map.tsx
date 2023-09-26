@@ -9,9 +9,9 @@ import PlacesOffCanvas from './PlacesOffCanvas.tsx'
 import pin from '../assets/img/pin.png'
 import needle from '../assets/img/needle.png'
 // style
-import Form from 'react-bootstrap/Form'
-import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import LoadingSpinner from './LoadingSpinner.tsx'
 
 interface Props {
 	zoom: number
@@ -56,10 +56,10 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 		setActiveMarker(marker)
 	}
 	const onCatSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelectCat(e.currentTarget.value);
+		setSelectCat(e.currentTarget.value)
 	}
 	const onOfferSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelectOffer(e.currentTarget.value);
+		setSelectOffer(e.currentTarget.value)
 	}
 	
 	if (!isLoaded) return <div id={'initial-loader'}>Loading Map</div>
@@ -77,7 +77,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 		setUserCity(selectedCity)
 	}
 	const rad = (x: number) => {
-		return x * Math.PI / 180;
+		return x * Math.PI / 180
 	}
 	
 	const getDistance = (PLlat: number, PLlng: number, p1: LatLngLiteral | null | undefined) => {
@@ -98,7 +98,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 		
 	return (
 		<>
-			{loading && <Alert variant="dark" className={'text-center mt-3 w-75 mx-auto'}>Fetching places...</Alert>}
+			{loading && <LoadingSpinner />}
 			
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
@@ -123,6 +123,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 						setMapCenter={setMapCenter}
 						onCitySelect={handleCitySelect}
 					/>
+					
 					<div className={'selectWrap'}>
 						<Form.Select size="sm" onChange={onCatSelect}>
 							<option value=''>Select a category</option>
@@ -177,7 +178,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 				</MarkerF>) : null}
 				
 				
-				{places && places.map(p => (
+				{places && filteredPlaces.map(p => (
 					<MarkerF
 						icon={pin}
 						key={p._id}

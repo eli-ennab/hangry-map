@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LatLngLiteral } from "../types/Places.types"
 import Map from '../components/Map.tsx'
 import Alert from 'react-bootstrap/Alert'
+import LoadingSpinner from "../components/LoadingSpinner.tsx"
 
 const HomePage = () => {
 	const [searchParams] = useSearchParams()
@@ -26,7 +27,7 @@ const HomePage = () => {
 		return {
 			lat: 55.853268746696365,
 			lng: 13.664624604034254,
-		}
+		}		
 	})
 	
 	const [userPos, setuserPos] = useState<LatLngLiteral|null>(null)
@@ -39,13 +40,16 @@ const HomePage = () => {
 				lat: Number(latParam),
 				lng: Number(lngParam),
 			}
+			setZoom(15)
 			setMapCenter(newCenter)
+		} else {
+			getLocation()
 		}
 	}, [latParam, lngParam])
 
 	useEffect(() => {
-		const currentLat = mapCenter.lat.toFixed(6)
-		const currentLng = mapCenter.lng.toFixed(6)
+		const currentLat = mapCenter.lat.toFixed(7)
+		const currentLng = mapCenter.lng.toFixed(7)
 
 		if (currentLat !== latParam || currentLng !== lngParam) {
 			navigate(`?lat=${currentLat}&lng=${currentLng}`)
@@ -74,10 +78,6 @@ const HomePage = () => {
 			fetchCityFromLatLng()
 		}
 	}, [latParam, lngParam])
-	
-	useEffect(() => {
-		getLocation()
-	}, []);
 	
 	const getLocation = () => {
 		setError(false)
@@ -108,9 +108,15 @@ const HomePage = () => {
 
 	return (
 		<>
-			{error && <Alert variant="danger" className={'text-center mt-3 w-75 mx-auto'}>{errorMsg}</Alert>}
-			{fetchPos && <Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>Fetching your position...</Alert>}
-					
+			{ error && 
+				<Alert variant="danger" className={'text-center mt-3 w-75 mx-auto'}>
+					{errorMsg}
+				</Alert>
+			}
+
+			{ fetchPos && 
+				<LoadingSpinner />
+			}		
 			
 			<Map 
 				zoom={zoom} 
@@ -121,7 +127,7 @@ const HomePage = () => {
 				city={userCity} 
 				haveUserPos={haveUserPos}
 				userPos={userPos}/>
-	</>
+			</>
 	)
 }
 

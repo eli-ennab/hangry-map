@@ -19,7 +19,6 @@ const useStreamCollectionWithConditions = <T>(
 			setData(data)
 			setLoading(false)
 		})
-		
 	}, [colRef, queryConstraints])
 	
 	return {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createContext, useEffect, useState } from 'react'
 import { auth } from '../services/firebase'
-import { doc, updateDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, setDoc, serverTimestamp } from "firebase/firestore"
 import {
 	onAuthStateChanged,
 	createUserWithEmailAndPassword,
@@ -15,6 +15,7 @@ import {
 } from 'firebase/auth'
 
 import { userCol } from '../services/firebase.ts'
+import LoadingSpinner from '../components/LoadingSpinner.tsx'
 
 type AuthContextType = {
 	currentUser: User | null
@@ -34,7 +35,7 @@ type AuthContextType = {
 	onPhotoUrl: (photoUrl: string) => Promise<void> | undefined
 }
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null)
 
 type AuthContextProps = {
 	children: React.ReactNode
@@ -169,7 +170,7 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
 				reloadUser
 			}}
 		>
-			{loading ? (<p>Loading</p>) : (<>{children}</>)}
+			{loading ? (<LoadingSpinner />) : (<>{children}</>)}
 		</AuthContext.Provider>
 	)
 }
