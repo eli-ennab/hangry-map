@@ -123,7 +123,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 							setFetchPos(true)
 						}}
 						>
-						{fetchPos ? <PuffLoader color="#c3e6cb" size={20} cssOverride={{'vertical-align':'middle'}}/> :<span className="material-symbols-outlined align-middle">location_searching</span> }
+						{fetchPos ? <PuffLoader color="#c3e6cb" size={20} cssOverride={{verticalAlign: 'middle' }}/> :<span className="material-symbols-outlined align-middle">location_searching</span> }
 						</Button>
 					</div>
 					
