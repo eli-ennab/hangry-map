@@ -58,11 +58,13 @@ p {
 .sub-nav-menu-wrap {
 	background: $green;
 }
+.btnWrap {
+	min-width: 282px;
+}
 .sub-nav-menu {
 	background: $green;
 	padding: 0.1em 1em;
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: center;
 	max-width: 1320px;
@@ -119,8 +121,15 @@ p {
 	}
 }
 
-@media (max-width: 585px) {
+@media (max-width: 900px) {
+	.btnWrap {
+		button {
+			display: block;
+			margin: 0.2rem auto;
+		}
+	}
 	.sub-nav-menu {
+		justify-content: center;
 		flex-wrap: wrap;		
 		input {
 			margin-bottom: 0.5rem;
