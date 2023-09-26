@@ -14,6 +14,7 @@ import Form from 'react-bootstrap/Form'
 import LoadingSpinner from './LoadingSpinner.tsx'
 import UploadImage from './UploadImage.tsx'
 import useAuth from '../hooks/useAuth.tsx'
+import {PuffLoader} from 'react-spinners'
 
 interface Props {
 	zoom: number
@@ -24,9 +25,11 @@ interface Props {
 	city: string | null
 	haveUserPos: boolean
 	userPos: LatLngLiteral | null | undefined
+	fetchPos: boolean
+	setFetchPos: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city, haveUserPos, userPos}) => {
+const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, setMapCenter, onGetLocation, city, haveUserPos, userPos}) => {
 	const {currentUser} = useAuth()
 	
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
@@ -99,6 +102,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 		return d
 	}
 	
+	
 	return (
 		<>
 			{loading && <LoadingSpinner/>}
@@ -116,9 +120,10 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 						<Button onClick={() => {
 							onGetLocation()
 							setUserCity(city)
+							setFetchPos(true)
 						}}
 						>
-							Get your current location
+						{fetchPos ? <PuffLoader color="#c3e6cb" size={20} cssOverride={{'vertical-align':'middle'}}/> :<span className="material-symbols-outlined align-middle">location_searching</span> }
 						</Button>
 					</div>
 					

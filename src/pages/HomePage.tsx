@@ -126,7 +126,10 @@ const HomePage = () => {
 				onGetLocation={getLocation} 
 				city={userCity} 
 				haveUserPos={haveUserPos}
-				userPos={userPos}/>
+				userPos={userPos}
+				fetchPos={fetchPos}
+				setFetchPos={setFetchPos}
+			/>
 			</>
 	)
 }
