@@ -12,6 +12,8 @@ import needle from '../assets/img/needle.png'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import LoadingSpinner from './LoadingSpinner.tsx'
+import UploadImage from './UploadImage.tsx'
+import useAuth from '../hooks/useAuth.tsx'
 
 interface Props {
 	zoom: number
@@ -25,7 +27,8 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city, haveUserPos, userPos}) => {
-	
+	const {currentUser} = useAuth()
+
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
 	
 	const queryConditions = useMemo(() => {
@@ -258,6 +261,11 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 												])}
 											</div>
 										)}
+										{currentUser ? (
+										<div className={'w-75 mx-auto'}>
+											<UploadImage place={p} text={'Add an image to this place'} />
+										</div>
+										) : null }
 									</div>
 								</div>
 							</InfoWindowF>
