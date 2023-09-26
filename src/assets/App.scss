@@ -4,14 +4,15 @@
 @import 'nav';
 @import 'tables';
 @import 'tabs';
-@import '_infoWindow';
+@import 'infoWindow';
+@import 'indexPage';
 
 body {
 	background-color: $white;
 	font-family: "Karla", sans-serif;
-	max-height: 100vh;
+	//max-height: 100vh;
 	max-width: 100vw;
-	overflow: hidden;
+	//overflow: hidden;
 }
 
 p {
@@ -54,7 +55,6 @@ p {
 	background-position: right center;
 	}
 }
-
 .sub-nav-menu-wrap {
 	background: $green;
 }
