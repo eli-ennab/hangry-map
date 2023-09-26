@@ -201,7 +201,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 									<p>{Math.ceil(getDistance(p.lat!, p.lng!, userPos)) / 1000} km from your position</p>
 									<p>
 										<a
-											href={`https://www.google.se/maps/dir/${mapCenter.lat},${mapCenter.lng}${p.gMapsLink}`}
+											href={`https://www.google.se/maps/dir/${userPos.lat},${userPos.lng}${p.gMapsLink}`}
 											target={'_blank'}
 											className="text-decoration-none">
 											Google Maps Direction
