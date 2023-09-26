@@ -32,15 +32,15 @@ const HomePage = () => {
 	
 	const [userPos, setuserPos] = useState<LatLngLiteral|null>(null)
 	const [haveUserPos, setHaveUserPos] = useState(false)
-	const [zoom, setZoom] = useState(10)
+	const [zoom, setZoom] = useState(9)
 
 	useEffect(() => {
+		
 		if (latParam && lngParam) {
 			const newCenter: LatLngLiteral = {
 				lat: Number(latParam),
 				lng: Number(lngParam),
 			}
-			setZoom(15)
 			setMapCenter(newCenter)
 		} else {
 			getLocation()

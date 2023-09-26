@@ -28,7 +28,7 @@ interface Props {
 
 const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLocation, city, haveUserPos, userPos}) => {
 	const {currentUser} = useAuth()
-
+	
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
 	
 	const queryConditions = useMemo(() => {
@@ -98,10 +98,10 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 		const d = R * c
 		return d
 	}
-		
+	
 	return (
 		<>
-			{loading && <LoadingSpinner />}
+			{loading && <LoadingSpinner/>}
 			
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
@@ -193,7 +193,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 							}}
 					>
 						
-						{userPos && activeMarker === p._id ? (
+						{activeMarker === p._id ? (
 							<InfoWindowF onCloseClick={() => setActiveMarker(null)}>
 								<div className={'infoWindowWrap'} key={p._id}>
 									<span className={'infoHeading'}>{p.name}</span>
@@ -202,18 +202,21 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
 									
-									<p>{Math.ceil(getDistance(p.lat!, p.lng!, userPos)) / 1000} km from your position</p>
-									<p>
-										<a
-											href={`https://www.google.se/maps/dir/${userPos.lat},${userPos.lng}${p.gMapsLink}`}
-											target={'_blank'}
-											className="text-decoration-none">
-											Google Maps Direction
-											<span className="material-symbols-outlined infoIcon">
+									{userPos ? (<>
+											<p>{Math.ceil(getDistance(p.lat!, p.lng!, userPos)) / 1000} km from your position</p>
+											<p>
+												<a
+													href={`https://www.google.se/maps/dir/${userPos.lat},${userPos.lng}${p.gMapsLink}`}
+													target={'_blank'}
+													className="text-decoration-none">
+													Google Maps Direction
+													<span className="material-symbols-outlined infoIcon">
 												open_in_new
 											</span>
-										</a>
-									</p>
+												</a>
+											</p>
+										</>
+									) : null}
 									<div>
 										{p.website && (
 											<p>
@@ -262,10 +265,10 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 											</div>
 										)}
 										{currentUser ? (
-										<div className={'w-75 mx-auto'}>
-											<UploadImage place={p} text={'Add an image to this place'} />
-										</div>
-										) : null }
+											<div className={'w-75 mx-auto'}>
+												<UploadImage place={p} text={'Add an image to this place'}/>
+											</div>
+										) : null}
 									</div>
 								</div>
 							</InfoWindowF>
