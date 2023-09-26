@@ -1,7 +1,7 @@
 import ListGroup from 'react-bootstrap/ListGroup'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import {LatLngLiteral, Place} from '../types/Places.types'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Button from 'react-bootstrap/Button'
 
 type PlacesOffCanvasProps = {
@@ -13,6 +13,7 @@ type PlacesOffCanvasProps = {
 }
 
 const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filteredPlaces, getDistance, userPos}) => {
+	const [sortBy, setSortBy] = useState<Place[]>(filteredPlaces)
 	
 	const sortedFilteredPlaces = [...filteredPlaces].map(place => {
 		const distance = getDistance(place.lat!, place.lng!, userPos)
@@ -22,7 +23,9 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filtered
 		}
 	}).sort((a, b) => a.distance - b.distance)
 	
-	const [sortBy, setSortBy] = useState<Place[]>(sortedFilteredPlaces)
+	useEffect(() => {
+	setSortBy(sortedFilteredPlaces)
+	}, [filteredPlaces, getDistance, userPos]);
 	
 	return (
 		<Offcanvas show={show} onHide={onHide} placement="start" title="Places near you">
