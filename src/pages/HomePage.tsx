@@ -40,6 +40,8 @@ const HomePage = () => {
 				lng: Number(lngParam),
 			}
 			setMapCenter(newCenter)
+		} else {
+			getLocation()
 		}
 	}, [latParam, lngParam])
 
@@ -75,9 +77,6 @@ const HomePage = () => {
 		}
 	}, [latParam, lngParam])
 	
-	useEffect(() => {
-		getLocation()
-	}, []);
 	const getLocation = () => {
 		setError(false)
 		if (navigator.geolocation) {
