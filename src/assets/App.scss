@@ -81,6 +81,14 @@ p {
 	}
 }
 
+.btnOffCanvas {
+	border: none;
+	background: $purple;
+	&:hover {
+		background: $light-purple;
+	}
+}
+
 .selectWrap {
 	width: 400px;
 	display: flex;

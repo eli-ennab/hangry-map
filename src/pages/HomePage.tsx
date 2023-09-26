@@ -40,6 +40,7 @@ const HomePage = () => {
 				lat: Number(latParam),
 				lng: Number(lngParam),
 			}
+			setZoom(15)
 			setMapCenter(newCenter)
 		} else {
 			getLocation()
@@ -47,8 +48,8 @@ const HomePage = () => {
 	}, [latParam, lngParam])
 
 	useEffect(() => {
-		const currentLat = mapCenter.lat.toFixed(6)
-		const currentLng = mapCenter.lng.toFixed(6)
+		const currentLat = mapCenter.lat.toFixed(7)
+		const currentLng = mapCenter.lng.toFixed(7)
 
 		if (currentLat !== latParam || currentLng !== lngParam) {
 			navigate(`?lat=${currentLat}&lng=${currentLng}`)
