@@ -22,29 +22,18 @@ const Places = () => {
 								<p>{p.offerings}{', '} {p.category}</p>								
 								<p>{p.description}</p>
 								<ListGroup variant="flush" className={'my-3'}>
+									{p.phone && (
 									<ListGroup.Item 
 										key={p.phone} 
 										action 
 										as={Link} 
 										to={`tel:${p.phone}`}>
 											{p.phone}
-									</ListGroup.Item>
+									</ListGroup.Item> )}
 									<ListGroup.Item 
 										key={p.address} 
-										action 
-										as={Link} 
-										to={`/map?lat=${p.lat}&lng=${p.lng}`}>
-											{p.address}, {p.city} - Click to show on our map
-									</ListGroup.Item>
-									<ListGroup.Item 
-										key={p.gMapsLink} 
-										action 
-										as={Link} 
-										to={p.gMapsLink} target={'_blank'} title={'Get directions...'}>
-											Google Maps Directions 
-												<span className="material-symbols-outlined infoIcon">
-													open_in_new
-												</span>
+								>
+											{p.address}, {p.city}
 									</ListGroup.Item>
 									
 									{p.website && (
