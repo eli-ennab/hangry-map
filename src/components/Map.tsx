@@ -123,6 +123,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 						setMapCenter={setMapCenter}
 						onCitySelect={handleCitySelect}
 					/>
+					
 					<div className={'selectWrap'}>
 						<Form.Select size="sm" onChange={onCatSelect}>
 							<option value=''>Select a category</option>
@@ -177,7 +178,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 				</MarkerF>) : null}
 				
 				
-				{places && places.map(p => (
+				{places && filteredPlaces.map(p => (
 					<MarkerF
 						icon={pin}
 						key={p._id}
