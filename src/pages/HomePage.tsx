@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LatLngLiteral } from "../types/Places.types"
 import Map from '../components/Map.tsx'
 import Alert from 'react-bootstrap/Alert'
+import LoadingSpinner from "../components/LoadingSpinner.tsx"
 
 const HomePage = () => {
 	const [searchParams] = useSearchParams()
@@ -113,9 +114,7 @@ const HomePage = () => {
 			}
 
 			{ fetchPos && 
-				<Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>
-					Fetching your position...
-				</Alert>
+				<LoadingSpinner />
 			}		
 			
 			<Map 
