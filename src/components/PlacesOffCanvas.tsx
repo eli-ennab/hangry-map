@@ -1,6 +1,8 @@
 import ListGroup from 'react-bootstrap/ListGroup'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import {LatLngLiteral, Place} from '../types/Places.types'
+import React, {useState} from 'react'
+import Button from 'react-bootstrap/Button'
 
 type PlacesOffCanvasProps = {
 	show: boolean
@@ -10,7 +12,8 @@ type PlacesOffCanvasProps = {
 	userPos: LatLngLiteral | null | undefined
 }
 
-const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({  show, onHide, filteredPlaces, getDistance, userPos }) => {
+const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filteredPlaces, getDistance, userPos}) => {
+	
 	const sortedFilteredPlaces = [...filteredPlaces].map(place => {
 		const distance = getDistance(place.lat!, place.lng!, userPos)
 		return {
@@ -18,6 +21,9 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({  show, onHide, filter
 			distance
 		}
 	}).sort((a, b) => a.distance - b.distance)
+	
+	const [sortBy, setSortBy] = useState<Place[]>(sortedFilteredPlaces)
+	
 	return (
 		<Offcanvas show={show} onHide={onHide} placement="start" title="Places near you">
 			<Offcanvas.Header className="placeListHeader" closeButton>
@@ -26,12 +32,20 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({  show, onHide, filter
 				</Offcanvas.Title>
 			</Offcanvas.Header>
 			<Offcanvas.Body>
+				<div className={'d-flex justify-content-around mb-3'}>
+					<Button className={'btnOffCanvas'} onClick={() => setSortBy(filteredPlaces)}> Sort by A - Z </Button>
+					<Button className={'btnOffCanvas'} onClick={() => setSortBy(sortedFilteredPlaces)}> Sort by Nearest</Button>
+				</div>
 				<ListGroup>
-					{sortedFilteredPlaces?.map(place => (
+					{sortBy?.map(place => (
 						<ListGroup.Item key={place._id} className="mb-3 placeListItem">
 							<strong>{place.name}</strong>
-							<br />
+							<p>{Math.ceil(getDistance(place.lat!, place.lng!, userPos)) / 1000} km from your position</p>
 							{place.address}
+							<p>
+								{place.category}, {place.offerings}
+							</p>
+							
 						</ListGroup.Item>
 					))}
 				</ListGroup>
