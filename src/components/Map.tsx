@@ -158,6 +158,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 					onHide={() => setShowPlacesCanvas(false)}
 					getDistance={getDistance}
 					userPos={userPos}
+					setActiveMarker={setActiveMarker}
 				
 				/>
 			) : null}
@@ -196,6 +197,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 							() => {
 								handleActiveMarker(p._id)
 								getDistance(p.lat!, p.lng!, userPos)
+								setInfoWindowCenter(false)
 							}}
 					>
 						
