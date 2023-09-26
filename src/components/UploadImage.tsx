@@ -30,7 +30,7 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 			'image/webp': [],
 		},
 		onDrop: onDrop,
-		maxSize: 5 * 1024 * 1024,
+		maxSize: 2 * 1024 * 1024,
 		maxFiles: 1,
 	})
 	
@@ -60,6 +60,7 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 							{text}
 						</p>}
 				</div>
+			<p>supported formats: gif, jpeg, jpg, png, webp <span className={'d-block'}>max filesize: 2mb</span> </p>
 			</div>
 		</>
 	)
