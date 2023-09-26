@@ -56,28 +56,32 @@ p {
 }
 
 .sub-nav-menu-wrap {
-	
 	background: $green;
 }
 .sub-nav-menu {
 	background: $green;
-	padding: 0.5em 1em;
+	padding: 0.1em 1em;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-around;
+	align-items: center;
 	max-width: 1320px;
 	margin: 0 auto;
-	form {
-		display: flex;
-		justify-content: space-around;
-		width: 90%;
-	}
+	width: 100%;
+
 	button {
+		min-width: fit-content;
+		height: fit-content;
+		margin: 0.2rem;
 		border: none;
 		background: $purple;
 		&:hover {
 			background: $light-purple;
 
 		}
+	}
+	form {
+		height: fit-content;
 	}
 }
 
@@ -93,6 +97,10 @@ p {
 	width: 400px;
 	display: flex;
 	gap: 0.5rem;
+	select {
+		height: fit-content;
+		min-width: fit-content;
+	}
 }
 
 #initial-loader {
@@ -102,19 +110,25 @@ p {
 	justify-content: center;
 	align-items: center;
 }
+[data-reach-combobox] {
+	min-width: 294px;
+	height: fit-content;
+	input {
+		border-radius: 0.5rem;
+		height: fit-content;
+	}
+}
 
 @media (max-width: 585px) {
 	.sub-nav-menu {
-		flex-wrap: wrap;
+		flex-wrap: wrap;		
 		input {
-
 			margin-bottom: 0.5rem;
 		}
 		form {
 			flex-wrap: wrap;
 			select {
-
-				margin-bottom: 0.5rem;
+			margin: 0.2rem
 			}
 		}
 	}

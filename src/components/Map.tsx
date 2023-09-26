@@ -105,21 +105,23 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 			
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
-					<Button
-						onClick={() => setShowPlacesCanvas(true)}
-						className="mb-2 my-1"
-					>
-						Places by city, category or offerings
-					</Button>
-					
-					<Button onClick={() => {
-						onGetLocation(city)
-						setUserCity(city)
-					}}
-							className="mb-2 my-1"
-					>
-						Get your current location
-					</Button>
+					<div>
+						<Button
+							onClick={() => setShowPlacesCanvas(true)}
+							className=""
+						>
+							Places by city, category or offerings
+						</Button>
+						
+						<Button onClick={() => {
+							onGetLocation(city)
+							setUserCity(city)
+						}}
+								className=""
+						>
+							Get your current location
+						</Button>
+					</div>
 					
 					<AutoComplete
 						setZoom={setZoom}
