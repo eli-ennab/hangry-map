@@ -10,9 +10,10 @@ type PlacesOffCanvasProps = {
 	filteredPlaces: Place[]
 	getDistance: (PLlat: number, PLlng: number, p1: LatLngLiteral | null | undefined) => number
 	userPos: LatLngLiteral | null | undefined
+	setActiveMarker:  React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filteredPlaces, getDistance, userPos}) => {
+const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filteredPlaces, setActiveMarker, getDistance, userPos}) => {
 	const [sortBy, setSortBy] = useState<Place[]>(filteredPlaces)
 	
 	const sortedFilteredPlaces = [...filteredPlaces].map(place => {
@@ -41,7 +42,13 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filtered
 				</div>
 				<ListGroup>
 					{sortBy?.map(place => (
-						<ListGroup.Item key={place._id} className="mb-3 placeListItem">
+						<ListGroup.Item key={place._id} className="mb-3 placeListItem" 
+										action
+										onClick={() => {
+											setActiveMarker(place._id)
+											onHide()
+										}
+						}>
 							<strong>{place.name}</strong>
 							<p>{Math.ceil(getDistance(place.lat!, place.lng!, userPos)) / 1000} km from your position</p>
 							{place.address}
