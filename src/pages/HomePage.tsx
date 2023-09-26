@@ -26,7 +26,7 @@ const HomePage = () => {
 		return {
 			lat: 55.853268746696365,
 			lng: 13.664624604034254,
-		}
+		}		
 	})
 	
 	const [userPos, setuserPos] = useState<LatLngLiteral|null>(null)
@@ -106,9 +106,17 @@ const HomePage = () => {
 
 	return (
 		<>
-			{error && <Alert variant="danger" className={'text-center mt-3 w-75 mx-auto'}>{errorMsg}</Alert>}
-			{fetchPos && <Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>Fetching your position...</Alert>}
-					
+			{ error && 
+				<Alert variant="danger" className={'text-center mt-3 w-75 mx-auto'}>
+					{errorMsg}
+				</Alert>
+			}
+
+			{ fetchPos && 
+				<Alert variant={'dark'} className={'text-center mt-3 w-75 mx-auto'}>
+					Fetching your position...
+				</Alert>
+			}		
 			
 			<Map 
 				zoom={zoom} 
@@ -119,7 +127,7 @@ const HomePage = () => {
 				city={userCity} 
 				haveUserPos={haveUserPos}
 				userPos={userPos}/>
-	</>
+			</>
 	)
 }
 

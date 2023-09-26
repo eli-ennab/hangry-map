@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { Card, Row, Col, Button, Container } from 'react-bootstrap'
-import { Place } from '../types/Places.types';
+import { Place } from '../types/Places.types'
 
 interface PlacesListProps {
 	onApprove: (placeId: string) => void

@@ -33,6 +33,17 @@ p {
 	color: $white;
 }
 
+.loading-spinner-wrapper {
+	max-width: 100vw;
+	max-height: 100vh;
+	position: absolute;
+	top: 45vh;
+	left: 45vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .btnGradient {
 	transition: 0.5s;
 	background: rgb(61,218,180);
