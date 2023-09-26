@@ -20,7 +20,7 @@ interface Props {
 	setZoom: React.Dispatch<React.SetStateAction<number>>
 	mapCenter: LatLngLiteral
 	setMapCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
-	onGetLocation: (city: string | null) => void
+	onGetLocation: () => void
 	city: string | null
 	haveUserPos: boolean
 	userPos: LatLngLiteral | null | undefined
@@ -35,7 +35,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 		return [orderBy('name'), where('city', '==', userCity!), where('isApproved', '==', true)]
 	}, [userCity])
 	
-	const {data: places, loading} = usePlacesByCity(userCity!, queryConditions)
+	const {data: places, loading} = usePlacesByCity(queryConditions)
 	
 	useEffect(() => {
 		if (city) {
@@ -105,19 +105,18 @@ const Map: React.FC<Props> = ({zoom, setZoom, mapCenter, setMapCenter, onGetLoca
 			
 			<div className={'sub-nav-menu-wrap'}>
 				<div className="sub-nav-menu">
-					<div>
+					<div className={'btnWrap'}>
 						<Button
 							onClick={() => setShowPlacesCanvas(true)}
-							className=""
+							className={'text-center'}
 						>
 							Places by city, category or offerings
 						</Button>
 						
 						<Button onClick={() => {
-							onGetLocation(city)
+							onGetLocation()
 							setUserCity(city)
 						}}
-								className=""
 						>
 							Get your current location
 						</Button>

@@ -1,4 +1,4 @@
-import React, {ReactEventHandler} from 'react'
+import React from 'react'
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete"
 import {
 	Combobox,
@@ -6,7 +6,6 @@ import {
 	ComboboxPopover,
 	ComboboxList,
 	ComboboxOption,
-	ComboboxButton
 } from "@reach/combobox"
 import "@reach/combobox/styles.css"
 import Button from 'react-bootstrap/Button'
