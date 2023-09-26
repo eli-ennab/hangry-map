@@ -159,6 +159,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 					getDistance={getDistance}
 					userPos={userPos}
 					setActiveMarker={setActiveMarker}
+					setInfoWindowCenter={setInfoWindowCenter}
 				
 				/>
 			) : null}
