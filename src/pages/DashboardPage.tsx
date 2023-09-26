@@ -36,24 +36,24 @@ const DashboardPage = () => {
 	
 	const placesBadge = 
 		<span className={'d-block'}> 
-			<Badge bg="success" text={'dark'}>{places?.filter(p => p.isApproved) .length}</Badge> of 
-			<Badge bg="danger" className={''} text={'dark'}>{places?.length}</Badge> approved 
+			<Badge bg={'secondary'}  className="dashboard-badge m-1">{places?.filter(p => p.isApproved) .length}</Badge> of {' '}
+			<Badge bg={'secondary'}  className="dashboard-badge m-1" >{places?.length}</Badge> approved 
 		</span>
 
 	const imagesBadge = 
 		<span className={'d-block'}> 
-			<Badge bg="success" text={'dark'}>{images?.filter(i => i.isApproved) .length}</Badge> of 
-			<Badge bg="danger" className={''} text={'dark'}>{images?.length}</Badge> approved 
+			<Badge bg={'secondary'}  className="dashboard-badge m-1">{images?.filter(i => i.isApproved) .length}</Badge> of {' '}
+			<Badge bg={'secondary'}  className="dashboard-badge m-1">{images?.length}</Badge> approved 
 		</span>
 	
 	const adminsCount = 
 		<span className={'d-block'}> 
-			<Badge bg="primary" text={'dark'}>{admins?.length}</Badge>
+			<Badge bg={'secondary'} className="dashboard-badge m-1">{admins?.length}</Badge>
 		</span>
 
 	const userCount = 
 		<span className={'d-block'}>  
-			<Badge bg="warning" text={'dark'}>{users?.length}</Badge>
+			<Badge bg={'secondary'} className="dashboard-badge m-1">{users?.length}</Badge>
 		</span>
 
 	return currentUser && places && users && admins && images ? (
