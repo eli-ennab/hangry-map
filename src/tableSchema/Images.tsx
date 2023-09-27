@@ -9,7 +9,7 @@ const imagesColumnsHelper = createColumnHelper<TImages>()
 
 export const imagesColumns = [
 	imagesColumnsHelper.group({
-		header: 'Place Details',
+		header: 'Images Details',
 		columns: [
 			imagesColumnsHelper.accessor('url', {
 				header: 'Picture',
