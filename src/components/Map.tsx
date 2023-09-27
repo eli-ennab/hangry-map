@@ -303,7 +303,7 @@ const Map: React.FC<Props> = ({
 														key={p.photoUrl} 
 														src={p.photoUrl} 
 														alt={p.photoUrl} 
-														className={'img-fluid rounded shadow w-25'} 
+														className={'img-fluid rounded shadow w-25 mx-2'} 
 													/>
 												])}
 											</div>
