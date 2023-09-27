@@ -7,7 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner.tsx'
 import Image from 'react-bootstrap/Image'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-const Places = () => {
+const PlacesPage = () => {
 	const {data: places, loading} = useGetPlacesApproved()
 	if (loading) return <LoadingSpinner />
 
@@ -95,4 +95,4 @@ const Places = () => {
 	)
 }
 
-export default Places
+export default PlacesPage
