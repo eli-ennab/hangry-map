@@ -1,10 +1,10 @@
-import React, {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone'
+import React, { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
 import classNames from 'classnames'
 import useUploadImg from '../hooks/useUploadImg.ts'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Alert from 'react-bootstrap/Alert'
-import {Place} from '../types/Places.types.ts'
+import { Place} from '../types/Places.types.ts'
 
 interface Props {
 	place: Place
@@ -19,7 +19,8 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 		if (!acceptImg.length || !uploadImg) {
 			return
 		}
-			await uploadImg.upload(acceptImg[0], place)		
+
+		await uploadImg.upload(acceptImg[0], place)		
 	}, [uploadImg])
 	
 	const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
@@ -35,32 +36,42 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 	})
 	
 	const dropzoneWrapperClasses = classNames({
-		"drag-accept": isDragAccept,
-		"drag-reject": isDragReject,
+		'drag-accept': isDragAccept,
+		'drag-reject': isDragReject,
 	})
 	
 	if (!uploadImg) return
 	
 	return (
 		<>
-			{uploadImg.isError && <Alert variant="danger">❌ {uploadImg.error}</Alert>}
-			{uploadImg.isSuccess && <Alert variant="success">✅ Upload complete!</Alert>}
+			{uploadImg.isError && <Alert variant='danger'>❌ {uploadImg.error}</Alert>}
+			{uploadImg.isSuccess && <Alert variant='success'>✅ Upload complete!</Alert>}
 			{uploadImg.progress !== null && (
-				<ProgressBar animated label={`${uploadImg.progress}%`} now={uploadImg.progress} variant="success"
+				<ProgressBar animated label={`${uploadImg.progress}%`} now={uploadImg.progress} variant='success'
 				/>)}
-			<div {...getRootProps()} id="dropzone-wrapper" className={dropzoneWrapperClasses}>
+			<div 
+				{...getRootProps()} 
+				id='dropzone-wrapper' 
+				className={ dropzoneWrapperClasses }
+			>
+
 				<input {...getInputProps()} />
-				<div className="indicator">
+
+				<div className={'indicator'}>
 					{isDragActive
 						? isDragAccept
 							? <p>Yeah! Drop that file...</p>
 							: <p>Nope, either to many images or wrong format</p>
 						: <p>
-							<span className="material-symbols-outlined d-block">upload_file</span>
+							<span className={'material-symbols-outlined d-block'}>
+								upload_file
+							</span>
 							{text}
-						</p>}
+						</p>
+					}
 				</div>
-			<p>supported formats: gif, jpeg, jpg, png, webp <span className={'d-block'}>max filesize: 2mb</span> </p>
+
+				<p>supported formats: gif, jpeg, jpg, png, webp <span className={'d-block'}>max filesize: 2mb</span> </p>
 			</div>
 		</>
 	)

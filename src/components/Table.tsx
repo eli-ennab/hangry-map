@@ -13,7 +13,7 @@ interface Props<TData, TValue> {
 	data: TData[]
 }
 
-const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
+const Table = <TData, TValue>({ columns, data } : Props<TData, TValue>) => {
 		
 	const [sorting, setSorting] = useState<SortingState>([])
 	
@@ -27,7 +27,7 @@ const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 	})
 	
     return (
-		<BTable bordered hover responsive className="m-3 w-75 mx-auto">
+		<BTable bordered hover responsive className={'m-3 w-75 mx-auto'}>
 			<thead>
 			{table.getHeaderGroups().map((headerGroup) => (
 				<tr key={headerGroup.id}>
@@ -38,8 +38,8 @@ const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 									{...{
 										className:
 											header.column.getCanSort()
-												? "cursor-pointer select-none"
-												: "",
+												? 'cursor-pointer select-none'
+												: '',
 										onClick:
 											header.column.getToggleSortingHandler(),
 									}}
@@ -49,7 +49,7 @@ const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 										header.getContext()
 									)}
 									
-									{{asc: " ⬇️",desc: " ⬆️",} [header.column.getIsSorted() as string] ?? null}
+									{{asc: ' ⬇️',desc: ' ⬆️',} [header.column.getIsSorted() as string] ?? null}
 								</div>
 							)}
 						</th>
@@ -59,18 +59,18 @@ const Table = <TData, TValue>({columns,data,}: Props<TData, TValue>) => {
 			</thead>
 			
 			<tbody>
-			{table.getRowModel().rows.map((row) => (
-				<tr key={row.id}>
-					{row.getVisibleCells().map((cell) => (
-						<td key={cell.id}>
-							{flexRender(
-								cell.column.columnDef.cell,
-								cell.getContext()
-							)}
-						</td>
-					))}
-				</tr>
-			))}
+				{table.getRowModel().rows.map((row) => (
+					<tr key={row.id}>
+						{row.getVisibleCells().map((cell) => (
+							<td key={cell.id}>
+								{flexRender(
+									cell.column.columnDef.cell,
+									cell.getContext()
+								)}
+							</td>
+						))}
+					</tr>
+				))}
 			</tbody>
 		</BTable>
     ) 

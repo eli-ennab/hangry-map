@@ -83,14 +83,14 @@ const UpdateProfilePage = () => {
 			if (error instanceof FirebaseError) {
 				setErrorMessage(error.message)
 			} else {
-				setErrorMessage("Something went wrong. Have you tried turning it off and on again?")
+				setErrorMessage('Something went wrong. Have you tried turning it off and on again?')
 			}
 			setLoading(false)
 			setProgress(null)
 		}
 	}
 	
-	const passwordRef = useRef("")
+	const passwordRef = useRef('')
 	passwordRef.current = watch('password')
 	
 	const photoFileRef = useRef<FileList | null>(null)
@@ -106,54 +106,54 @@ const UpdateProfilePage = () => {
 	}
 	
 	return (
-		<Container className="py-3 center-y">
+		<Container className='py-3 center-y'>
 			<Row>
 				<Col md={{span: 10, offset: 1}}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3">Update Your Profile</Card.Title>
+							<Card.Title className={'mb-3'}>Update Your Profile</Card.Title>
 							
-							{errorMessage && (<Alert variant="danger">{errorMessage}</Alert>)}
-							<div className="d-flex justify-content-center my-3">
+							{errorMessage && (<Alert variant='danger'>{errorMessage}</Alert>)}
+							<div className='d-flex justify-content-center my-3'>
 								<Image
 									src={userPhotoUrl || `https://placehold.co/100x100?text=${currentUser?.displayName ?? 'N/A'}`}
 									fluid
 									roundedCircle
-									className="w-25"
+									className={'w-25'}
 								/>
 							</div>
 							
-							<div className="text-center mt-3">
+							<div className='text-center mt-3'>
 								<Button onClick={onDeletePic} variant={'outline-danger'} size={'sm'}>Delete Picture</Button>
 							</div>
 							
 							<Form onSubmit={handleSubmit(onUpdateProfile)}>
-								<Form.Group controlId="name" className="mb-3">
+								<Form.Group controlId='name' className={'mb-3'}>
 									<Form.Label>Name</Form.Label>
 									<Form.Control
 										placeholder={userName ?? 'Enter a name'}
-										type="text"
+										type='text'
 										required
 										{...register('name', {
 											minLength: {
 												value: 3,
-												message: "Must be at least 3 characters long..."
+												message: 'Must be at least 3 characters long...'
 											}
 										})}
 									/>
-									{errors.name && <p className="invalid">{errors.name.message ?? "Invalid value"}</p>}
+									{errors.name && <p className='invalid'>{errors.name.message ?? 'Invalid value'}</p>}
 								</Form.Group>
 								
 								
-								<Form.Group controlId="photo" className="mb-3">
+								<Form.Group controlId='photo' className={'mb-3'}>
 									<Form.Label>Photo</Form.Label>
 									<Form.Control
-										type="file"
-										accept="image/gif,image/jpeg,image/png,image/webp"
+										type='file'
+										accept='image/gif,image/jpeg,image/png,image/webp'
 										{...register('photoFile', {})}
 									/>
 									{errors.photoFile &&
-										<p className="invalid">{errors.photoFile.message ?? "Invalid value"}</p>}
+										<p className={'invalid'}>{errors.photoFile.message ?? 'Invalid value'}</p>}
 									<Form.Text>{photoFileRef.current && photoFileRef.current.length > 0 && (
 										<>
 								<span>
@@ -171,65 +171,65 @@ const UpdateProfilePage = () => {
 								</Form.Group>
 								
 								
-								<Form.Group controlId="email" className="mb-3">
+								<Form.Group controlId='email' className={'mb-3'}>
 									<Form.Label>Your registered mail</Form.Label>
 									<Form.Control
 										disabled
 										placeholder={userEmail ?? 'E-Mail'}
-										type="email"
+										type='email'
 										{...register('email', {
 											required: 'You have to enter a valid email'
 										})}
 									/>
 									{errors.email &&
-										<p className="invalid">{errors.email.message ?? "Invalid value"}</p>}
+										<p className={'invalid'}>{errors.email.message ?? 'Invalid value'}</p>}
 								</Form.Group>
 								
 								<Form.Label>Update your password? </Form.Label>
-								<Form.Group controlId="password" className="mb-3">
+								<Form.Group controlId='password' className={'mb-3'}>
 									<Form.Label>Password</Form.Label>
 									<Form.Control
-										type="password"
-										autoComplete="new-password"
+										type='password'
+										autoComplete='new-password'
 										{...register('password', {
 											minLength: {
 												value: 6,
-												message: "Password must be at least 6 characters"
+												message: 'Password must be at least 6 characters'
 											},
 										})}
 									/>
 									{errors.password &&
-										<p className="invalid">{errors.password.message ?? "Invalid value"}</p>}
+										<p className={'invalid'}>{errors.password.message ?? 'Invalid value'}</p>}
 									<Form.Text>At least 6 characters</Form.Text>
 								</Form.Group>
 								
-								<Form.Group controlId="confirmPassword" className="mb-3">
+								<Form.Group controlId='confirmPassword' className={'mb-3'}>
 									<Form.Label>Confirm Password</Form.Label>
 									<Form.Control
-										type="password"
-										autoComplete="off"
+										type='password'
+										autoComplete='off'
 										{...register('passwordConfirm', {
 											minLength: {
 												value: 6,
-												message: "Please enter at least 6 characters"
+												message: 'Please enter at least 6 characters'
 											},
 											validate: (value) => {
-												return !passwordRef.current || value === passwordRef.current || "The passwords does not match️"
+												return !passwordRef.current || value === passwordRef.current || 'The passwords does not match️'
 											}
 										})}
 									/>
 									{errors.passwordConfirm &&
-										<p className="invalid">{errors.passwordConfirm.message ?? "Invalid value"}</p>}
+										<p className={'invalid'}>{errors.passwordConfirm.message ?? 'Invalid value'}</p>}
 								</Form.Group>
 								
-								<div className="d-grid gap-2">
+								<div className='d-grid gap-2'>
 									<Button
 										disabled={loading}
 										className={'btnGradient mx-auto'}
-										type="submit">
+										type='submit'>
 										{loading
-											? "saving..."
-											: "Save Changes"}
+											? 'saving...'
+											: 'Save Changes'}
 									</Button>
 								</div>
 							</Form>		

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createContext, useEffect, useState } from 'react'
 import { auth } from '../services/firebase'
-import { doc, updateDoc, setDoc, serverTimestamp } from "firebase/firestore"
+import { doc, updateDoc, setDoc, serverTimestamp } from 'firebase/firestore'
 import {
 	onAuthStateChanged,
 	createUserWithEmailAndPassword,
@@ -57,7 +57,6 @@ const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
 	}
 
 	const signup = async (email: string, password: string, username: string) => {
-
 		try {
 			const newUser = await createUserWithEmailAndPassword(auth, email, password)
 

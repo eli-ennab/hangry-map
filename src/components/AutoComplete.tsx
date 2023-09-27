@@ -1,14 +1,15 @@
 import React from 'react'
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete"
+import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete'
 import {
 	Combobox,
 	ComboboxInput,
 	ComboboxPopover,
 	ComboboxList,
 	ComboboxOption,
-} from "@reach/combobox"
-import "@reach/combobox/styles.css"
+} from '@reach/combobox'
+import '@reach/combobox/styles.css'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 interface Props {
 	setMapCenter: React.Dispatch<React.SetStateAction<google.maps.LatLngLiteral>>
@@ -43,32 +44,39 @@ const AutoComplete: React.FC<Props> = ({
 		setValue('')
 	}
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		handleSelect(value);
+		e.preventDefault()
+		handleSelect(value)
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-		<Combobox onSelect={handleSelect}>
-			<ComboboxInput
-				value={value}
-				onChange={(e) => setValue(e.target.value)}
-				className="search-input p-2 my-1"
-				disabled={!ready}
-				placeholder="Hangry Search 😠"
-			/>
-			<Button className={'mx-2'} type={'submit'}><span className="material-symbols-outlined align-middle">search</span></Button>
+		<Form onSubmit={handleSubmit}>
+			<Combobox onSelect={handleSelect}>
+				<ComboboxInput
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					className="search-input p-2 my-1"
+					disabled={!ready}
+					placeholder="Hangry Search 😠"
+				/>
+				<Button 
+					className={'mx-2'} 
+					type={'submit'}
+				>
+					<span className="material-symbols-outlined align-middle">
+						search
+					</span>
+				</Button>
 
-			<ComboboxPopover>
-				<ComboboxList>
-					{status == "OK" &&
-						data.map(({ place_id, description }) => (
-							<ComboboxOption key={place_id} value={description} />
-						))}
-				</ComboboxList>
-			</ComboboxPopover>
-		</Combobox>
-		</form>
+				<ComboboxPopover>
+					<ComboboxList>
+						{status == "OK" &&
+							data.map(({ place_id, description }) => (
+								<ComboboxOption key={place_id} value={description} />
+							))}
+					</ComboboxList>
+				</ComboboxPopover>
+			</Combobox>
+		</Form>
 	)
 }
 

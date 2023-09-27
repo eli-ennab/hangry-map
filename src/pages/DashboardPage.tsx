@@ -1,6 +1,6 @@
-import useAuth from "../hooks/useAuth"
+import useAuth from '../hooks/useAuth'
 import Table from '../components/Table.tsx'
-import useGetAdmins from "../hooks/useGetAdmins.ts"
+import useGetAdmins from '../hooks/useGetAdmins.ts'
 import useGetImages from '../hooks/useGetImages.ts'
 import useGetPlaces from '../hooks/useGetPlaces.ts'
 import useGetUsers from '../hooks/useGetUsers.ts'
@@ -36,34 +36,34 @@ const DashboardPage = () => {
 	
 	const placesBadge = 
 		<span className={'d-block'}> 
-			<Badge bg={'secondary'}  className="dashboard-badge m-1">{places?.filter(p => p.isApproved) .length}</Badge> of {' '}
-			<Badge bg={'secondary'}  className="dashboard-badge m-1" >{places?.length}</Badge> approved 
+			<Badge bg={'secondary'}  className={'dashboard-badge m-1'}>{places?.filter(p => p.isApproved) .length}</Badge> of {' '}
+			<Badge bg={'secondary'}  className={'dashboard-badge m-1'}>{places?.length}</Badge> approved 
 		</span>
 
 	const imagesBadge = 
 		<span className={'d-block'}> 
-			<Badge bg={'secondary'}  className="dashboard-badge m-1">{images?.filter(i => i.isApproved) .length}</Badge> of {' '}
-			<Badge bg={'secondary'}  className="dashboard-badge m-1">{images?.length}</Badge> approved 
+			<Badge bg={'secondary'}  className={'dashboard-badge m-1'}>{images?.filter(i => i.isApproved) .length}</Badge> of {' '}
+			<Badge bg={'secondary'}  className={'dashboard-badge m-1'}>{images?.length}</Badge> approved 
 		</span>
 	
 	const adminsCount = 
 		<span className={'d-block'}> 
-			<Badge bg={'secondary'} className="dashboard-badge m-1">{admins?.length}</Badge>
+			<Badge bg={'secondary'} className={'dashboard-badge m-1'}>{admins?.length}</Badge>
 		</span>
 
 	const userCount = 
 		<span className={'d-block'}>  
-			<Badge bg={'secondary'} className="dashboard-badge m-1">{users?.length}</Badge>
+			<Badge bg={'secondary'} className={'dashboard-badge m-1'}>{users?.length}</Badge>
 		</span>
 
 	return currentUser && places && users && admins && images ? (
 			<>
 				<Tabs
-					defaultActiveKey="places"
-					className="table-tabs mb-3"
+					defaultActiveKey='places'
+					className={'table-tabs mb-3'}
 					fill
 				>
-					<Tab eventKey="places" 
+					<Tab eventKey='places' 
 						title={!placesBadge || places?.filter(p => p.isApproved).length === places.length  
 							? <>
 								<span>Places</span>
@@ -75,7 +75,7 @@ const DashboardPage = () => {
 							data={places} 
 						/>
 					</Tab>
-					<Tab eventKey="images" 
+					<Tab eventKey='images' 
 						title={!imagesBadge || images?.filter(i => i.isApproved).length === images.length 
 							? <>
 								<span>Images</span>
@@ -87,7 +87,7 @@ const DashboardPage = () => {
                             data={images} 
                         />
                     </Tab>
-					<Tab eventKey="users" 
+					<Tab eventKey='users' 
 						title={!userCount || users.length === 0 
 							? 'Users' 
 							: <>Users {userCount}</>
@@ -97,7 +97,7 @@ const DashboardPage = () => {
 							data={users} 
 						/>
 					</Tab>
-					<Tab eventKey="admins" 
+					<Tab eventKey='admins' 
 						title={!adminsCount || admins.length === 0 
 							? 'Admins' 
 							: <>Admins {adminsCount}</>

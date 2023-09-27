@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { LatLngLiteral } from "../types/Places.types"
+import { LatLngLiteral } from '../types/Places.types'
 import Map from '../components/Map.tsx'
 import Alert from 'react-bootstrap/Alert'
-import LoadingSpinner from "../components/LoadingSpinner.tsx"
+import LoadingSpinner from '../components/LoadingSpinner.tsx'
 
 const MapPage = () => {
 	const [searchParams] = useSearchParams()
@@ -100,7 +100,7 @@ const MapPage = () => {
 				setError(true)
 			})
 		} else {
-			setErrorMsg("Geolocation not supported")
+			setErrorMsg('Geolocation not supported')
 			setFetchPos(false)
 			setError(true)
 		}

@@ -44,7 +44,7 @@ const Places = () => {
 											to={p.website} 
 											target={'_blank'}>
 												Visit The Webpage{' '}
-													<span className="material-symbols-outlined infoIcon">
+													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
 											</ListGroup.Item>)}
@@ -56,7 +56,7 @@ const Places = () => {
 											to={p.facebook} 
 											target={'_blank'}>
 												Visit Their Facebook{' '}
-													<span className="material-symbols-outlined infoIcon">
+													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
 										</ListGroup.Item>)}
@@ -68,19 +68,19 @@ const Places = () => {
 											to={p.instagram} 
 											target={'_blank'}>
 												Visit Their Instagram{' '}
-													<span className="material-symbols-outlined infoIcon">
+													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
 										</ListGroup.Item>)}
 								</ListGroup>
 								{p.images && (
-									<div className="mb-3 imgWrap">
+									<div className={'mb-3 imgWrap'}>
 										{p.images.map((p, index) => [
 											<Image 
 												key={index} 
 												src={p.photoUrl} 
 												alt={p.photoUrl}
-												className="img-fluid rounded shadow w-25"
+												className={'img-fluid rounded shadow w-25'}
 											/>
 										])}
 									</div>

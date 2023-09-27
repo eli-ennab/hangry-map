@@ -5,9 +5,6 @@ import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import {approveImage} from '../services/firebase.ts'
 
-
-
-
 const imagesColumnsHelper = createColumnHelper<TImages>()
 
 export const imagesColumns = [
@@ -42,7 +39,11 @@ export const imagesColumns = [
 					<Button onClick={() => {
 						approveImage(props.row.original._id, props.row.original.isApproved, props.row.original.url, props.row.original.place_id)}} 
 									variant={props.getValue() === true ? 'outline-success' : 'outline-danger'}>
-						{props.row.original.isApproved ? <span className="material-symbols-outlined align-middle"> check </span> : <span className="material-symbols-outlined align-middle"> cancel </span>}</Button>
+						{props.row.original.isApproved 
+							? <span className={'material-symbols-outlined align-middle'}> check </span> 
+							: <span className={'material-symbols-outlined align-middle'}> cancel </span>
+						}
+					</Button>
 				)
 			}),
 			imagesColumnsHelper.accessor('place', {

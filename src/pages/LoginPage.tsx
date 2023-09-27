@@ -31,54 +31,54 @@ const LoginPage = () => {
 			if (error instanceof FirebaseError) {
 				setErrorMessage(error.message)
 			} else {
-				setErrorMessage("The stars was not aligned and the whole vibe was off, please try again.")
+				setErrorMessage('The stars was not aligned and the whole vibe was off, please try again.')
 			}
 			setLoading(false)
 		}
 	}
 
 	return (
-		<Container className="py-3">
+		<Container className='py-3'>
 			<Row>
 				<Col md={{span: 6, offset: 3}}>
-					<Card className="mb-3">
+					<Card className={'mb-3'}>
 						<Card.Body>
-							<Card.Title className="mb-3">Log In</Card.Title>
+							<Card.Title className={'mb-3'}>Log In</Card.Title>
 
-							{errorMessage && (<Alert variant="dark">{errorMessage}</Alert>)}
+							{errorMessage && (<Alert variant='dark'>{errorMessage}</Alert>)}
 
 							<Form onSubmit={handleSubmit(onLogin)}>
-								<Form.Group controlId="email" className="mb-3">
+								<Form.Group controlId='email' className={'mb-3'}>
 									<Form.Label>Email</Form.Label>
 									<Form.Control
-											placeholder="mail@example.com"
-											type="email"
+											placeholder='mail@example.com'
+											type='email'
 											{...register('email', {
 												required: 'E-Mail required'
 											})}
 										/>
 									{errors.email && 
 										<p>
-											{errors.email.message ?? "Invalid value"}
+											{errors.email.message ?? 'Invalid value'}
 										</p>
 									}
 								</Form.Group>
 
-								<Form.Group controlId="password" className="mb-3">
+								<Form.Group controlId='password' className={'mb-3'}>
 									<Form.Label>Password</Form.Label>
 									<Form.Control
-										type="password"
+										type='password'
 										{...register('password', {
-											required: "Password required",
+											required: 'Password required',
 											minLength: {
 												value: 6,
-												message: "Please enter at least 6 characters"
+												message: 'Please enter at least 6 characters'
 											}
 										})}
 									/>
 									{errors.password && 
 										<p>
-											{errors.password.message ?? "Invalid value"}
+											{errors.password.message ?? 'Invalid value'}
 										</p>
 									}
 									<Form.Text>You must have least 6 characters</Form.Text>
@@ -87,22 +87,22 @@ const LoginPage = () => {
 								<Button
 										disabled={loading}
 										className={'btnGradient'}
-										type="submit"
+										type='submit'
 									>
 										{loading
-											? "Logging in..."
-											: "Log In"}
+											? 'Logging in...'
+											: 'Log In'}
 								</Button>
 							</Form>
 
 							<div>
-								<Link to="/forgot-password">Did you forget your password?</Link>
+								<Link to='/forgot-password'>Did you forget your password?</Link>
 							</div>
 						</Card.Body>
 					</Card>
 
 					<div>
-						Haven't signed up yet? <Link to="/signup">Sign Up</Link>
+						Haven't signed up yet? <Link to='/signup'>Sign Up</Link>
 					</div>
 				</Col>
 			</Row>
