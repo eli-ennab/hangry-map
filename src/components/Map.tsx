@@ -68,6 +68,7 @@ const Map: React.FC<Props> = ({
 		googleMapsApiKey: import.meta.env.VITE_GMAP_API_KEY,
 		libraries,
 	})
+	
 	const handleActiveMarker = (marker: string) => {
 		if (marker === activeMarker) return
 		setActiveMarker(marker)
@@ -79,7 +80,7 @@ const Map: React.FC<Props> = ({
 		setSelectOffer(e.currentTarget.value)
 	}
 	
-	if (!isLoaded) return <div id={'initial-loader'}>Loading Map</div>
+	if (!isLoaded) return <LoadingSpinner />
 	
 	if (!places) return
 	

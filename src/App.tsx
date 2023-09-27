@@ -9,7 +9,7 @@ import LogoutPage from './pages/LogoutPage'
 import EditPlacePage from './pages/EditPlacePage.tsx'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import Index from './pages/HomePage.tsx'
-import Places from './pages/Places.tsx'
+import PlacesPage from './pages/PlacesPage.tsx'
 import RequireAuth from './components/RequireAuth'
 import SignupPage from './pages/SignupPage'
 import UpdateProfilePage from './pages/UpdateProfilePage'
@@ -26,7 +26,7 @@ const App = () => {
 				{/* Guest Routes */}
 				<Route path='/' element={<Index />} />
 				<Route path='/map' element={<HomePage />} />
-				<Route path='/places' element={<Places />} />
+				<Route path='/places' element={<PlacesPage />} />
 
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/logout' element={<LogoutPage />} />

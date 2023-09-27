@@ -14,7 +14,7 @@ export const imagesColumns = [
 			imagesColumnsHelper.accessor('url', {
 				header: 'Picture',
 				cell: props => (
-					<Image className={'w-25'} src={props.getValue()} />
+					<Image className={'w-25'} src={props.getValue()} alt='Image of a place' />
 				)
 			}),
 			imagesColumnsHelper.accessor('name', {

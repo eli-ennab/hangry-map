@@ -1,11 +1,12 @@
 import useAuth from '../hooks/useAuth'
-import {SubmitHandler, useForm} from 'react-hook-form'
-import {UpdateProfileFormData} from '../types/User.types.ts'
-import {v4 as uuidv4} from 'uuid'
-import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage'
-import {storage} from '../services/firebase.ts'
-import {FirebaseError} from 'firebase/app'
-import {useRef, useState} from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { UpdateProfileFormData } from '../types/User.types.ts'
+import { v4 as uuidv4 } from 'uuid'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { storage } from '../services/firebase.ts'
+import { FirebaseError } from 'firebase/app'
+import { useRef, useState } from 'react'
+import LoadingSpinner from '../components/LoadingSpinner.tsx'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
@@ -102,7 +103,7 @@ const UpdateProfilePage = () => {
 	}
 	
 	if (!currentUser) {
-		return (<p>Loading ...</p>)
+		return <LoadingSpinner />
 	}
 	
 	return (
