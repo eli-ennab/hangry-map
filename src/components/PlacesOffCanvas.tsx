@@ -39,7 +39,7 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({
 	
 	useEffect(() => {
 		setSortBy(sortedFilteredPlaces)
-	}, [filteredPlaces, getDistance, userPos]);
+	}, [filteredPlaces, getDistance, userPos])
 	
 	return (
 		<Offcanvas show={show} onHide={onHide} placement="start" title="Places near you">
