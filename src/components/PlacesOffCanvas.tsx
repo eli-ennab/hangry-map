@@ -12,6 +12,8 @@ type PlacesOffCanvasProps = {
 	userPos: LatLngLiteral | null | undefined
 	setActiveMarker:  React.Dispatch<React.SetStateAction<string | null>>
 	setInfoWindowCenter: React.Dispatch<React.SetStateAction<boolean>>
+	selectedCat: string | null
+	selectedOffer: string | null
 }
 
 const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({
@@ -21,7 +23,9 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({
 		setActiveMarker, 
 		setInfoWindowCenter, 
 		getDistance, 
-		userPos
+		userPos,
+		selectedCat,
+		selectedOffer,
 	}) => {
 	const [sortBy, setSortBy] = useState<Place[]>(filteredPlaces)
 	
@@ -34,14 +38,17 @@ const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({
 	}).sort((a, b) => a.distance - b.distance)
 	
 	useEffect(() => {
-	setSortBy(sortedFilteredPlaces)
+		setSortBy(sortedFilteredPlaces)
 	}, [filteredPlaces, getDistance, userPos]);
 	
 	return (
 		<Offcanvas show={show} onHide={onHide} placement="start" title="Places near you">
 			<Offcanvas.Header className="placeListHeader" closeButton>
 				<Offcanvas.Title>
-					Places near you
+					{selectedCat && selectedOffer ? `${selectedCat} with ${selectedOffer} near you` 
+					: selectedCat ? `${selectedCat} near you`
+					: selectedOffer ? `${selectedOffer} near you`
+					: 'All places near you'}
 				</Offcanvas.Title>
 			</Offcanvas.Header>
 			<Offcanvas.Body>

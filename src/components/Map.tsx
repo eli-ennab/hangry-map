@@ -184,7 +184,8 @@ const Map: React.FC<Props> = ({
 					userPos={userPos}
 					setActiveMarker={setActiveMarker}
 					setInfoWindowCenter={setInfoWindowCenter}
-				
+					selectedCat={selectCat}
+					selectedOffer={selectOffer}
 				/>
 			) : null}
 			
