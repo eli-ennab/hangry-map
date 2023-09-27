@@ -49,7 +49,7 @@ export const imagesColumns = [
 			imagesColumnsHelper.accessor('place', {
 				header: 'Place',
 				cell: props => (
-					<Link to={`/places/${props.row.original._id}`}>{props.getValue()}</Link>
+					<Link to={`/places/${props.row.original.place_id}`}>{props.getValue()}</Link>
 				)
 			}),
 		],
