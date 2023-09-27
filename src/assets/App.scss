@@ -1,11 +1,11 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'dropZone';
-@import 'config';
-@import 'nav';
-@import 'tables';
-@import 'tabs';
-@import 'infoWindow';
-@import 'indexPage';
+@import "bootstrap/scss/bootstrap";
+@import "dropZone";
+@import "config";
+@import "nav";
+@import "tables";
+@import "tabs";
+@import "infoWindow";
+@import "indexPage";
 
 body {
 	background-color: $white;
@@ -43,15 +43,30 @@ p {
 
 .btnGradient {
 	transition: 0.5s;
-	background: rgb(61,218,180);
-	background: -moz-linear-gradient(90deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 50%, rgba(61,218,180,1) 100%);
-	background: -webkit-linear-gradient(90deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 50%, rgba(61,218,180,1) 100%);
-	background: linear-gradient(90deg, rgba(61,218,180,1) 0%, rgba(108,25,255,1) 50%, rgba(61,218,180,1) 100%);
+	background: rgb(61, 218, 180);
+	background: -moz-linear-gradient(
+		90deg,
+		rgba(61, 218, 180, 1) 0%,
+		rgba(108, 25, 255, 1) 50%,
+		rgba(61, 218, 180, 1) 100%
+	);
+	background: -webkit-linear-gradient(
+		90deg,
+		rgba(61, 218, 180, 1) 0%,
+		rgba(108, 25, 255, 1) 50%,
+		rgba(61, 218, 180, 1) 100%
+	);
+	background: linear-gradient(
+		90deg,
+		rgba(61, 218, 180, 1) 0%,
+		rgba(108, 25, 255, 1) 50%,
+		rgba(61, 218, 180, 1) 100%
+	);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3ddab4",endColorstr="#3ddab4",GradientType=1);
 	background-size: 200% auto;
 	border: none;
 	&:hover {
-	background-position: right center;
+		background-position: right center;
 	}
 }
 .sub-nav-menu-wrap {
@@ -76,7 +91,6 @@ p {
 		background: $purple;
 		&:hover {
 			background: $light-purple;
-
 		}
 	}
 	form {
@@ -118,19 +132,34 @@ p {
 	}
 }
 
-@media (max-width: 900px) {
+.image-table img {
+	min-width: 100px;
+	max-width: 100%;
+	height: auto;
+}
 
+@media (max-width: 900px) {
 	.sub-nav-menu {
 		justify-content: center;
-		flex-wrap: wrap;		
+		flex-wrap: wrap;
 		input {
 			margin-bottom: 0.5rem;
 		}
 		form {
 			flex-wrap: wrap;
 			select {
-			margin: 0.2rem
+				margin: 0.2rem;
 			}
 		}
+	}
+}
+@media (max-width: 767px) {
+	.image-table,
+	.image-table thead,
+	.image-table tbody,
+	.image-table th,
+	.image-table td,
+	.image-table tr {
+		display: block;
 	}
 }
