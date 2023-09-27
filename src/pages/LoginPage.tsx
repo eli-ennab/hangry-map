@@ -86,7 +86,7 @@ const LoginPage = () => {
 
 								<Button
 										disabled={loading}
-										className={'btnGradient'}
+										className={'btnGradient mb-3'}
 										type='submit'
 									>
 										{loading
