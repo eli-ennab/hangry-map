@@ -48,7 +48,7 @@ const SignupPage = () => {
 		<Container className={'py-3'}>
 			<Row>
 				<Col md={{ span: 6, offset: 3 }}>
-					<Card>
+					<Card className={'mb-3'}>
 						<Card.Body>
 							<Card.Title className={'mb-3'}>Sign Up</Card.Title>
 							{errorMessage && <Alert variant='dark' className={'text-center mt-3 w-75 mx-auto'}>{errorMessage}</Alert>}
