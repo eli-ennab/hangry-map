@@ -29,7 +29,7 @@ const Navigation = () => {
 							<> 
 								{user?.admin 
 									?	<Nav.Link as={NavLink} to='/user/dashboard'>
-										<span className='material-symbols-outlined align-middle'>
+										<span className='material-symbols-outlined align-middle mx-1'>
 											table
 										</span> 
 										Dashboard
@@ -38,21 +38,21 @@ const Navigation = () => {
 								}
 
 								<Nav.Link as={NavLink} title={'The Map'} to='/map'>
-									<span className='material-symbols-outlined align-middle'>
+									<span className='material-symbols-outlined align-middle mx-1'>
 										map
 									</span> 
 									Map
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'List All Places'} to='/places'>
-									<span className='material-symbols-outlined align-middle'>
+									<span className='material-symbols-outlined align-middle mx-1'>
 										where_to_vote
 									</span> 
 									Places
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} to='/user/create-places' title={'Add A Place'}>
-									<span className='material-symbols-outlined align-middle'>
+									<span className='material-symbols-outlined align-middle mx-1'>
 										note_add
 									</span> 
 									Add a place
@@ -67,7 +67,7 @@ const Navigation = () => {
 									>
 										
 									<NavDropdown.Item as={NavLink} to='/user/update-profile' title={'Update Profile'}>
-										<span className={'material-symbols-outlined align-middle'}>
+										<span className={'material-symbols-outlined align-middle mx-1'}>
 											manage_accounts
 										</span> 
 										Update profile
@@ -76,7 +76,7 @@ const Navigation = () => {
 									<NavDropdown.Divider />
 
 									<NavDropdown.Item as={NavLink} to='/logout'>
-										<span className={'material-symbols-outlined align-middle'}>
+										<span className={'material-symbols-outlined align-middle mx-1'}>
 											logout
 										</span> 
 										Log Out
@@ -86,28 +86,28 @@ const Navigation = () => {
 						) : (
 							<>
 								<Nav.Link as={NavLink} title={'The Map!'} to="/map">
-									<span className={'material-symbols-outlined align-middle'}>
+									<span className={'material-symbols-outlined align-middle mx-1'}>
 										map
 									</span> 
 									Map
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'List All Places!'} to='/places'>
-									<span className={'material-symbols-outlined align-middle'}>
+									<span className={'material-symbols-outlined align-middle mx-1'}>
 										where_to_vote
 									</span> 
 									Places
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'Sing Up Now!'} to='/signup'>
-									<span className={'material-symbols-outlined align-middle'}>
+									<span className={'material-symbols-outlined align-middle mx-1'}>
 										person_add
 									</span> 
 									Sign Up
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'Log In'} to='/login'>
-									<span className={'material-symbols-outlined align-middle'}>
+									<span className={'material-symbols-outlined align-middle mx-1'}>
 										login
 									</span> 
 									Log In
