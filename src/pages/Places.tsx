@@ -3,12 +3,13 @@ import Accordion from 'react-bootstrap/Accordion'
 import Container from 'react-bootstrap/Container'
 import { Link } from 'react-router-dom'
 import pin from '../assets/img/pin.png'
+import LoadingSpinner from '../components/LoadingSpinner.tsx'
 import Image from 'react-bootstrap/Image'
 import ListGroup from 'react-bootstrap/ListGroup'
 
 const Places = () => {
 	const {data: places, loading} = useGetPlacesApproved()
-	if (loading) return <div>Fetching Places...</div>
+	if (loading) return <LoadingSpinner />
 
 	return (
 		<Container className={'pt-3'}>
