@@ -57,7 +57,7 @@ const AutoComplete: React.FC<Props> = ({
 				disabled={!ready}
 				placeholder="Hangry Search 😠"
 			/>
-			<Button className={'m-1'} type={'submit'}>Search</Button>
+			<Button className={'mx-2'} type={'submit'}><span className="material-symbols-outlined align-middle">search</span></Button>
 
 			<ComboboxPopover>
 				<ComboboxList>

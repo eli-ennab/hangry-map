@@ -108,13 +108,12 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 			{loading && <LoadingSpinner/>}
 			
 			<div className={'sub-nav-menu-wrap'}>
-				<div className="sub-nav-menu">
-					<div className={'btnWrap'}>
+				<div className={'sub-nav-menu'}>
+					<div>				
 						<Button
 							onClick={() => setShowPlacesCanvas(true)}
-							className={'text-center'}
 						>
-							Places by city, category or offerings
+							<span className="material-symbols-outlined align-middle">list</span>
 						</Button>
 						
 						<Button onClick={() => {
@@ -122,6 +121,8 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 							setUserCity(city)
 							setFetchPos(true)
 						}}
+						className={'mx-2'}
+						
 						>
 						{fetchPos ? <PuffLoader color="#c3e6cb" size={20} cssOverride={{verticalAlign: 'middle' }}/> :<span className="material-symbols-outlined align-middle">location_searching</span> }
 						</Button>
@@ -136,15 +137,15 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 					<div className={'selectWrap'}>
 						<Form.Select size="sm" onChange={onCatSelect}>
 							<option value=''>Select a category</option>
-							{categories.map(category =>
-								<option value={category}>{category}</option>)
+							{categories.map((category, index) =>
+								<option key={index} value={category}>{category}</option>)
 							}
 						</Form.Select>
 						
 						<Form.Select size="sm" onChange={onOfferSelect}>
 							<option value=''>Select type of offerings</option>
-							{offerings.map(offering =>
-								<option value={offering}>{offering}</option>)
+							{offerings.map((offering,index ) =>
+								<option key={index} value={offering}>{offering}</option>)
 							}
 						</Form.Select>
 					</div>
