@@ -24,36 +24,36 @@ const App = () => {
 			<Routes>
 
 				{/* Guest Routes */}
-				<Route path="/" element={<Index />} />
-				<Route path="/map" element={<HomePage />} />
-				<Route path="/places" element={<Places />} />
+				<Route path='/' element={<Index />} />
+				<Route path='/map' element={<HomePage />} />
+				<Route path='/places' element={<Places />} />
 
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/logout" element={<LogoutPage />} />
-				<Route path="/signup" element={<SignupPage />} />
-				<Route path="/forgot-password" element={<ForgotPasswordPage />} />
-				<Route path="*" element={<NotFound />} />
+				<Route path='/login' element={<LoginPage />} />
+				<Route path='/logout' element={<LogoutPage />} />
+				<Route path='/signup' element={<SignupPage />} />
+				<Route path='/forgot-password' element={<ForgotPasswordPage />} />
+				<Route path='*' element={<NotFound />} />
 
 				{/* RequireAuth */}
-				<Route path="/user/create-places" element={
+				<Route path='/user/create-places' element={
 					<RequireAuth>
 						<CreatePlacesPage />
 					</RequireAuth>
 				} />
 
-				<Route path="/user/update-profile" element={
+				<Route path='/user/update-profile' element={
 					<RequireAuth>
 						<UpdateProfilePage />
 					</RequireAuth>
 				} />
 
-				<Route path="/user/dashboard" element={
+				<Route path='/user/dashboard' element={
 					<RequireAuth>
 						<DashboardPage />
 					</RequireAuth>
 				} />
 
-				<Route path="/places/:id" element={
+				<Route path='/places/:id' element={
 					<RequireAuth>
 						<EditPlacePage />
 					</RequireAuth>

@@ -1,16 +1,16 @@
 import useAuth from './useAuth.tsx'
-import {useState} from 'react'
-import {v4 as uuidv4} from 'uuid'
-import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage'
-import {doc, serverTimestamp, setDoc, updateDoc, getDoc} from 'firebase/firestore'
-import {imgCol, placeCol, storage} from '../services/firebase'
-import {Place} from '../types/Places.types.ts'
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { doc, serverTimestamp, setDoc, updateDoc, getDoc } from 'firebase/firestore'
+import { imgCol, placeCol, storage } from '../services/firebase'
+import { Place } from '../types/Places.types.ts'
 import useGetUser from './useGetUser.ts'
 
 const useUploadImg = () => {
     const {currentUser} = useAuth()
     if (!currentUser) {
-        throw new Error("Error.")
+        throw new Error('Error.')
     }
     const {data: user} = useGetUser(currentUser?.uid)
     const [progress, setProgress] = useState<number | null>(null)
@@ -27,7 +27,7 @@ const useUploadImg = () => {
         try {
             const uuid = uuidv4()
 						
-            const storageRef = ref(storage, `img/placePic/${place.name}/${uuid}.${image.name.substring(image.name.lastIndexOf(".") + 1) }`)
+            const storageRef = ref(storage, `img/placePic/${place.name}/${uuid}.${image.name.substring(image.name.lastIndexOf('.') + 1) }`)
             const uploadTask = uploadBytesResumable(storageRef, image)
             uploadTask.on('state_changed', snapshot => {
                 setProgress(
@@ -66,12 +66,12 @@ const useUploadImg = () => {
             setProgress(null)
 			
         } catch (err) {
-            console.log("Something went wrong with the upload", err)
+            console.log('Something went wrong with the upload', err)
             setIsError(true)
             if (err instanceof Error) {
                 setError(err.message)
             } else {
-                setError("Something unexpected happened, try again... ")
+                setError('Something unexpected happened, try again...')
             }
         } finally {
             setIsUploading(false)

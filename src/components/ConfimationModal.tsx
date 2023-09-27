@@ -24,10 +24,16 @@ const ConfirmationModal: React.FC<IProps> = ({
 			<Modal.Body>{children}</Modal.Body>
 
 			<Modal.Footer>
-				<Button variant="secondary" onClick={onCancel}>
+				<Button 
+					variant='secondary' 
+					onClick={onCancel}
+				>
 					Cancel
 				</Button>
-				<Button variant="warning" onClick={onConfirm}>
+				<Button 
+					variant='warning' 
+					onClick={onConfirm}
+				>
 					Yes
 				</Button>
 			</Modal.Footer>

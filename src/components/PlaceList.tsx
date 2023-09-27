@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../services/firebase'
-import { Card, Row, Col, Button, Container } from 'react-bootstrap'
-import { Place } from '../types/Places.types';
+import { Place } from '../types/Places.types'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 
 interface PlacesListProps {
 	onApprove: (placeId: string) => void
@@ -23,16 +27,16 @@ const PlacesList: React.FC<PlacesListProps> = ({ onApprove }) => {
 	}, [])
 
 	return (
-		<Container className='py-3'>
+		<Container className={'py-3'}>
 			<Row>
 				<Row>
-					<Col className="text-center mb-4">
+					<Col className={'text-center mb-4'}>
 						<h2>Places to Approve</h2>
 					</Col>
 				</Row>
 				{places.map(place => (
 					<Col md={4} key={place._id}>
-						<Card className="mb-4">
+						<Card className={'mb-4'}>
 							<Card.Body>
 								<Card.Title>{place.name}</Card.Title>
 								<Card.Text>
@@ -44,7 +48,7 @@ const PlacesList: React.FC<PlacesListProps> = ({ onApprove }) => {
 									<br />
 									Offerings: {place.offerings}
 								</Card.Text>
-								<Button variant="primary" onClick={() => onApprove(place._id ?? 'N/A')}>
+								<Button variant={'primary'} onClick={() => onApprove(place._id ?? 'N/A')}>
 									Approve
 								</Button>
 							</Card.Body>

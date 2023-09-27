@@ -20,12 +20,12 @@ const LogoutPage = () => {
 	}, [logout, navigate])
 
 	return (
-		<Container className="py-3">
+		<Container className={'py-3'}>
 			<Row>
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
 						<Card.Body>
-							<Card.Title className="mb-3">You are being logged out...</Card.Title>
+							<Card.Title className={'mb-3'}>You are being logged out...</Card.Title>
 						</Card.Body>
 					</Card>
 				</Col>

@@ -27,36 +27,37 @@ const ForgotPassword: React.FC = () => {
 	}
 
 	return (
-		<Container className="py-3">
+		<Container className={'py-3'}>
 			<Row>
 				<Col md={{ span: 6, offset: 3 }}>
-					<Card className="mb-3">
+					<Card className={'mb-3'}>
 						<Card.Body>
-							<Card.Title className="mb-3">Forgot Password</Card.Title>
+							<Card.Title className={'mb-3'}>Forgot Password</Card.Title>
 
-							{message && <Alert variant="success">{message}</Alert>}
-							{error && <Alert variant="danger">{error}</Alert>}
+							{message && <Alert variant='success'>{message}</Alert>}
+							
+							{error && <Alert variant='danger'>{error}</Alert>}
 
 							<Form onSubmit={handleSubmit(onSubmit)}>
-								<Form.Group controlId="email" className="mb-3">
+								<Form.Group controlId='email' className={'mb-3'}>
 									<Form.Label>Email</Form.Label>
 									<Form.Control
-										type="email"
-										placeholder="Enter your email"
+										type='email'
+										placeholder='Enter your email'
 										{...register('email', {
 											required: 'Email is required'
 										})}
 									/>
-									{errors.email && <p className="text-danger">{errors.email.message}</p>}
+									{errors.email && <p className={'text-danger'}>{errors.email.message}</p>}
 								</Form.Group>
 
-								<Button type="submit" className={'btnGradient'}>
+								<Button type='submit' className={'btnGradient'}>
 									Send Password Reset Email
 								</Button>
 							</Form>
 
-							<div className="mt-3">
-								Remembered? <Link to="/login">Log In</Link>
+							<div className={'mt-3'}>
+								Remembered? <Link to='/login'>Log In</Link>
 							</div>
 						</Card.Body>
 					</Card>
@@ -66,4 +67,4 @@ const ForgotPassword: React.FC = () => {
 	)
 }
 
-export default ForgotPassword;
+export default ForgotPassword

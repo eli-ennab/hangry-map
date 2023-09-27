@@ -9,7 +9,7 @@ interface IRequireAuthProps {
 
 const RequireAuth: React.FC<IRequireAuthProps> = ({
 	children,
-	redirectTo = "/login",
+	redirectTo = '/login',
 }) => {
 	const { currentUser } = useAuth()
 

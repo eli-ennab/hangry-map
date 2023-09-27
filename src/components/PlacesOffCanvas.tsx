@@ -14,7 +14,15 @@ type PlacesOffCanvasProps = {
 	setInfoWindowCenter: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({show, onHide, filteredPlaces, setActiveMarker, setInfoWindowCenter, getDistance, userPos}) => {
+const PlacesOffCanvas: React.FC<PlacesOffCanvasProps> = ({
+		show, 
+		onHide, 
+		filteredPlaces, 
+		setActiveMarker, 
+		setInfoWindowCenter, 
+		getDistance, 
+		userPos
+	}) => {
 	const [sortBy, setSortBy] = useState<Place[]>(filteredPlaces)
 	
 	const sortedFilteredPlaces = [...filteredPlaces].map(place => {

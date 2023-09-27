@@ -20,14 +20,16 @@ export const placesColumns = [
 			columnPlaceHelper.accessor('isApproved', {
 				header: 'Approved',
 				cell: props => (
-					props.row.original.isApproved ? <span className="material-symbols-outlined text-success"> check </span> : <span className="material-symbols-outlined text-danger"> cancel </span>
+					props.row.original.isApproved 
+						? <span className={'material-symbols-outlined text-success'}> check </span> 
+						: <span className={'material-symbols-outlined text-danger'}> cancel </span>
 				)
 			}),
 			columnPlaceHelper.accessor('_id', {
 				header: 'Edit Details',
 				cell: props => (
 					<Link to={`/places/${props.row.original._id}`}>
-						<span className="material-symbols-outlined">edit</span>
+						<span className={'material-symbols-outlined'}>edit</span>
 					</Link>
 				)
 			}),

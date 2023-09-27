@@ -29,7 +29,18 @@ interface Props {
 	setFetchPos: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, setMapCenter, onGetLocation, city, haveUserPos, userPos}) => {
+const Map: React.FC<Props> = ({
+	zoom, 
+	setZoom, 
+	fetchPos, 
+	setFetchPos, 
+	mapCenter, 
+	setMapCenter, 
+	onGetLocation, 
+	city, 
+	haveUserPos, 
+	userPos
+}) => {
 	const {currentUser} = useAuth()
 	
 	const [userCity, setUserCity] = useState<string | null>('Malmö')
@@ -102,7 +113,6 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 		return d
 	}
 	
-	
 	return (
 		<>
 			{loading && <LoadingSpinner/>}
@@ -113,7 +123,9 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 						<Button
 							onClick={() => setShowPlacesCanvas(true)}
 						>
-							<span className="material-symbols-outlined align-middle">list</span>
+							<span className={'material-symbols-outlined align-middle'}>
+								list
+							</span>
 						</Button>
 						
 						<Button onClick={() => {
@@ -122,10 +134,16 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 							setFetchPos(true)
 						}}
 						className={'mx-2'}
-						
 						>
-						{fetchPos ? <PuffLoader color="#c3e6cb" size={20} cssOverride={{verticalAlign: 'middle' }}/> :<span className="material-symbols-outlined align-middle">location_searching</span> }
+
+						{fetchPos 
+							? 	<PuffLoader color="#c3e6cb" size={20} cssOverride={{verticalAlign: 'middle' }} /> 
+							: 	<span className="material-symbols-outlined align-middle">
+									location_searching
+								</span> 
+						}
 						</Button>
+
 					</div>
 					
 					<AutoComplete
@@ -135,17 +153,21 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 					/>
 					
 					<div className={'selectWrap'}>
-						<Form.Select size="sm" onChange={onCatSelect}>
+						<Form.Select size='sm' onChange={onCatSelect}>
 							<option value=''>Select a category</option>
 							{categories.map((category, index) =>
-								<option key={index} value={category}>{category}</option>)
+								<option key={index} value={category}>
+									{category}
+								</option>)
 							}
 						</Form.Select>
 						
-						<Form.Select size="sm" onChange={onOfferSelect}>
+						<Form.Select size='sm' onChange={onOfferSelect}>
 							<option value=''>Select type of offerings</option>
 							{offerings.map((offering,index ) =>
-								<option key={index} value={offering}>{offering}</option>)
+								<option key={index} value={offering}>
+									{offering}
+								</option>)
 							}
 						</Form.Select>
 					</div>
@@ -167,7 +189,7 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 			
 			<GoogleMap
 				onClick={() => setActiveMarker(null)}
-				mapContainerStyle={{width: "100vw", height: '91vh'}}
+				mapContainerStyle={{ width: '100vw', height: '91vh' }}
 				options={{
 					zoom: zoom,
 					center: mapCenter,
@@ -212,21 +234,23 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
 									<p>{p.address}, {p.city}</p>
 									
-									{userPos ? (<>
+									{userPos ? (
+										<>
 											<p>{Math.ceil(getDistance(p.lat!, p.lng!, userPos)) / 1000} km from your position</p>
 											<p>
 												<a
 													href={`https://www.google.se/maps/dir/${userPos.lat},${userPos.lng}${p.gMapsLink}`}
 													target={'_blank'}
-													className="text-decoration-none">
-													Google Maps Direction
+													className={'text-decoration-none'}>
+														Google Maps Direction
 													<span className="material-symbols-outlined infoIcon">
-												open_in_new
-											</span>
+														open_in_new
+													</span>
 												</a>
 											</p>
 										</>
 									) : null}
+
 									<div>
 										{p.website && (
 											<p>
@@ -241,39 +265,50 @@ const Map: React.FC<Props> = ({zoom, setZoom, fetchPos, setFetchPos, mapCenter, 
 												</a>
 											</p>
 										)}
+
 										{p.facebook && (
 											<p><strong>Facebook:</strong>{' '}
 												<a
 													href={p.facebook}
 													target={'_blank'}
-													className="text-decoration-none">
+													className={'text-decoration-none'}
+												>
 													Visit
-													<span className="material-symbols-outlined infoIcon">
+													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
 												</a>
 											</p>
 										)}
+
 										{p.instagram && (
 											<p><strong>Instagram:</strong>{' '}
 												<a
 													href={p.instagram}
 													target={'_blank'}
-													className="text-decoration-none">
+													className={'text-decoration-none'}
+												>
 													Visit
-													<span className="material-symbols-outlined infoIcon">
+													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
 												</a>
 											</p>
 										)}
+
 										{p.images && (
-											<div className="my-3 imgWrap">
+											<div className='my-3 imgWrap'>
 												{p.images.map(p => [
-													<img key={p.photoUrl} src={p.photoUrl} alt={p.photoUrl} className="img-fluid rounded shadow w-25"/>
+													<img 
+														key={p.photoUrl} 
+														src={p.photoUrl} 
+														alt={p.photoUrl} 
+														className={'img-fluid rounded shadow w-25'} 
+													/>
 												])}
 											</div>
 										)}
+
 										{currentUser ? (
 											<div className={'w-75 mx-auto'}>
 												<UploadImage place={p} text={'Add an image to this place'}/>

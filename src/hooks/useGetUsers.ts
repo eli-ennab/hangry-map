@@ -1,7 +1,7 @@
 import { orderBy, where} from 'firebase/firestore'
 import useStreamCollection from './useStreamCollection.ts'
-import {User} from '../types/User.types.ts'
-import {userCol} from '../services/firebase.ts'
+import { User } from '../types/User.types.ts'
+import { userCol } from '../services/firebase.ts'
 
 const useGetUsers = () => {
     return useStreamCollection<User>(userCol, 
