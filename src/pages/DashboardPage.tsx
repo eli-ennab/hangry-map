@@ -82,10 +82,12 @@ const DashboardPage = () => {
 							<span className={'d-block'}>Nothing to approve</span>
 						</> : <> Images {imagesBadge}</>
 					}>
-					<Table
-						columns={imagesColumns}
-						data={images}
-					/>
+					<div className="image-table">
+						<Table
+							columns={imagesColumns}
+							data={images}
+						/>
+					</div>
 				</Tab>
 				<Tab eventKey="users"
 					title={!userCount || users.length === 0
