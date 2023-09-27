@@ -155,11 +155,12 @@ p {
 }
 @media (max-width: 767px) {
 	.image-table,
-	.image-table thead,
 	.image-table tbody,
-	.image-table th,
 	.image-table td,
 	.image-table tr {
 		display: block;
+	}
+	.image-table thead {
+		display: none;
 	}
 }
