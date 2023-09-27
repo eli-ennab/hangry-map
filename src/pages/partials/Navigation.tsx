@@ -13,8 +13,8 @@ const Navigation = () => {
 		currentUser,
 	} = useAuth()
 	const userId = currentUser?.uid || 'no id'
-	const {data: user} = useGetUser(userId)
-	
+	const { data: user } = useGetUser(userId)
+
 	return (
 		<Navbar className={'navigation'} variant='dark' expand='md'>
 			<Container>
@@ -26,50 +26,50 @@ const Navigation = () => {
 				<Navbar.Collapse id='basic-navbar-nav'>
 					<Nav className='ms-auto align-middle'>
 						{currentUser || user?.admin ? (
-							<> 
-								{user?.admin 
-									?	<Nav.Link as={NavLink} to='/user/dashboard'>
+							<>
+								{user?.admin
+									? <Nav.Link as={NavLink} to='/user/dashboard'>
 										<span className='material-symbols-outlined align-middle mx-1'>
 											table
-										</span> 
+										</span>
 										Dashboard
-									</Nav.Link> 
-									:	null
+									</Nav.Link>
+									: null
 								}
 
 								<Nav.Link as={NavLink} title={'The Map'} to='/map'>
 									<span className='material-symbols-outlined align-middle mx-1'>
 										map
-									</span> 
+									</span>
 									Map
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'List All Places'} to='/places'>
 									<span className='material-symbols-outlined align-middle mx-1'>
 										where_to_vote
-									</span> 
+									</span>
 									Places
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} to='/user/create-places' title={'Add A Place'}>
 									<span className='material-symbols-outlined align-middle mx-1'>
 										note_add
-									</span> 
+									</span>
 									Add a place
 								</Nav.Link>
 
 								<NavDropdown
-									title={currentUser?.photoURL 
-											? 	<>
-													<Image src={currentUser.photoURL} height={30} width={30} fluid roundedCircle />{' '}{currentUser.displayName} 
-												</> 
-											: 	currentUser?.displayName}
-									>
-										
+									title={currentUser?.photoURL
+										? <>
+											<Image src={currentUser.photoURL} height={30} width={30} roundedCircle />{' '}{currentUser.displayName}
+										</>
+										: currentUser?.displayName}
+								>
+
 									<NavDropdown.Item as={NavLink} to='/user/update-profile' title={'Update Profile'}>
 										<span className={'material-symbols-outlined align-middle mx-1'}>
 											manage_accounts
-										</span> 
+										</span>
 										Update profile
 									</NavDropdown.Item>
 
@@ -78,7 +78,7 @@ const Navigation = () => {
 									<NavDropdown.Item as={NavLink} to='/logout'>
 										<span className={'material-symbols-outlined align-middle mx-1'}>
 											logout
-										</span> 
+										</span>
 										Log Out
 									</NavDropdown.Item>
 								</NavDropdown>
@@ -88,28 +88,28 @@ const Navigation = () => {
 								<Nav.Link as={NavLink} title={'The Map!'} to="/map">
 									<span className={'material-symbols-outlined align-middle mx-1'}>
 										map
-									</span> 
+									</span>
 									Map
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'List All Places!'} to='/places'>
 									<span className={'material-symbols-outlined align-middle mx-1'}>
 										where_to_vote
-									</span> 
+									</span>
 									Places
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'Sing Up Now!'} to='/signup'>
 									<span className={'material-symbols-outlined align-middle mx-1'}>
 										person_add
-									</span> 
+									</span>
 									Sign Up
 								</Nav.Link>
 
 								<Nav.Link as={NavLink} title={'Log In'} to='/login'>
 									<span className={'material-symbols-outlined align-middle mx-1'}>
 										login
-									</span> 
+									</span>
 									Log In
 								</Nav.Link>
 							</>
