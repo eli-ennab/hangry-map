@@ -21,20 +21,21 @@ const PlacesPage = () => {
 							<Accordion.Header><Image src={pin} />{p.name}, {p.city}</Accordion.Header>
 							<Accordion.Body>
 								<p>{p.offerings}{', '} {p.category}</p>								
-								<p>{p.description}</p>
+								<p>"{p.description}"</p>
 								<ListGroup variant="flush" className={'my-3'}>
 									{p.phone && (
 									<ListGroup.Item 
 										key={p.phone} 
 										action 
 										as={Link} 
-										to={`tel:${p.phone}`}>
-											{p.phone}
+										to={`tel:${p.phone}`}
+									>
+											Phone number: {p.phone}
 									</ListGroup.Item> )}
 									<ListGroup.Item 
 										key={p.address} 
-								>
-											{p.address}, {p.city}
+									>
+											Address: {p.address}, {p.city}
 									</ListGroup.Item>
 									
 									{p.website && (
@@ -44,7 +45,7 @@ const PlacesPage = () => {
 											as={Link} 
 											to={p.website} 
 											target={'_blank'}>
-												Visit The Webpage{' '}
+												Visit their webpage{' '}
 													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
@@ -56,7 +57,7 @@ const PlacesPage = () => {
 											as={Link} 
 											to={p.facebook} 
 											target={'_blank'}>
-												Visit Their Facebook{' '}
+												Visit their Facebook{' '}
 													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
@@ -68,7 +69,7 @@ const PlacesPage = () => {
 											as={Link} 
 											to={p.instagram} 
 											target={'_blank'}>
-												Visit Their Instagram{' '}
+												Visit their Instagram{' '}
 													<span className={'material-symbols-outlined infoIcon'}>
 														open_in_new
 													</span>
