@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner.tsx'
 
 const MapPage = () => {
 	const [searchParams] = useSearchParams()
+	const navigate = useNavigate()
 	const latParam = searchParams.get('lat')
 	const lngParam = searchParams.get('lng')
 	
@@ -16,7 +17,6 @@ const MapPage = () => {
 
 	const [userCity, setUserCity] = useState<string | null>(null)
 
-	const navigate = useNavigate()
 	const [mapCenter, setMapCenter] = useState<LatLngLiteral>(() => {
 		if (latParam && lngParam) {
 			return {
@@ -35,7 +35,6 @@ const MapPage = () => {
 	const [zoom, setZoom] = useState(9)
 
 	useEffect(() => {
-		
 		if (latParam && lngParam) {
 			const newCenter: LatLngLiteral = {
 				lat: Number(latParam),
