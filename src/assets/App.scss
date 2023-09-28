@@ -4,8 +4,8 @@
 @import "nav";
 @import "tables";
 @import "tabs";
-@import "infoWindow";
 @import "indexPage";
+@import "infoWindow";
 
 body {
 	background-color: $white;
@@ -153,6 +153,7 @@ p {
 		}
 	}
 }
+
 @media (max-width: 767px) {
 	.image-table,
 	.image-table tbody,
