@@ -57,7 +57,7 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 
 				<input {...getInputProps()} />
 
-				<div className={'indicator'}>
+				<div>
 					{isDragActive
 						? isDragAccept
 							? <p>Yeah! Drop that file...</p>
@@ -66,13 +66,12 @@ const UploadImage: React.FC<Props> = ({place, text }) => {
 							<span className={'material-symbols-outlined d-block'}>
 								upload_file
 							</span>
-							{text}
+							<span className={'indicator'}>{text}</span>
 						</p>
 					}
 				</div>
-
-				<p>supported formats: gif, jpeg, jpg, png, webp <span className={'d-block'}>max filesize: 2mb</span> </p>
 			</div>
+			<p className={'infotext'}>supported formats: gif, jpeg, jpg, png, webp <span className={'d-block'}>max filesize: 2mb</span></p>
 		</>
 	)
 }

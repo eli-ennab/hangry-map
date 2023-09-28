@@ -230,16 +230,21 @@ const Map: React.FC<Props> = ({
 						{activeMarker === p._id ? (
 							<InfoWindowF onCloseClick={() => setActiveMarker(null)}>
 								<div className={'infoWindowWrap'} key={p._id}>
-									<span className={'infoHeading'}>{p.name}</span>
-									<p>{p.category} {' '} {p.offerings}</p>
-									<p className={'my-2'}>{p.description}</p>
-									<p className={'mb-2'}><a href={`tel:${p.phone}`}>{p.phone}</a></p>
-									<p>{p.address}, {p.city}</p>
+									<h2 className={'infoHeading mb-2'}>{p.name}</h2>
+									<p className={'mb-2'}>{p.category}{', '} {p.offerings}</p>
+									<p className={'mb-2'}>"{p.description}"</p>
+									<p className={'mb-2'}>Phone number: 
+										{p.phone 
+											? <a href={`tel:${p.phone}`}>{p.phone}</a> 
+											: ' N/A'
+										}
+									</p>
+									<p className={'mb-2'}>Address: {p.address}, {p.city}</p>
 									
 									{userPos ? (
 										<>
-											<p>{Math.ceil(getDistance(p.lat!, p.lng!, userPos)) / 1000} km from your position</p>
-											<p>
+											<p className={'mb-2'}>{Math.ceil(getDistance(p.lat!, p.lng!, userPos)) / 1000} km from your position</p>
+											<p className={'mb-2'}>
 												<a
 													href={`https://www.google.se/maps/dir/${userPos.lat},${userPos.lng}${p.gMapsLink}`}
 													target={'_blank'}
@@ -312,7 +317,7 @@ const Map: React.FC<Props> = ({
 										)}
 
 										{currentUser ? (
-											<div className={'w-75 mx-auto'}>
+											<div className={'w-100 mx-auto'}>
 												<UploadImage place={p} text={'Add an image to this place'}/>
 											</div>
 										) : null}
